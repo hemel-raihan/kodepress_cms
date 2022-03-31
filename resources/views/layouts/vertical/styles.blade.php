@@ -1,6 +1,9 @@
 
     <!-- FAVICON -->
-		<link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/frontend/logo.png') }}" />
+    @php
+    $setting  = \App\Models\Admin\Setting::where([['id',1]])->orderBy('id','desc')->first();
+    @endphp
+		<link rel="shortcut icon" type="image/x-icon" href="{{asset('uploads/settings/'.$setting->logo)}}" />
 
 		<!-- BOOTSTRAP CSS -->
 		<link href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />

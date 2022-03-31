@@ -4,10 +4,13 @@
 						<div class="d-flex">
 							<a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="#"></a><!-- sidebar-toggle-->
 							<a class="header-brand1 d-flex d-md-none" href="{{ url('index') }}">
-								<img src="{{ asset('frontend/images/browser_logo.png') }}" class="header-brand-img desktop-logo" alt="logo">
+                                @php
+                                $setting  = \App\Models\Admin\Setting::where([['id',1]])->orderBy('id','desc')->first();
+                                @endphp
+								{{-- <img src="{{ asset('frontend/images/browser_logo.png') }}" class="header-brand-img desktop-logo" alt="logo">
 								<img src="{{ asset('frontend/images/browser_logo.png') }}" class="header-brand-img toggle-logo" alt="logo">
-								<img src="{{ asset('frontend/images/browser_logo.png') }}" class="header-brand-img light-logo" alt="logo">
-								<img src="{{ asset('frontend/images/browser_logo.png') }}" class="header-brand-img light-logo1" alt="logo">
+								<img src="{{ asset('frontend/images/browser_logo.png') }}" class="header-brand-img light-logo" alt="logo"> --}}
+								<img src="{{asset('uploads/settings/'.$setting->logo)}}" class="header-brand-img light-logo1" alt="logo">
 							</a><!-- LOGO -->
 							<div class="dropdown d-md-flex">
 								<a class="nav-link icon full-screen-link mt-2 nav-link-bg" target="_blank" href="{{ route('home') }}">

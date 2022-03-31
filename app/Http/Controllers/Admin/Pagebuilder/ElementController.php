@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use App\Models\Pagebuilder\Pagebuilder;
+use App\Models\Product\Productcategory;
 
 class ElementController extends Controller
 {
@@ -24,8 +25,9 @@ class ElementController extends Controller
     public function create($id)
     {
         $page = Pagebuilder::findOrFail($id);
-        $categories = category::all();
-        return view('backend.admin.pagebuilder.element.form',compact('page','categories'));
+        $categories = category::withCount('posts')->get(['id']);
+        $product_categories = Productcategory::withCount('products')->get(['id']);
+        return view('backend.admin.pagebuilder.element.form',compact('page','categories','product_categories'));
     }
 
     public function store(Request $request,$id)
@@ -94,6 +96,7 @@ class ElementController extends Controller
 
         $page->elements()->create([
             'category_id' => $request->category_id,
+            'product_category_id' => $request->product_category_id,
             'title' => $request->title,
             'module_type' => $request->module_type,
             'container' => $request->container,
@@ -123,8 +126,9 @@ class ElementController extends Controller
         $auth = Auth::user();
         $page = Pagebuilder::findOrFail($id);
         $element = $page->elements()->findOrFail($elementId);
-        $editcategories = category::all();
-        return view('backend.admin.pagebuilder.element.form',compact('page','auth','element','editcategories'));
+        $editcategories = category::withCount('posts')->get(['id']);
+        $product_editcategories = Productcategory::withCount('products')->get(['id']);
+        return view('backend.admin.pagebuilder.element.form',compact('page','auth','element','editcategories','product_editcategories'));
     }
 
     public function update(Request $request,$id,$elementId)
@@ -216,6 +220,7 @@ class ElementController extends Controller
 
         $page->elements()->findOrFail($elementId)->update([
             'category_id' => $request->category_id,
+            'product_category_id' => $request->product_category_id,
             'title' => $request->title,
             'module_type' => $request->module_type,
             'container' => $request->container,

@@ -126,9 +126,10 @@
                         <option value="">Select Module</option>
                         <option value="Custome Element" {{($element->module_type == 'Custome Element') ? 'selected' : ''}} >Custome Element</option>
 						<option value="Blog Category" {{($element->module_type == 'Blog Category') ? 'selected' : ''}} >Blog Category</option>
-                        <option value="Blog_Category_post" {{($element->module_type == 'Blog_Category_post') ? 'selected' : ''}} >Blog Category Post</option>
+                        <option value="Blog_Category_post" {{($element->module_type == 'Blog_Category_post') ? 'selected' : ''}} >Category Wise BlogPost</option>
 						<option value="Blog Post" {{($element->module_type == 'Blog Post') ? 'selected' : ''}}>Blog Post</option>
                         <option value="Product Category" {{($element->module_type == 'Product Category') ? 'selected' : ''}} >Product Category</option>
+                        <option value="Product_Category_post" {{($element->module_type == 'Product_Category_post') ? 'selected' : ''}} >Category Wise Product</option>
 						<option value="Product Post" {{($element->module_type == 'Product Post') ? 'selected' : ''}}>Product Post</option>
                         <option value="General Category" {{($element->module_type == 'General Category') ? 'selected' : ''}} >General Category</option>
                         <option value="General Post" {{($element->module_type == 'General Post') ? 'selected' : ''}} >General Post</option>
@@ -145,9 +146,10 @@
                         <option value="">Select Module</option>
                         <option value="Custome Element">Custome Element</option>
 						<option value="Blog Category">Blog Category</option>
-                        <option value="Blog_Category_post">Blog Category Post</option>
+                        <option value="Blog_Category_post">Category Wise BlogPost</option>
 						<option value="Blog Post">Blog Post</option>
                         <option value="Product Category">Product Category</option>
+                        <option value="Product_Category_post">Category Wise Product</option>
 						<option value="Product Post">Product Post</option>
                         <option value="General Category">General Category</option>
                         <option value="General Post">General Post</option>
@@ -235,7 +237,7 @@
                                 <select class="form-control" name="category_id" id="category_id" data-live-search="true">
                                     <option value="0">Select Category</option>
                                     @foreach ($editcategories as $key => $category)
-                                    <option value="{{ $category->id }}" {{($element->category_id == $category->id) ? 'selected' : ''}} >{{ $category->name }} ({{$category->posts()->count()}})</option>
+                                    <option value="{{ $category->id }}" {{($element->category_id == $category->id) ? 'selected' : ''}} >{{ $category->name }} ({{$category->posts_count}})</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -244,13 +246,39 @@
                                 <select class="form-control" name="category_id" id="category_id" data-live-search="true">
                                     <option value="0">Select Category</option>
                                     @foreach ($categories as $key => $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }} ({{$category->posts()->count()}})</option>
+                                    <option value="{{ $category->id }}">{{ $category->name }} ({{$category->posts_count}})</option>
                                     @endforeach
                                 </select>
                             </div>
                             @endisset
                         </div>
 				</div>
+
+
+                <div id="product_category" style="display: none;">
+                    <div class="form-group row" id="category">
+                        <label class="col-md-3 col-from-label">Select Product Category<span class="text-danger">*</span></label>
+                        @isset($product_editcategories)
+                        <div>
+                            <select class="form-control" name="product_category_id" id="product_category_id" data-live-search="true">
+                                <option value="0">Select Category</option>
+                                @foreach ($product_editcategories as $key => $category)
+                                <option value="{{ $category->id }}" {{($element->product_category_id == $category->id) ? 'selected' : ''}} >{{ $category->name }} ({{$category->products_count}})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @else
+                        <div>
+                            <select class="form-control" name="product_category_id" id="product_category_id" data-live-search="true">
+                                <option value="0">Select Category</option>
+                                @foreach ($product_categories as $key => $category)
+                                <option value="{{ $category->id }}">{{ $category->name }} ({{$category->products_count}})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @endisset
+                    </div>
+            </div>
 
 
 
@@ -464,6 +492,12 @@
         {
             $('#blog_category').show();
             $('#portfolio_width').show();
+            $('#product_category').hide();
+        }
+        else if($('select[name="module_type"]').val() === 'Product_Category_post')
+        {
+            $('#blog_category').hide();
+            $('#product_category').show();
         }
         else
         {

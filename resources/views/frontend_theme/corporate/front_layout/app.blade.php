@@ -61,7 +61,7 @@
         @include('frontend_theme.corporate.front_layout.vertical.slider')
         @endif --}}
         @if (!Request::is('default*') && !Request::is('blog/details*') && !Request::is('service/details*')  && !Request::is('gallery/all*'))
-        @include('frontend_theme.corporate.front_layout.vertical.head_banner')
+        @include('frontend_theme.corporate.front_layout.vertical.slider')
 
 
         @endif

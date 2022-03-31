@@ -36,7 +36,7 @@ class HomepageController extends Controller
         // $links = Link::where('status',1)->orderBy('id','desc')->limit(5)->get();
         // $posts = Post::where('scrollable',1)->orderBy('id','desc')->limit(5)->get();
 
-        $page = Custompage::where([['type','=','main-page'],['status','=',true]])->orderBy('id','desc')->first();
+        $page = Custompage::where([['type','=','main-page'],['status','=',true]])->with('pagebuilders')->orderBy('id','desc')->first();
         foreach($page->pagebuilders as $test)
         {
             foreach($test->elements as $tes)
@@ -48,22 +48,8 @@ class HomepageController extends Controller
                 }
                 else
                 {
-                    $blogcategories = category::all();
+                    $blogcategories = null;
                 }
-
-                // if($tes->module_type == 'Blog_Category_post')
-                // {
-                //     $cat = $tes->category_id;
-                //     //$cat = category::find($tes->category_id);
-                //    // $blogcategoryposts[] = $cat->posts->all();
-
-                //     //$blogcategoryposts = $tes->category->posts->all();
-                // }
-                // else
-                // {
-                //     $cat = category::find($tes->category_id);
-                //     $blogcategoryposts = $cat->posts->all();
-                // }
 
                 if($tes->module_type == 'Service Category')
                 {
@@ -71,7 +57,7 @@ class HomepageController extends Controller
                 }
                 else
                 {
-                    $servicecategories = Servicecategory::all();
+                    $servicecategories = null;
                 }
 
                 if($tes->module_type == 'General Category')
@@ -80,7 +66,7 @@ class HomepageController extends Controller
                 }
                 else
                 {
-                    $generalcategories = Contentcategory::all();
+                    $generalcategories = null;
                 }
 
                 if($tes->module_type == 'Portfolio Category')
@@ -89,7 +75,7 @@ class HomepageController extends Controller
                 }
                 else
                 {
-                    $portfoliocategories = Portfoliocategory::all();
+                    $portfoliocategories = null;
                 }
                 if($tes->module_type == 'Price-Table Category')
                 {
@@ -97,7 +83,7 @@ class HomepageController extends Controller
                 }
                 else
                 {
-                    $pricecategories = Pricecategory::all();
+                    $pricecategories = null;
                 }
                 if($tes->module_type == 'Product Category')
                 {
@@ -105,7 +91,7 @@ class HomepageController extends Controller
                 }
                 else
                 {
-                    $productcategories = Productcategory::all();
+                    $productcategories = null;
                 }
                 if($tes->module_type == 'Blog Post')
                 {
@@ -113,8 +99,7 @@ class HomepageController extends Controller
                 }
                 else
                 {
-                    $qty = Element::where('module_type','Blog Post')->orderBy('id','desc')->first();
-                    $blogposts = Post::where('status',1)->orderBy('id','desc')->limit(5)->get();
+                    $blogposts = null;
                 }
                 if($tes->module_type == 'General Post')
                 {
@@ -122,8 +107,7 @@ class HomepageController extends Controller
                 }
                 else
                 {
-                    $qty = Element::where('module_type','General Post')->orderBy('id','desc')->first();
-                    $generalposts = Contentpost::where('status',1)->orderBy('id','desc')->limit(5)->get();
+                    $generalposts = null;
                 }
                 if($tes->module_type == 'Service Post')
                 {
@@ -131,7 +115,7 @@ class HomepageController extends Controller
                 }
                 else
                 {
-                    $serviceposts = Service::all();
+                    $serviceposts = null;
                 }
                 if($tes->module_type == 'Portfolio Post')
                 {
@@ -139,7 +123,7 @@ class HomepageController extends Controller
                 }
                 else
                 {
-                    $portfolioposts = Portfolio::all();
+                    $portfolioposts = null;
                 }
                 if($tes->module_type == 'Price-Table Post')
                 {
@@ -147,7 +131,7 @@ class HomepageController extends Controller
                 }
                 else
                 {
-                    $priceposts = Price::all();
+                    $priceposts = null;
                 }
                 if($tes->module_type == 'Product Post')
                 {
@@ -156,7 +140,7 @@ class HomepageController extends Controller
                 }
                 else
                 {
-                    $productposts = Product::all();
+                    $productposts = null;
                 }
 
 

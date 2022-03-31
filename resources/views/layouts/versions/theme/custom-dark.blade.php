@@ -6,19 +6,20 @@
 		<meta charset="UTF-8">
 		<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="description" content="Zanex – Laravel Admin & Dashboard Template">
-		<meta name="author" content="Spruko Technologies Private Limited">
+		<meta name="description" content="Admin Dashboard">
+		<meta name="author" content="Datahost it">
 		<meta name="keywords" content="admin, admin dashboard template, bootstrap 5, dashboard, laravel, laravel admin, laravel admin panel, laravel admin template, laravel blade, laravel dashboard, laravel dashboard template, laravel mvc, laravel php, laravel ui template, ui kit">
 
 		<!-- TITLE -->
 		<title>Admin Dashboard</title>
+		<link rel="icon" href="{!! asset('images/gcm_ico.ico') !!}"/>
 
         @include('layouts.custom-styles')
 
 	</head>
 
-	<body class="error-bg">
-		
+	<body class="error-bg dark-mode">
+
 	@yield('class')
 
 	    <!-- GLOBAL-LOADER -->

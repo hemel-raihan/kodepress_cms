@@ -3,10 +3,13 @@
 				<aside class="app-sidebar">
 					<div class="side-header">
 						<a class="header-brand1" href="{{ url('index') }}">
-							<img src="{{ asset('frontend/images/browser_logo.png') }}" class="header-brand-img desktop-logo" alt="logo">
+                            @php
+                            $setting  = \App\Models\Admin\Setting::where([['id',1]])->orderBy('id','desc')->first();
+                            @endphp
+							{{-- <img src="{{ asset('frontend/images/browser_logo.png') }}" class="header-brand-img desktop-logo" alt="logo">
 							<img src="{{ asset('frontend/images/browser_logo.png') }}" class="header-brand-img toggle-logo" alt="logo">
-							<img src="{{ asset('frontend/images/browser_logo.png') }}" class="header-brand-img light-logo" alt="logo">
-							<img src="{{ asset('assets/frontend/logo.png') }}" class="header-brand-img light-logo1" alt="logo">
+							<img src="{{ asset('frontend/images/browser_logo.png') }}" class="header-brand-img light-logo" alt="logo"> --}}
+							<img src="{{asset('uploads/settings/'.$setting->logo)}}" class="header-brand-img light-logo1" alt="logo">
 						</a><!-- LOGO -->
 					</div>
 					<ul class="side-menu">

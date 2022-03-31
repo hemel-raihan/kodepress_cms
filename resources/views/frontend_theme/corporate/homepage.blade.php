@@ -97,7 +97,7 @@
                         @elseif ($element->module_type == 'Blog_Category_post')
 
                         @php
-                            $category = App\Models\blog\category::select('name','id')->find($element->category_id);
+                            $category = App\Models\blog\category::with('posts')->find($element->category_id);
                         @endphp
 
                         @if ($element->title)
@@ -241,6 +241,75 @@
                         </div>
 
                         @endisset
+
+
+                        @elseif ($element->module_type == 'Product_Category_post')
+
+                        @php
+                            $category = App\Models\Product\Productcategory::with('products')->find($element->product_category_id);
+                        @endphp
+
+                        @if ($element->title)
+                        @if ($element->title_show == 1)
+                        <div class="heading-block">
+                            <h4>{{$element->title}}</h4>
+                        </div>
+                        @endif
+                        @endif
+                        @isset($category->products)
+                        <div id="oc-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-pagi="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-xl="{{($element->layout == 'One Column') ? 1 : (($element->layout == 'Two Column') ? 2 : (($element->layout == 'Three Column') ? 3 : 4)) }}">
+                        @foreach ($category->products as $post)
+                        @if ($post->status == 1)
+
+                        {{-- <div class="posts-sm row col-mb-30" id="post-list-sidebar" >
+                            <div class="entry col-12"  >
+                                <div class="grid-inner row g-0" >
+
+                                    <div class="col-auto">
+                                        <div class="entry-image">
+                                            <a href="{{route('blog.details',$post->slug)}}"><img src="{{asset('uploads/productphoto/'.$post->image)}}" alt="Image"></a>
+                                        </div>
+                                    </div>
+                                    <div class="col ps-3">
+                                        <div class="entry-title">
+                                            <h4><a href="{{route('blog.details',$post->slug)}}">{{$post->title}}</a></h4>
+                                        </div>
+                                        <div class="entry-meta">
+                                            <ul>
+                                                <li>{{ \Carbon\Carbon::parse($post->created_at)->isoFormat('Do MMM YYYY')}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div> --}}
+
+                        <div class="portfolio-item">
+                            <div class="portfolio-image" style="width: {{$element->portfolio_width}}%;">
+                                <a href="portfolio-single.html">
+                                    <img src="{{asset('uploads/productphoto/'.$post->image)}}" alt="Open Imagination">
+                                </a>
+                                <div class="bg-overlay">
+                                    <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-speed="350">
+                                        <a href="{{asset('uploads/productphoto/'.$post->image)}}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350" data-lightbox="image"><i class="icon-line-plus"></i></a>
+                                    </div>
+                                    <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-speed="350"></div>
+                                </div>
+                            </div>
+                            @if ($post->title_show != null)
+                            <div class="portfolio-desc">
+                                <h3><a href="#">{{$post->title}}</a></h3>
+                            </div>
+                            @endif
+                        </div>
+
+
+                        @endif
+                        @endforeach
+                        </div>
+                        @endisset
+                    </br>
 
 
                         @elseif ($element->module_type == 'General Post')
@@ -573,67 +642,6 @@
         </div>
         @endif
         @endforeach
-
-<div class="container-sm">
-    <div class="center mb-5">
-        <h1 class="fw-bold display-4">Contact Us..</h1>
-    </div>
-    {{-- <div class="form-widget" data-loader="button" data-alert-type="inline"> --}}
-
-        <div class="row" >
-            <div class="col-6">
-                <p>Our mission is to help you make the right choice for
-                the right outcomes. That starts with an honest
-                conversation about your challenges. We look forward
-                to talking.</p>
-
-                <p> <img width="50" src="{{asset('assets/frontend/images/Address.png')}}"> 10400 Eaton Place, Suite 105, Fairfax, VA 22030 </p>
-                <p> <img width="30" src="{{asset('assets/frontend/images/Phone.png')}}"> <span style="margin-left: 20px;"> 571-645 5899 </span></p>
-
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3650.8003818461652!2d90.39779751536324!3d23.79012169317382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c713baad70ab%3A0x1db8512cf4fe0bbf!2s5M%20INTERNATIONAL%20LTD.!5e0!3m2!1sen!2sbd!4v1645249159049!5m2!1sen!2sbd" width="600" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-            <div class="col-6">
-                <form id="coming-soon-registration" class="mb-0" action="{{route('contact.store')}}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-process"></div>
-                    <div class="row form-section px-4 py-5 bg-white rounded shadow-lg">
-                        <div class="col-12 form-group">
-                            <label>Name:</label>
-                            <input type="text" name="name" id="landing-enquiry-name" class="form-control form-control-lg required" value="" placeholder="John Doe">
-                        </div>
-                        <div class="col-12 form-group">
-                            <label>Email:</label>
-                            <input type="email" name="email" id="landing-enquiry-email" class="form-control form-control-lg required" value="" placeholder="user@company.com">
-                        </div>
-                        <div class="col-12 form-group">
-                            <label>Phone:</label>
-                            <input type="tel" name="phone" id="landing-enquiry-phone" class="form-control form-control-lg required" value="" placeholder="123-45-678" maxlength="12">
-                        </div>
-                        <div class="col-12 form-group">
-                            <label>Message</label>
-                            <textarea name="msg" id="landing-enquiry-phone" class="form-control form-control-lg required" value="" placeholder="Write your message" ></textarea>
-                        </div>
-                        <div class="col-12 d-none">
-                            <input type="text" id="landing-enquiry-botcheck" name="landing-enquiry-botcheck" value="" />
-                        </div>
-                        <div class="col-12">
-                            <button type="submit" name="landing-enquiry-submit" class="btn w-100 text-white bg-color rounded-3 py-3 fw-semibold text-uppercase mt-2">Get Notified</button>
-                        </div>
-
-                        <input type="hidden" name="prefix" value="landing-enquiry-">
-                    </div>
-                </br>
-                </br>
-                </form>
-            </div>
-
-        </div>
-</div>
-
-
-        </div>
-
-
 
 
 @endsection()
