@@ -21,7 +21,7 @@ class MenuitemController extends Controller
     public function index($id)
     {
         Gate::authorize('app.front.menuitems.widgetbuilder');
-        $menu = Frontmenu::findOrFail($id);
+        $menu = Frontmenu::with('menuItems')->findOrFail($id);
         $auth = Auth::guard('admin')->user();
         $pages = Page::all();
         $categories = category::where('parent_id', '=', 0)->get();

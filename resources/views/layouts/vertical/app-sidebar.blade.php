@@ -118,6 +118,13 @@
 						</li>
 
                         <li class="slide">
+							<a class="side-menu__item" data-bs-toggle="slide" href="#"><i class="side-menu__icon fe fe-dollar-sign"></i><span class="side-menu__label">Career</span><i class="angle fa fa-angle-right"></i></a>
+							<ul class="slide-menu">
+								<li><a href="{{route('admin.jobcategories.create')}}" class="slide-item">Add Category</a></li>
+							</ul>
+						</li>
+
+                        <li class="slide">
 							<a class="side-menu__item" data-bs-toggle="slide" href="#"><i class="side-menu__icon fe fe-align-justify"></i><span class="side-menu__label">Sidebar</span><i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
 								<li><a href="{{route('admin.sidebars.create')}}" class="slide-item">Create New Sidebar </a></li>

@@ -58,6 +58,7 @@
                                     <nav class="primary-menu">
 
                                         <ul class="menu-container">
+
                                             @isset($menuitems)
                                             @foreach ($menuitems as $menuitem)
                                             @if($menuitem->childs->isEmpty())
@@ -65,6 +66,7 @@
                                             <li class="menu-item">
                                                 <a class="menu-link" style="color: {{$navbar->text_color}}" href="{{route('page',$menuitem->slug)}}"><div>{{$menuitem->title}}</div></a>
                                             </li>
+
                                             @else
                                             <li class="menu-item">
                                                 <a class="menu-link" style="color: {{$navbar->text_color}}" href="{{$menuitem->url}}"><div>{{$menuitem->title}}</div></a>
@@ -114,6 +116,7 @@
 
                                                 </ul>
                                             </li>
+
                                             @endif
                                             @endforeach
                                             @endisset
@@ -507,6 +510,7 @@
                             <nav class="primary-menu">
 
                                 <ul class="menu-container">
+
                                     {{-- <li class="menu-item"> --}}
                                     @isset($menuitems)
                                     @foreach ($menuitems as $menuitem)
@@ -567,6 +571,30 @@
                                     @endif
                                     @endforeach
                                     @endisset
+                                    <li class="menu-item">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {{ Config::get('languages')[App::getLocale()] }}
+                                        </a>
+                                        <ul class="sub-menu-container" style="background: {{$navbar->background_color}}">
+                                            @foreach (Config::get('languages') as $lang => $language)
+                                            @if ($lang != App::getLocale())
+                                                    <a class="dropdown-item" href="{{ route('lang.switch', $lang) }}"> {{$language}}</a>
+                                            @endif
+                                        @endforeach
+
+                                        </ul>
+                                    </li>
+                                    {{-- <li>
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {{ Config::get('languages')[App::getLocale()] }}
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        @foreach (Config::get('languages') as $lang => $language)
+                                            @if ($lang != App::getLocale())
+                                                    <a class="dropdown-item" href="{{ route('lang.switch', $lang) }}"> {{$language}}</a>
+                                            @endif
+                                        @endforeach
+                                    </li> --}}
                                 </ul>
                             </nav><!-- #primary-menu end -->
 

@@ -54,8 +54,8 @@
 													<tr>
 														<td>{{$key}}</td>
 														<td>{{$role->name}}</td>
-														<td> @if($role->permissions->count() > 0 )
-                                                            <span class="badge bg-success  me-1 mb-1 mt-1">{{$role->permissions->count()}}</span>
+														<td> @if($role->permissions_count > 0 )
+                                                            <span class="badge bg-success  me-1 mb-1 mt-1">{{$role->permissions_count}}</span>
                                                             @else
                                                             <span class="badge bg-danger  me-1 mb-1 mt-1">No Permission Found :(</span>
                                                             @endif

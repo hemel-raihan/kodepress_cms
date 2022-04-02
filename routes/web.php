@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -236,6 +237,9 @@ Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin', 'middlewar
 
     //  Route::post('/texteditor/test', 'blog\PostController@text_editor')->name('texteditor.test');
 
+    Route::resource('career/jobcategories','Career\JobcategoryController');
+    Route::get('fetch/jobcategories', 'Career\JobcategoryController@fetchcategory')->name('jobcategories.fetch');
+    Route::get('jobcategories/{id}/status', 'Career\JobcategoryController@status')->name('jobcategories.status');
 });
 
 
@@ -244,6 +248,9 @@ Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin', 'middlewar
 Route::group(['as'=>'author.','prefix'=>'author', 'namespace'=>'Admin', 'middleware'=>['auth:admin']], function(){
     Route::get('dashboard', 'DashboardController@author')->name('dashboard');
 });
+
+//Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
+Route::get('lang/{lang}', 'LanguageController@switchLang')->name('lang.switch');
 
 Route::get('default/{slug}', 'PageController@index')->name('page');
 // Route::get('{categoryslug}', 'PageController@category')->name('category.page');

@@ -25,7 +25,7 @@ class ProductController extends Controller
         Gate::authorize('app.product.posts.self');
         //$posts = Auth::guard('admin')->user()->posts()->latest()->get();
         $auth = Auth::guard('admin')->user();
-        $posts = Product::latest()->get();
+        $posts = Product::with('admin')->latest()->get(['title','admin_id','id','unit_price']);
         return view('backend.admin.product.post.index',compact('posts','auth'));
     }
 

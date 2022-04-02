@@ -26,7 +26,7 @@ class PostController extends Controller
         Gate::authorize('app.blog.posts.self');
         //$posts = Auth::guard('admin')->user()->posts()->latest()->get();
         $auth = Auth::guard('admin')->user();
-        $posts = Post::latest()->get();
+        $posts = Post::with('categories')->latest()->get();
         return view('backend.admin.blog.post.index',compact('posts','auth'));
     }
 

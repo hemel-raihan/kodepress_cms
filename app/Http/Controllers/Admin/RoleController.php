@@ -18,7 +18,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
+        $roles = Role::withCount('permissions')->get();
         Artisan::call('cache:clear');
         return view('backend.admin.roles.index',compact('roles'));
     }
@@ -30,7 +30,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $modules = Module::all();
+        $modules = Module::with('permissions')->get();
         Artisan::call('cache:clear');
         return view('backend.admin.roles.form',compact('modules'));
     }
@@ -52,7 +52,7 @@ class RoleController extends Controller
             'name' => $request->name,
             'slug' => Str::slug($request->name),
         ])->permissions()->sync($request->input('permissions'),[]);
-        
+
         Artisan::call('cache:clear');
         notify()->success("Role Successfulyy Ceated", "Added");
         return redirect()->route('admin.roles.index');
@@ -77,7 +77,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $modules = Module::all();
+        $modules = Module::with('permissions')->get();
         Artisan::call('cache:clear');
         return view('backend.admin.roles.form',compact('modules','role'));
     }
@@ -96,7 +96,7 @@ class RoleController extends Controller
             'slug' => Str::slug($request->name),
         ]);
         $role->permissions()->sync($request->input('permissions'));
-        
+
         Artisan::call('cache:clear');
         notify()->success("Role Successfully Updated","Updated");
         return redirect()->route('admin.roles.index');
@@ -119,7 +119,7 @@ class RoleController extends Controller
         {
             notify()->success("You can't delete this ","Delete");
         }
-        
+
         Artisan::call('cache:clear');
         return back();
     }

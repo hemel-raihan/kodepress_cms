@@ -44,15 +44,15 @@
                                  <div class="form-group">
                                  <label for="name">Role Name</label>
                                  <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $role->name ?? old('name') }}"  autofocus>
-    
+
                                             @error('name')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
-    
+
                                    </div>
-    
+
                                    <div class="text-center"><strong>Manage Permission For Role</strong>
                                             @error('permissions')
                                                 <span class="text-danger" role="alert">
@@ -60,7 +60,7 @@
                                                 </span>
                                             @enderror
                                             </div>
-    
+
                                    <div class="form-group">
                                    <div class="custom-control custom-checkbox">
                                    <input type="checkbox" class="custom-control-input"
@@ -68,7 +68,7 @@
                                     <label for="select-all" class="custom-control-label">Select All</label>
                                    </div>
                                    </div>
-    
+
                                 @forelse($modules->chunk(2) as $key=>$chunks)
                                   <div class="form-row">
                                   @foreach($chunks as $key=>$module)
@@ -109,9 +109,9 @@
                         Create
                         @endisset
                         </button>
-    
+
                             </div>
-    
+
                                 </form>
                                 </div>
                             </div>
