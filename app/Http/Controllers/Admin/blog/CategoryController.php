@@ -23,7 +23,7 @@ class CategoryController extends Controller
     public function index()
     {
         Gate::authorize('app.blog.categories.self');
-        $categories = category::simplePaginate(10);
+        $categories = category::paginate(10);
         $auth = Auth::guard('admin')->user();
         return view('backend.admin.blog.category.index',compact('categories','auth'));
     }
@@ -36,10 +36,10 @@ class CategoryController extends Controller
     public function create()
     {
         Gate::authorize('app.blog.categories.create');
-        $categories = category::where('parent_id', '=', 0)->get();
-        $subcat = category::all();
-        $sidebars = Sidebar::all();
-        return view('backend.admin.blog.category.form',compact('categories','subcat','sidebars'));
+        $categories = category::with('childrenRecursive')->where('parent_id', '=', 0)->get();
+        // $subcat = category::all();
+        // $sidebars = Sidebar::all();
+        return view('backend.admin.blog.category.form',compact('categories'));
     }
 
     /**

@@ -1,6 +1,9 @@
 @php
     $footer = \App\Models\Appearance_Settings\Footersetting::find(1);
 @endphp
+@isset($footer)
+
+
         @if ($footer->container == 'container-sm')
         <div class="container-sm">
             <div class="main-div">
@@ -384,5 +387,5 @@
 @endif
 
 
-
+@endisset
 

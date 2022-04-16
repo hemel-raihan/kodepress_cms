@@ -17,13 +17,13 @@
 							</div>
 
 							<div class="ms-auto pageheader-btn">
-                            @if($auth->hasPermission('app.users.create'))
+                            {{-- @if($auth->hasPermission('app.users.create'))
 								<a href="{{route('admin.users.create')}}" class="btn btn-primary btn-icon text-white me-2">
 									<span>
 										<i class="fe fe-plus"></i>
 									</span> Create New User
 								</a>
-                                @endif
+                            @endif --}}
 								{{-- <a href="#" class="btn btn-success btn-icon text-white">
 									<span>
 										<i class="fe fe-log-in"></i>

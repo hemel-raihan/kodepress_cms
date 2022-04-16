@@ -10,4 +10,9 @@ class Jobcategory extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function jobs()
+    {
+        return $this->hasMany(Jobpost::class);
+    }
 }

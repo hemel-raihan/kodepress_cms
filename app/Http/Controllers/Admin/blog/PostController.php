@@ -23,11 +23,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        Gate::authorize('app.blog.posts.self');
+        //Gate::authorize('app.blog.posts.self');
         //$posts = Auth::guard('admin')->user()->posts()->latest()->get();
-        $auth = Auth::guard('admin')->user();
-        $posts = Post::with('categories')->latest()->get();
-        return view('backend.admin.blog.post.index',compact('posts','auth'));
+        //$auth = Auth::guard('admin')->user();
+        $posts = Post::with('categories')->latest()->paginate(5);
+        return view('backend.admin.blog.post.index',compact('posts'));
     }
 
     /**
@@ -38,10 +38,10 @@ class PostController extends Controller
     public function create()
     {
         Gate::authorize('app.blog.posts.create');
-        $categories = category::where('parent_id', '=', 0)->get();
-        $subcat = category::all();
-        $sidebars = Sidebar::all();
-        return view('backend.admin.blog.post.form',compact('categories','subcat','sidebars'));
+        $categories = category::with('childrenRecursive')->where('parent_id', '=', 0)->get();
+        //$subcat = category::all();
+        //$sidebars = Sidebar::all();
+        return view('backend.admin.blog.post.form',compact('categories'));
     }
 
     /**
@@ -270,10 +270,10 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         Gate::authorize('app.blog.posts.edit');
-        $categories = category::where('parent_id', '=', 0)->get();
-        $subcat = category::all();
-        $editsidebars = Sidebar::all();
-        return view('backend.admin.blog.post.form',compact('post','categories','subcat','editsidebars'));
+        $categories = category::with('childrenRecursive')->where('parent_id', '=', 0)->get();
+        //$subcat = category::all();
+        //$editsidebars = Sidebar::all();
+        return view('backend.admin.blog.post.form',compact('post','categories'));
     }
 
     /**

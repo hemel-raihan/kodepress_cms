@@ -56,7 +56,7 @@ class Admin extends Authenticatable
 
     public function hasPermission($permission) : bool
     {
-        return $this->role->permissions()->where('slug', $permission)->first() ? true : false;
+        return $this->role->permissions->where('slug', $permission)->first() ? true : false;
     }
 
     public function posts()

@@ -36,10 +36,10 @@ class CategoryController extends Controller
     public function create()
     {
         Gate::authorize('app.product.categories.create');
-        $categories = Productcategory::where('parent_id', '=', 0)->get();
-        $subcat = Productcategory::all();
-        $sidebars = Sidebar::all();
-        return view('backend.admin.product.category.form',compact('categories','subcat','sidebars'));
+        $categories = Productcategory::with('childrenRecursive')->where('parent_id', '=', 0)->get();
+        // $subcat = Productcategory::all();
+        // $sidebars = Sidebar::all();
+        return view('backend.admin.product.category.form',compact('categories'));
     }
 
     /**
@@ -155,10 +155,10 @@ class CategoryController extends Controller
     public function edit(Productcategory $productcategory)
     {
         Gate::authorize('app.product.categories.edit');
-        $categories = Productcategory::where('parent_id', '=', 0)->get();
-        $subcat = Productcategory::all();
-        $editsidebars = Sidebar::all();
-        return view('backend.admin.product.category.form',compact('productcategory','categories','subcat','editsidebars'));
+        $categories = Productcategory::with('childrenRecursive')->where('parent_id', '=', 0)->get();
+        // $subcat = Productcategory::all();
+        // $editsidebars = Sidebar::all();
+        return view('backend.admin.product.category.form',compact('productcategory','categories'));
     }
 
     /**

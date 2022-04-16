@@ -3,11 +3,12 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Models\Admin;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use App\Models\Admin;
-use App\Models\Permission;
+use Illuminate\Support\Facades\Schema;
 
 class AuthGates
 {
@@ -21,17 +22,22 @@ class AuthGates
     public function handle(Request $request, Closure $next)
     {
         $user = Auth::guard('admin');
-        if($user)
+        if (Schema::hasTable('permissions'))
         {
-            $permissions = Permission::all();
-            foreach($permissions as $key=>$permission)
+            if($user)
             {
-                Gate::define($permission->slug,function(Admin $admin) use($permission)
+                $permissions = Permission::all();
+
+                foreach($permissions as $key=>$permission)
                 {
-                    return $admin->hasPermission($permission->slug);
-                });
+                    Gate::define($permission->slug,function(Admin $admin) use($permission)
+                    {
+                        return $admin->hasPermission($permission->slug);
+                    });
+                }
             }
         }
+
         return $next($request);
     }
 }

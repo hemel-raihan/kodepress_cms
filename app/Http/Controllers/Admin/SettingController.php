@@ -51,6 +51,15 @@ class SettingController extends Controller
             $imagename = $setting->logo;
         }
 
+        if(!$request->preloader_status)
+        {
+            $status = 0;
+        }
+        else
+        {
+            $status = 1;
+        }
+
         $setting->update([
             'company_name' => $request->company_name,
             'company_slogan' => $request->company_slogan,
@@ -59,6 +68,7 @@ class SettingController extends Controller
             'facebook_link' => $request->facebook_link,
             'logo' => $imagename,
             'contact' => $request->contact,
+            'preloader_status' => $status,
         ]);
 
 

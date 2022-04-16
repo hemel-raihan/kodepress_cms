@@ -174,7 +174,6 @@
                         @isset($blogcategories)
                         @foreach ($blogcategories as $blogcategory)
                         <div class="col-sm-6 col-lg-{{($element->layout == 'One Column') ? 12 : (($element->layout == 'Two Column') ? 6 : (($element->layout == 'Three Column') ? 4 : 3)) }}">
-
                                 <div class="feature-box fbox-rounded fbox-effect">
                                     <div class="fbox-icon">
                                         <a href="{{route('blog.posts',$blogcategory->id)}}"><img src="{{asset('uploads/categoryphoto/'.$blogcategory->image)}}"></a>
@@ -291,17 +290,17 @@
                                     <img src="{{asset('uploads/productphoto/'.$post->image)}}" alt="Open Imagination">
                                 </a>
                                 <div class="bg-overlay">
-                                    <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-speed="350">
-                                        <a href="{{asset('uploads/productphoto/'.$post->image)}}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350" data-lightbox="image"><i class="icon-line-plus"></i></a>
-                                    </div>
+
                                     <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-speed="350"></div>
                                 </div>
                             </div>
-                            @if ($post->title_show != null)
-                            <div class="portfolio-desc">
+                            {{-- @if ($post->title_show != null) --}}
+                            <div class="portfolio-desc" style="text-align: center;">
                                 <h3><a href="#">{{$post->title}}</a></h3>
+                                <p>{{$post->unit_price}}</p>
+
                             </div>
-                            @endif
+                            {{-- @endif --}}
                         </div>
 
 

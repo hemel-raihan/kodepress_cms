@@ -48,10 +48,10 @@
 													<div class="col">
 														<h6 class="">Total Post</h6>
 														@php
-															$all_post = \App\Models\blog\Post::all();
-															$post_count = count($all_post);
+															$all_post = \App\Models\blog\Post::get('id');
+															//$post_count = count($all_post);
 														@endphp
-														<h3 class="mb-2 number-font">{{ $post_count }}</h3>
+														<h3 class="mb-2 number-font">{{ $all_post->count() }}</h3>
 														{{-- <p class="text-muted mb-0">
 															<span class="text-primary"><i class="fa fa-chevron-circle-up text-primary me-1"></i> 3%</span>
 															last month
@@ -73,7 +73,7 @@
 													<div class="col">
 														<h6 class="">General Post</h6>
 														@php
-															$general_post = \App\Models\general_content\Contentpost::all();
+															$general_post = \App\Models\general_content\Contentpost::get('id');
 															$general_post_count = count($general_post);
 														@endphp
 														<h3 class="mb-2 number-font">{{ $general_post_count }}</h3>

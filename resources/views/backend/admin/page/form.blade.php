@@ -131,20 +131,13 @@
 
 					<div class="form-group">
 						<label for="exampleInputname">Page Title</label>
-						<input type="text" class="form-control @error('title') is-invalid @enderror" value="{{$page->title ?? old('title')}}" name="title" id="posttitle" onkeyup="myFunction()" placeholder="Post Name">
+						<input type="text" class="form-control @error('title') is-invalid @enderror" value="{{$page->title ?? old('title')}}" name="title" id="posttitle" onkeyup="myFunction()" placeholder="Page Name">
                         @error('title')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{$message}}</strong>
                         </span>
                         @enderror
 					</div>
-
-     <!--               @isset($page)-->
-     <!--               <div class="form-group">-->
-					<!--	<label for="exampleInputname">Post Slug</label>-->
-					<!--	<input type="text" class="form-control" value="{{$page->slug ?? old('slug')}}" name="slug" id="postslug" placeholder="Post Slug">-->
-					<!--</div>-->
-     <!--               @endisset-->
 
 
 
@@ -387,7 +380,7 @@
 
                     <div class="form-group">
 						<label class="form-label">File</label>
-						<input type="file" name="files" class="dropify" data-default-file="{{ isset($page) ? asset('uploads/pagefile/'.$page->files) : ''}}" data-bs-height="180"  />
+						<input type="file" data-height="100" name="files" class="dropify" data-default-file="{{ isset($page) ? asset('uploads/pagefile/'.$page->files) : ''}}" data-bs-height="180"  />
 					</div>
 
 				</div>

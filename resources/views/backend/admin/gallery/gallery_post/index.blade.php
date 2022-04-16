@@ -82,6 +82,7 @@
 
 								</tbody>
 							</table>
+                            {{ $galleries->links('vendor.pagination.custom') }}
 						</div>
 					</div>
 				</div>

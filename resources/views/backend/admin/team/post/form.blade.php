@@ -183,11 +183,7 @@
 						<input type="text" class="form-control" value="{{$post->youtube_link ?? old('youtube_link')}}" name="youtube_link" id="youtube_link" placeholder="Youtube Video Link">
 					</div> --}}
 
-					<div class="form-group featur">
-						<label class="form-label">Feature Image</label>
-						<!-- <input id="demo" type="file" name="image" accept=".jpg, .png, image/jpeg, image/png" multiple="" class="ff_fileupload_hidden"> -->
-                        <input type="file" data-height="100" class="dropify form-control" data-default-file="{{ isset($teampost) ? asset('uploads/teamphoto/'.$teampost->image) : '' }}" name="image">
-					</div>
+
 
 				</div>
 				<div class="card-footer text-end">
@@ -327,9 +323,15 @@
 
                     @endisset
 
+                    <div class="form-group featur">
+						<label class="form-label">Feature Image</label>
+						<!-- <input id="demo" type="file" name="image" accept=".jpg, .png, image/jpeg, image/png" multiple="" class="ff_fileupload_hidden"> -->
+                        <input type="file" class="dropify form-control" data-default-file="{{ isset($teampost) ? asset('uploads/teamphoto/'.$teampost->image) : '' }}" name="image">
+					</div>
+
                     <div class="form-group">
 						<label class="form-label">File</label>
-						<input type="file" name="files" class="dropify" data-default-file="{{ isset($teampost) ? asset('uploads/teamfiles/'.$teampost->files) : ''}}" data-bs-height="180"  />
+						<input type="file" data-height="100" name="files" class="dropify" data-default-file="{{ isset($teampost) ? asset('uploads/teamfiles/'.$teampost->files) : ''}}" data-bs-height="180"  />
 
 					</div>
 

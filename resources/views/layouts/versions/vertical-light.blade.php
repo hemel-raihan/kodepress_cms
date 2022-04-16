@@ -20,9 +20,19 @@
 	<body class="app sidebar-mini">
 
 		<!-- GLOBAL-LOADER -->
-		<div id="global-loader">
+        @php
+        $setting  = \App\Models\Admin\Setting::where([['id',1]])->orderBy('id','desc')->first();
+        @endphp
+
+        @isset($setting)
+        @if ($setting->preloader_status == 1)
+        <div id="global-loader">
 			<img src="{{ asset('assets/images/loader.svg') }}" class="loader-img" alt="Loader">
 		</div>
+        @endif
+        @endisset
+
+
 		<!-- /GLOBAL-LOADER -->
 
 		<!-- PAGE -->

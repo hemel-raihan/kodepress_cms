@@ -7021,8 +7021,8 @@ body:not(.device-touch) .portfolio {
 .portfolio-item .portfolio-image > a,
 .portfolio-item .portfolio-image img {
 	display: block;
-	/* width: 100%; */
-    width: 90%;
+	width: 100%;
+    /* width: 90%; */
 	height: auto;
 }
 

@@ -41,7 +41,6 @@ class HomepageController extends Controller
         {
             foreach($test->elements as $tes)
             {
-
                 if($tes->module_type == 'Blog Category')
                 {
                     $blogcategories = category::all();
@@ -142,6 +141,9 @@ class HomepageController extends Controller
                 {
                     $productposts = null;
                 }
+
+
+
 
 
             }

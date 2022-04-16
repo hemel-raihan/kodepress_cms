@@ -37,14 +37,16 @@
 
 
             @php
-            $menus = \App\Models\Frontmenu\Frontmenu::where([['type','=','main-menu'],['status','=',true]])->get();
-            foreach($menus as $menu)
-            {
-                $menuitems = $menu->menuItems()->get();
-            }
+            $menus = \App\Models\Frontmenu\Frontmenu::with('menuItems')->where([['type','=','main-menu'],['status','=',true]])->first();
+            // foreach($menus as $menu)
+            // {
+            //     $menuitems = $menu->menuItems;
+            // }
+            $menuitems = $menus->menuItems;
             @endphp
 
-            @isset($menuitems)
+            @isset($menus)
+
             @include('frontend_theme.corporate.front_layout.vertical.header',['menuitems'=>$menuitems])
             @else
             @include('frontend_theme.corporate.front_layout.vertical.header')

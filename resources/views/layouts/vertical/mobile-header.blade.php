@@ -10,7 +10,10 @@
 								{{-- <img src="{{ asset('frontend/images/browser_logo.png') }}" class="header-brand-img desktop-logo" alt="logo">
 								<img src="{{ asset('frontend/images/browser_logo.png') }}" class="header-brand-img toggle-logo" alt="logo">
 								<img src="{{ asset('frontend/images/browser_logo.png') }}" class="header-brand-img light-logo" alt="logo"> --}}
-								<img src="{{asset('uploads/settings/'.$setting->logo)}}" class="header-brand-img light-logo1" alt="logo">
+                                @isset($setting)
+                                <img src="{{asset('uploads/settings/'.$setting->logo)}}" class="header-brand-img light-logo1" alt="logo">
+                                @endisset
+
 							</a><!-- LOGO -->
 							<div class="dropdown d-md-flex">
 								<a class="nav-link icon full-screen-link mt-2 nav-link-bg" target="_blank" href="{{ route('home') }}">

@@ -2,6 +2,8 @@
     $navbar = \App\Models\Appearance_Settings\Navbarsetting::find(1);
     // $page = \App\Models\Appearance_Settings\Navbarsetting::where([['type','=','main-page'],['status','=',true]])->orderBy('id','desc')->first();
 @endphp
+@isset($navbar)
+
 
 @if ($navbar->navbar_style == 'default')
                 @if ($navbar->container == 'container-sm')
@@ -611,7 +613,7 @@
             @endif
 
             @endif
-
+    @endisset
     {{-- </div>
 </div> --}}
 

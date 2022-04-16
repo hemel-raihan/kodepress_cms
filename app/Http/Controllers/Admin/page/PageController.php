@@ -72,8 +72,14 @@ class PageController extends Controller
           $currentDate = Carbon::now()->toDateString();
           $imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
 
+
+
             $pagePath = public_path('uploads/pagephoto');
-            Image::make($image)->resize(800, 500)->save($pagePath.'/'.$imagename);
+            $thumnail_pagepath = public_path('uploads/pagephoto/thumbnail');
+            //Image::make($image)->resize(800, 500)->save($pagePath.'/'.$imagename);
+          
+
+            $image->move($pagePath, $imagename);
 
            // $img->resize(900, 600)->save($pagePath.'/'.$imagename);
 

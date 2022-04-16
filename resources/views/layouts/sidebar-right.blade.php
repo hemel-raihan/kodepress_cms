@@ -61,6 +61,22 @@
 										</div>
 									</div>
 								</a> --}}
+                                <a class="dropdown-item d-flex border-bottom" href="{{route('admin.profile.change')}}">
+									<div class="d-flex"><i class="fe fe-settings me-3 tx-20 text-muted"></i>
+										<div class="pt-1">
+											<h6 class="mb-0">Profile Settings</h6>
+											<p class="tx-12 mb-0 text-muted">Settings Information</p>
+										</div>
+									</div>
+								</a>
+                                <a class="dropdown-item d-flex border-bottom" href="{{route('admin.password.change')}}">
+									<div class="d-flex"><i class="fe fe-settings me-3 tx-20 text-muted"></i>
+										<div class="pt-1">
+											<h6 class="mb-0">Change Password</h6>
+											<p class="tx-12 mb-0 text-muted">Settings Information</p>
+										</div>
+									</div>
+								</a>
 								<a class="dropdown-item d-flex border-bottom" href="{{url('logout')}}">
 									<div class="d-flex"><i class="fe fe-power me-3 tx-20 text-muted"></i>
 										<div class="pt-1">

@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use mysqli;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Artisan;
 
 class DashboardController extends Controller
 {
     public function index()
     {
+        Gate::authorize('app.dashboard');
         Artisan::call('cache:clear');
+      
         return view('backend.admin.dashboard');
     }
     public function author()

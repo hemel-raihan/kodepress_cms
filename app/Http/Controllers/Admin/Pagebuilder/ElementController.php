@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\blog\category;
+use App\Models\Career\Jobcategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -27,7 +28,8 @@ class ElementController extends Controller
         $page = Pagebuilder::findOrFail($id);
         $categories = category::withCount('posts')->get(['id']);
         $product_categories = Productcategory::withCount('products')->get(['id']);
-        return view('backend.admin.pagebuilder.element.form',compact('page','categories','product_categories'));
+        $job_categories = Jobcategory::withCount('jobs')->get(['id']);
+        return view('backend.admin.pagebuilder.element.form',compact('page','categories','product_categories','job_categories'));
     }
 
     public function store(Request $request,$id)
@@ -97,6 +99,7 @@ class ElementController extends Controller
         $page->elements()->create([
             'category_id' => $request->category_id,
             'product_category_id' => $request->product_category_id,
+            'job_category_id' => $request->job_category_id,
             'title' => $request->title,
             'module_type' => $request->module_type,
             'container' => $request->container,
@@ -128,6 +131,7 @@ class ElementController extends Controller
         $element = $page->elements()->findOrFail($elementId);
         $editcategories = category::withCount('posts')->get(['id']);
         $product_editcategories = Productcategory::withCount('products')->get(['id']);
+        //$job_editcategories = Jobcategory::withCount('jobs')->get(['id']);
         return view('backend.admin.pagebuilder.element.form',compact('page','auth','element','editcategories','product_editcategories'));
     }
 
@@ -221,6 +225,7 @@ class ElementController extends Controller
         $page->elements()->findOrFail($elementId)->update([
             'category_id' => $request->category_id,
             'product_category_id' => $request->product_category_id,
+            'job_category_id' => $request->job_category_id,
             'title' => $request->title,
             'module_type' => $request->module_type,
             'container' => $request->container,

@@ -17,6 +17,8 @@ class CreateElementsTable extends Migration
             $table->id();
             $table->foreignId('pagebuilder_id');
             $table->foreignId('category_id')->nullable();
+            $table->foreignId('product_category_id')->nullable();
+            $table->foreignId('job_category_id')->nullable();
             $table->string('module_type')->nullable();
             $table->string('container')->nullable();
             $table->string('layout')->nullable();

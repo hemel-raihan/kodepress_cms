@@ -135,6 +135,9 @@
                         <option value="General Post" {{($element->module_type == 'General Post') ? 'selected' : ''}} >General Post</option>
                         <option value="Service Category" {{($element->module_type == 'Service Category') ? 'selected' : ''}} >Service Category</option>
                         <option value="Service Post" {{($element->module_type == 'Service Post') ? 'selected' : ''}} >Service Post</option>
+                        <option value="Job Category" {{($element->module_type == 'Job Category') ? 'selected' : ''}} >Job Category</option>
+                        <option value="Job_Category_post" {{($element->module_type == 'Job_Category_post') ? 'selected' : ''}} >Category Wise Job</option>
+                        <option value="Job Post" {{($element->module_type == 'Job Post') ? 'selected' : ''}} >Job Post</option>
                         <option value="Portfolio Category" {{($element->module_type == 'Portfolio Category') ? 'selected' : ''}} >Portfolio Category</option>
                         <option value="Portfolio Post" {{($element->module_type == 'Portfolio Post') ? 'selected' : ''}} >Portfolio Post</option>
                         <option value="Price-Table Category" {{($element->module_type == 'Price-Table Category') ? 'selected' : ''}} >Price-Table Category</option>
@@ -155,6 +158,9 @@
                         <option value="General Post">General Post</option>
                         <option value="Service Category">Service Category</option>
                         <option value="Service Post">Service Post</option>
+                        <option value="Job Category">Job Category</option>
+                        <option value="Job_Category_post">Category Wise Job</option>
+                        <option value="Job Post">Job Post</option>
                         <option value="Portfolio Category">Portfolio Category</option>
                         <option value="Portfolio Post">Portfolio Post</option>
                         <option value="Price-Table Category">Price-Table Category</option>
@@ -278,7 +284,33 @@
                         </div>
                         @endisset
                     </div>
-            </div>
+                </div>
+
+
+                {{-- <div id="job_category" style="display: none;">
+                    <div class="form-group row" id="category">
+                        <label class="col-md-3 col-from-label">Select Job Category<span class="text-danger">*</span></label>
+                        @isset($job_editcategories)
+                        <div>
+                            <select class="form-control" name="job_category_id" id="job_category_id" data-live-search="true">
+                                <option value="0">Select Category</option>
+                                @foreach ($job_editcategories as $key => $category)
+                                <option value="{{ $category->id }}" {{($element->product_category_id == $category->id) ? 'selected' : ''}} >{{ $category->name }} ({{$category->products_count}})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @else
+                        <div>
+                            <select class="form-control" name="job_category_id" id="job_category_id" data-live-search="true">
+                                <option value="0">Select Category</option>
+                                @foreach ($job_categories as $key => $category)
+                                <option value="{{ $category->id }}">{{ $category->name }} ({{$category->products_count}})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @endisset
+                    </div>
+                </div> --}}
 
 
 

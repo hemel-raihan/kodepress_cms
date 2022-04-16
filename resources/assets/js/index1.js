@@ -41,7 +41,7 @@ $(function(e) {
 			name: "Total Orders",
 			type: 'line',
 			data: [0, 45, 30, 75, 15, 94, 40, 115, 30, 105, 65, 110]
-			
+
 		},{
 			name: "Total Sales",
 			type: 'line',
@@ -98,8 +98,8 @@ $(function(e) {
 	var chart = new ApexCharts(document.querySelector("#chartArea"), options);
 	chart.render();
 
-	
-	
+
+
 	var options = {
 		chart: {
 		height: 305,
@@ -114,8 +114,8 @@ $(function(e) {
 		size: 120,
 		imageWidth: 50,
         imageHeight: 50,
-		track: {	
-			strokeWidth: "80%",	
+		track: {
+			strokeWidth: "80%",
 		},
 		dropShadow: {
 			enabled: false,
@@ -131,8 +131,8 @@ $(function(e) {
 			color: undefined,
 			offsetY: 30,
 		  },
-		  hollow: {	
-			 size: "60%"	
+		  hollow: {
+			 size: "60%"
 			},
 		  value: {
 			offsetY: -10,
@@ -162,13 +162,13 @@ $(function(e) {
 	stroke: {
 		dashArray: 4
 	},
-	series: [83],	
+	series: [83],
 		labels: [""]
 	};
 
 	var chart = new ApexCharts(document.querySelector("#recentorders"), options);
 	chart.render();
-	
+
 
 
 	//______Data-Table
@@ -178,12 +178,11 @@ $(function(e) {
 			sSearch: '',
 		}
 	});
-	
-	//______Select2 
+
+	//______Select2
 	$('.select2').select2({
 		minimumResultsForSearch: Infinity
 	});
-	
+
  });
- 
- 
+

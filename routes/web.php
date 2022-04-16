@@ -37,7 +37,7 @@ Route::get('fetch-portfolios', 'Admin\Portfolio\PortfolioController@fetchportfol
 //     return view('frontend_theme.corporate.homepage');
 // })->name('home');
 
-Route::get('/', 'Corporate\HomepageController@index')->name('home');
+ Route::get('/', 'Corporate\HomepageController@index')->name('home')->middleware('installcheck');
 
 
 // Route::get('/content/details/{id}', 'HomepageController@contentdetails')->name('content.details');
@@ -91,7 +91,7 @@ Route::get('/gallery/all', 'Corporate\HomepageController@gallery_view')->name('g
 Route::get('default/faq', 'Corporate\HomepageController@faqpage')->name('faq');
 
 //for admin authentication
-Route::get('adminlogin', 'Adminlogin\LoginController@showloginform')->name('admin.login');
+Route::get('adminlogin', 'Adminlogin\LoginController@showloginform')->name('admin.login')->middleware('installcheck');
  Route::post('adminlogin', 'Adminlogin\LoginController@login')->name('admin.loginform');
 //Route::post('adminlogin',[\App\Http\Controllers\AdminLogin\LoginController::class, 'login'])->name('admin.loginform');
 Route::post('admin-password/email', 'Adminlogin\ForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
@@ -106,6 +106,7 @@ Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin', 'middlewar
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
     Route::resource('roles','RoleController');
     Route::resource('users','UserController');
+    Route::resource('admins','AdminController');
     Route::resource('blog/categories','blog\CategoryController');
     Route::get('blog/category/{id}/approve', 'blog\CategoryController@approval')->name('blog.category.approve');
     Route::resource('blog/posts','blog\PostController');
@@ -240,6 +241,14 @@ Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin', 'middlewar
     Route::resource('career/jobcategories','Career\JobcategoryController');
     Route::get('fetch/jobcategories', 'Career\JobcategoryController@fetchcategory')->name('jobcategories.fetch');
     Route::get('jobcategories/{id}/status', 'Career\JobcategoryController@status')->name('jobcategories.status');
+
+    Route::resource('career/jobs','Career\JobController');
+
+    //for security
+    Route::get('update/password','ProfileController@changePassword')->name('password.change');
+    Route::put('update/password','ProfileController@updatePassword')->name('password.update');
+    Route::get('update/profile','ProfileController@changeProfile')->name('profile.change');
+    Route::put('update/profile','ProfileController@updateProfile')->name('profile.update');
 });
 
 

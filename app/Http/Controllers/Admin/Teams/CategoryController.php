@@ -32,7 +32,7 @@ class CategoryController extends Controller
     public function create()
     {
         Gate::authorize('app.team.categories.create');
-        $categories = Teamcategory::where('parent_id', '=', 0)->get();
+        $categories = Teamcategory::with('childrenRecursive')->where('parent_id', '=', 0)->get();
         $subcat = Teamcategory::all();
         return view('backend.admin.team.category.form',compact('categories','subcat'));
     }

@@ -195,6 +195,23 @@
 			</div>
 		</div>
 
+        <div class="col-lg-3 col-xl-3 col-md-12 col-sm-12" style="float: left">
+
+			<div class="card">
+				<div class="card-body">
+					<div class="form-group">
+						<div class="form-label">Pre-Loader Status</div>
+						<label class="custom-switch">
+							<input type="checkbox" name="preloader_status" {{$setting->preloader_status == true ? 'checked' : ''}} class="custom-switch-input ">
+							<span class="custom-switch-indicator"></span>
+						</label>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
 	</div>
     </form>
 	<!-- ROW-1 CLOSED -->

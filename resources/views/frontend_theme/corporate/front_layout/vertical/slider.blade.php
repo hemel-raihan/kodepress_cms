@@ -4,6 +4,9 @@
 @endphp
 {{-- <div class="container-lg" style="background: #19a1dd;">
     <div class="container-md" style="background: white;"> --}}
+        @isset($slider)
+
+
                     @if ($slider->container == 'container-sm')
                     <div class="container-sm">
                         <div class="main-div">
@@ -113,7 +116,7 @@
 
                     @endif
 
-
+                    @endisset
     {{-- </div>
 </div> --}}
 
