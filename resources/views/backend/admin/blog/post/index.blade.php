@@ -24,13 +24,13 @@
 							</div>
 
 							<div class="ms-auto pageheader-btn">
-                            {{-- @if($auth->hasPermission('app.blog.posts.create')) --}}
+                            @if($auth->hasPermission('app.blog.posts.create'))
 								<a href="{{route('admin.posts.create')}}" class="btn btn-primary btn-icon text-white me-2">
 									<span>
 										<i class="fe fe-plus"></i>
 									</span> Create New Post
 								</a>
-                                {{-- @endif --}}
+                                @endif
 
 								{{-- <a href="#" class="btn btn-success btn-icon text-white">
 									<span>
@@ -89,14 +89,14 @@
 
 										<td>
 
-                                            {{-- @if($auth->hasPermission('app.blog.posts.edit')) --}}
+                                            @if($auth->hasPermission('app.blog.posts.edit'))
                                             <a href="{{route('admin.posts.edit',$post->id)}}" class="btn btn-success">
                                             <i class="fa fa-edit"></i>
                                             </a>
-                                            {{-- @endif --}}
+                                            @endif
 
 
-                                        {{-- @if($auth->hasPermission('app.blog.posts.destroy')) --}}
+                                        @if($auth->hasPermission('app.blog.posts.destroy'))
 
                                         <button class="btn btn-danger waves effect" type="button"
                                             onclick="deletepost$post({{ $post->id}})" >
@@ -106,7 +106,7 @@
                                             @csrf
                                             @method('DELETE')
                                             </form>
-                                        {{-- @endif --}}
+                                        @endif
                                             </td>
 
 									</tr>
