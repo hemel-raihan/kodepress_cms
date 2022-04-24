@@ -70,7 +70,7 @@ Route::get('/portfolio/posts/{id}', 'Corporate\HomepageController@portfolios')->
 Route::get('/portfolio/details/{id}', 'Corporate\HomepageController@portfoliodetails')->name('portfolio.details');
 
 Route::get('/service/posts/{id}', 'Corporate\HomepageController@services')->name('service.posts');
-Route::get('/service/details/{id}', 'Corporate\HomepageController@servicedetails')->name('service.details');
+Route::get('/service/details/{slug}', 'Corporate\HomepageController@servicedetails')->name('service.details');
 
 Route::get('/price/posts/{id}', 'Corporate\HomepageController@prices')->name('price.posts');
 Route::get('/price/details/{id}', 'Corporate\HomepageController@pricedetails')->name('price.details');
@@ -89,6 +89,12 @@ Route::get('/search', 'Corporate\HomepageController@autocomplete')->name('search
 Route::get('/gallery/all', 'Corporate\HomepageController@gallery_view')->name('gallery.all');
 
 Route::get('default/faq', 'Corporate\HomepageController@faqpage')->name('faq');
+
+Route::get('default/career', 'Corporate\HomepageController@career')->name('career');
+Route::get('job/details/{slug}', 'Corporate\HomepageController@career_details')->name('career.details');
+
+Route::get('default/price/category', 'Corporate\HomepageController@price_category')->name('pricecategory');
+Route::get('default/price-plan/{slug}', 'Corporate\HomepageController@all_price')->name('all.price');
 
 //for admin authentication
 Route::get('adminlogin', 'Adminlogin\LoginController@showloginform')->name('admin.login')->middleware('installcheck');
@@ -174,13 +180,13 @@ Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin', 'middlewar
     Route::get('products/productcategories/{id}/approve', 'Product\CategoryController@approval')->name('product.category.approve');
 
     Route::resource('products','Product\ProductController');
-    Route::get('products/{id}/status', 'Product\ProductController@status')->name('product.status');
+    Route::get('products/{id}/status', 'Product\ProductController@status')->name('product.post.status');
 
     Route::resource('services/servicecategories','Service\CategoryController');
     Route::get('services/servicecategories/{id}/approve', 'Service\CategoryController@approval')->name('service.category.approve');
 
     Route::resource('services','Service\ServiceController');
-    Route::get('products/{id}/status', 'Service\ServiceController@status')->name('service.status');
+    Route::get('services/{id}/status', 'Service\ServiceController@status')->name('service.status');
 
     Route::resource('portfolios/portfoliocategories','Portfolio\CategoryController');
     Route::get('portfolios/portfoliocategories/{id}/approve', 'Portfolio\CategoryController@approval')->name('portfolio.category.approve');
@@ -228,7 +234,8 @@ Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin', 'middlewar
     Route::get('mail/settings','SettingController@mail')->name('mail.settings');
     Route::put('mail/settings/update/{setting}', 'SettingController@mailupdate')->name('mail.settings.update');
 
-    Route::post('/contact/index', 'ContactController@index')->name('contact.index');
+    Route::get('/contact/index', 'ContactController@index')->name('contact.index');
+    Route::delete('/contact/delete/{contact}', 'ContactController@destroy')->name('contact.destroy');
 
     Route::resource('gallery/gallerycategories','Gallery\GallcategoryController');
     Route::get('fetch/gallerycategories', 'Gallery\GallcategoryController@fetchcategory')->name('gallerycategories.fetch');
@@ -249,6 +256,16 @@ Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin', 'middlewar
     Route::put('update/password','ProfileController@updatePassword')->name('password.update');
     Route::get('update/profile','ProfileController@changeProfile')->name('profile.change');
     Route::put('update/profile','ProfileController@updateProfile')->name('profile.update');
+
+    Route::resource('clients','Client\ClientController');
+    Route::get('fetch/clients', 'Client\ClientController@fetchclient')->name('clients.fetch');
+
+    Route::resource('faqs','FaqController');
+    Route::get('fetch/faqs', 'FaqController@fetchfaq')->name('faqs.fetch');
+    Route::get('faqs/{id}/status', 'FaqController@status')->name('faqs.status');
+
+    Route::resource('counters','CounterController');
+    Route::get('fetch/counters', 'CounterController@fetchcounter')->name('counters.fetch');
 });
 
 
