@@ -5,7 +5,7 @@
 @isset($navbar)
 
 
-@if ($navbar->navbar_style == 'default')
+               @if ($navbar->navbar_style == 'default')
                 @if ($navbar->container == 'container-sm')
                 <div class="container-sm">
                 <div class="main-div">
@@ -573,7 +573,7 @@
                                     @endif
                                     @endforeach
                                     @endisset
-                                    <li class="menu-item">
+                                    {{-- <li class="menu-item">
                                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             {{ Config::get('languages')[App::getLocale()] }}
                                         </a>
@@ -585,17 +585,6 @@
                                         @endforeach
 
                                         </ul>
-                                    </li>
-                                    {{-- <li>
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            {{ Config::get('languages')[App::getLocale()] }}
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        @foreach (Config::get('languages') as $lang => $language)
-                                            @if ($lang != App::getLocale())
-                                                    <a class="dropdown-item" href="{{ route('lang.switch', $lang) }}"> {{$language}}</a>
-                                            @endif
-                                        @endforeach
                                     </li> --}}
                                 </ul>
                             </nav><!-- #primary-menu end -->

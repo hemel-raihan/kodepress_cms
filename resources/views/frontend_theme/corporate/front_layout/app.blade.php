@@ -48,7 +48,7 @@
 
             @isset($menus)
 
-            @include('frontend_theme.corporate.front_layout.vertical.header',['menuitems'=>$menuitems])
+            @include('frontend_theme.corporate.front_layout.vertical.header_new',['menuitems'=>$menuitems])
             @else
             @include('frontend_theme.corporate.front_layout.vertical.header')
             @endisset
