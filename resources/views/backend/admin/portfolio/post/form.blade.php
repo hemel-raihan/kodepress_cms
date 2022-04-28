@@ -139,17 +139,7 @@
                         @enderror
 					</div>
 
-                    <div class="form-group featur">
-						<label class="form-label">Feature Image</label>
-						<!-- <input id="demo" type="file" name="image" accept=".jpg, .png, image/jpeg, image/png" multiple="" class="ff_fileupload_hidden"> -->
-                        <input type="file" data-height="100" class="dropify form-control" data-default-file="{{ isset($portfolio) ? asset('uploads/portfoliophoto/'.$portfolio->image) : '' }}" name="image">
-					</div>
 
-                    <div class="form-group">
-						<label class="form-label">Gallary Image</label>
-						<!-- <input id="demo" type="file" name="image" accept=".jpg, .png, image/jpeg, image/png" multiple="" class="ff_fileupload_hidden"> -->
-                        <input type="file" data-height="100" class="dropify form-control" data-default-file="{{ isset($portfolio) ? asset('uploads/portfoliogallary_image/'.$portfolio->gallaryimage) : '' }}" multiple name="gallaryimage[]">
-					</div>
 
 
 					<div class="form-group">
@@ -318,79 +308,21 @@
 
                     @endisset
 
-					@isset($editsidebars)
+                    <div class="form-group featur">
+						<label class="form-label">Feature Image</label>
+						<!-- <input id="demo" type="file" name="image" accept=".jpg, .png, image/jpeg, image/png" multiple="" class="ff_fileupload_hidden"> -->
+                        <input type="file"  class="dropify form-control" data-default-file="{{ isset($portfolio) ? asset('uploads/portfoliophoto/'.$portfolio->image) : '' }}" name="image">
+					</div>
 
                     <div class="form-group">
-						<label class="form-label">Left Sidebar</label>
-						<select name="leftsidebar_id" class="form-control form-select select2" data-bs-placeholder="Select Sidebar">
-							<option value="">Select Left Sidebar</option>
-                            <option value="0" {{($portfolio->leftsidebar_id == 0) ? 'selected' : ''}}>None</option>
-                            @foreach ($editsidebars as $editsidebar)
-                            @if($editsidebar->type == 'Left Side Bar')
-                            <option value="{{$editsidebar->id}}" {{($portfolio->leftsidebar_id == $editsidebar->id) ? 'selected' : ''}}>{{$editsidebar->title}}</option>
-                            @endif
-                            @endforeach
-						</select>
+						<label class="form-label">Gallary Image</label>
+						<!-- <input id="demo" type="file" name="image" accept=".jpg, .png, image/jpeg, image/png" multiple="" class="ff_fileupload_hidden"> -->
+                        <input type="file"  class="dropify form-control" data-default-file="{{ isset($portfolio) ? asset('uploads/portfoliogallary_image/'.$portfolio->gallaryimage) : '' }}" multiple name="gallaryimage[]">
 					</div>
-
-
-					<div class="form-group">
-						<label class="form-label">Right Sidebar</label>
-						<select name="rightsidebar_id" class="form-control form-select select2" data-bs-placeholder="Select Sidebar">
-							<option value="">Select Right Sidebar</option>
-                            <option value="0" {{($portfolio->rightsidebar_id == 0) ? 'selected' : ''}} >None</option>
-                            @foreach ($editsidebars as $editsidebar)
-                            @if($editsidebar->type == 'Right Side Bar')
-							<option value="{{$editsidebar->id}}" {{($portfolio->rightsidebar_id == $editsidebar->id) ? 'selected' : ''}} >{{$editsidebar->title}}</option>
-                            @endif
-                            @endforeach
-						</select>
-					</div>
-
-                    @else
-
-                    <div class="form-group">
-						<label class="form-label">Left Sidebar</label>
-						<select name="leftsidebar_id" class="form-control @error('leftsidebar_id') is-invalid @enderror form-select select2" data-bs-placeholder="Select Sidebar">
-							<option value="">Select Left Sidebar</option>
-                            <option value="0">None</option>
-                            @foreach ($sidebars as $sidebar)
-                            @if($sidebar->type == 'Left Side Bar')
-                            <option value="{{$sidebar->id}}">{{$sidebar->title}}</option>
-                            @endif
-                            @endforeach
-						</select>
-                        @error('leftsidebar_id')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-					</div>
-
-
-					<div class="form-group">
-						<label class="form-label">Right Sidebar</label>
-						<select name="rightsidebar_id" class="form-control @error('rightsidebar_id') is-invalid @enderror form-select select2" data-bs-placeholder="Select Sidebar">
-							<option value="">Select Right Sidebar</option>
-                            <option value="0">None</option>
-                            @foreach ($sidebars as $sidebar)
-                            @if($sidebar->type == 'Right Side Bar')
-							<option value="{{$sidebar->id}}">{{$sidebar->title}}</option>
-                            @endif
-                            @endforeach
-						</select>
-                        @error('rightsidebar_id')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-					</div>
-
-                    @endisset
 
                     <div class="form-group">
 						<label class="form-label">File</label>
-						<input type="file" name="files" class="dropify" data-default-file="{{ isset($portfolio) ? asset('uploads/portfoliofiles/'.$portfolio->files) : ''}}" data-bs-height="180"  />
+						<input type="file" data-height="100" name="files" class="dropify" data-default-file="{{ isset($portfolio) ? asset('uploads/portfoliofiles/'.$portfolio->files) : ''}}" data-bs-height="180"  />
 					</div>
 
 				</div>

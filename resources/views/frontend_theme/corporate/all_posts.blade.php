@@ -6,31 +6,13 @@
 
 @section('content')
 
-{{-- <section id="page-title">
 
-    <div class="container clearfix">
-        <h1>Portfolio</h1>
-        <span>Showcase of Our Awesome Works in 3 Columns</span>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Portfolio</li>
-        </ol>
-    </div>
-
-</section><!-- #page-title end --> --}}
-
-{{-- <section id="content">
-    <div class="content-wrap">
-        <div class="container clearfix"> --}}
 
 @isset($alljobs)
 @include('frontend_theme.corporate.front_layout.vertical.banner',['alljobs'=>$alljobs])
 @endisset
 
-    <div class="container-sm">
 
-    </br>
-</br>
 
             @if ($page->rightsidebar_id == 0 && $page->leftsidebar_id == 0)
         <div class="postcontent col-lg-12">
@@ -42,7 +24,8 @@
         <div class="postcontent col-lg-6">
         @endif
 
-
+    </br>
+</br>
 
             <!-- Portfolio Items
             ============================================= -->
@@ -76,13 +59,13 @@
                 @isset($servicecategoryposts)
                 <div class="row col-mb-50">
                     @foreach ($servicecategoryposts as $key=> $servicecategorypost)
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="feature-box media-box">
                             <div class="fbox-media">
                                 <img src="{{asset('uploads/servicephoto/'.$servicecategorypost->image)}}" alt="Why choose Us?">
                             </div>
                             <div class="fbox-content px-0">
-                               <h3><a href="{{route('service.details',$servicecategorypost->id)}}">{{$servicecategorypost->title}}</a></h3>
+                               <h3><a href="{{route('service.details',$servicecategorypost->slug)}}">{{$servicecategorypost->title}}</a></h3>
                                 <p>{!!Str::limit($servicecategorypost->body, 150)!!}</p>
                             </div>
                         </div>
@@ -269,14 +252,10 @@
 
         </div>
 
-        </div>
-
-        {{-- </div>
-    </div>
-</section> --}}
 
 
-@endsection()
+
+@endsection
 
 @section('scripts')
 

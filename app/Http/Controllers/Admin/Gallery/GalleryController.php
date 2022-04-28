@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\Gallery\Gallery;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Intervention\Image\Facades\Image;
 use App\Models\Gallery\Gallerycategory;
 
@@ -19,6 +20,7 @@ class GalleryController extends Controller
      */
     public function index()
     {
+        Gate::authorize('app.gallery.global');
         $galleries = Gallery::latest()->paginate(10);
         return view('backend.admin.gallery.gallery_post.index',compact('galleries'));
     }
@@ -30,6 +32,7 @@ class GalleryController extends Controller
      */
     public function create()
     {
+        Gate::authorize('app.gallery.global');
         $categories = Gallerycategory::all();
         return view('backend.admin.gallery.gallery_post.form',compact('categories'));
     }
@@ -94,6 +97,7 @@ class GalleryController extends Controller
      */
     public function edit(Gallery $galleryphoto)
     {
+        
         $categories = Gallerycategory::all();
         return view('backend.admin.gallery.gallery_post.form',compact('galleryphoto','categories'));
     }

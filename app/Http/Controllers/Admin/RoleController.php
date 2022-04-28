@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\Module;
+use App\Models\Permission;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Artisan;
 
 class RoleController extends Controller
@@ -18,6 +20,7 @@ class RoleController extends Controller
      */
     public function index()
     {
+        Gate::authorize('app.roles.self');
         $roles = Role::withCount('permissions')->get();
         Artisan::call('cache:clear');
         return view('backend.admin.roles.index',compact('roles'));
@@ -122,5 +125,15 @@ class RoleController extends Controller
 
         Artisan::call('cache:clear');
         return back();
+    }
+
+    public function autocomplete(Request $request)
+    {
+        $query = $request->input('query');
+        //$search_news = Page::where('title','LIKE',"%$query%")->where('status',1)->get();
+
+        $search_news = Module::where('name','LIKE','%'.$query.'%')->get();
+        $modules = Module::with('permissions')->get();
+        return view('backend.admin.roles.form',compact('search_news','query','modules'));
     }
 }

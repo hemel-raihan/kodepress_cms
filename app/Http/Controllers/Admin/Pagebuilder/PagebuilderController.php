@@ -15,7 +15,6 @@ class PagebuilderController extends Controller
 {
     public function index($id)
     {
-        Gate::authorize('app.build.pages.pagebuilder');
         $page = Custompage::findOrFail($id);
         $auth = Auth::guard('admin')->user();
         return view('backend.admin.pagebuilder.builder',compact('page','auth'));

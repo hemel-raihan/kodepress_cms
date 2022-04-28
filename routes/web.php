@@ -104,6 +104,7 @@ Route::post('admin-password/email', 'Adminlogin\ForgotPasswordController@sendRes
 Route::get('admin-password/reset', 'Adminlogin\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
 Route::post('admin-password/reset', 'Adminlogin\ResetPasswordController@reset')->name('admin.password.reset');
 Route::get('admin-password/reset/{token}', 'Adminlogin\ResetPasswordController@showResetForm')->name('admin.password.reset');
+Route::get('adminlogout', 'Adminlogin\LoginController@logout')->name('admin.logout');
 
 
 //Admin
@@ -266,6 +267,9 @@ Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin', 'middlewar
 
     Route::resource('counters','CounterController');
     Route::get('fetch/counters', 'CounterController@fetchcounter')->name('counters.fetch');
+
+
+    Route::get('role/search', 'RoleController@autocomplete')->name('role.search');
 });
 
 

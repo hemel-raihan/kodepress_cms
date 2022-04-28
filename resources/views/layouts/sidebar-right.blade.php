@@ -24,8 +24,8 @@
 											<img alt="user-img" class="avatar avatar-xl brround mx-auto text-center" src="{{ asset('assets/images/faces/6.jpg') }}"><span class="avatar-status profile-status bg-green"></span>
 										</div> --}}
 										<div class="user-info mg-t-20">
-											{{-- <h6 class="fw-semibold  mt-2 mb-0">{{ Auth::user()->name }}</h6>
-											<span class="mb-0 text-muted fs-12">{{ Auth::user()->role->name }}</span> --}}
+											<h6 class="fw-semibold  mt-2 mb-0">{{ Auth::user()->name }}</h6>
+											<span class="mb-0 text-muted fs-12">{{ Auth::user()->role->name }}</span>
 										</div>
 									</div>
 								</div>
@@ -77,7 +77,7 @@
 										</div>
 									</div>
 								</a>
-								<a class="dropdown-item d-flex border-bottom" href="{{url('logout')}}">
+								<a class="dropdown-item d-flex border-bottom" href="{{route('admin.logout')}}">
 									<div class="d-flex"><i class="fe fe-power me-3 tx-20 text-muted"></i>
 										<div class="pt-1">
 											<h6 class="mb-0">Sign Out</h6>

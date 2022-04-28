@@ -34,6 +34,13 @@ class WidgetbuilderController extends Controller
     {
         $sidebar = Sidebar::findOrFail($id);
 
+        if($request->type == 'Blog Category')
+        {
+            $this->validate($request,[
+                'category_id' => 'required',
+            ]);
+        }
+
         //get form image
         $image = $request->file('image');
         $slug = Str::slug($request->title);
@@ -97,6 +104,13 @@ class WidgetbuilderController extends Controller
         //Gate::authorize('app.menus.edit');
         $sidebar = Sidebar::findOrFail($id);
 
+        if($request->type == 'Blog Category')
+        {
+            $this->validate($request,[
+                'category_id' => 'required',
+            ]);
+        }
+
         //get form image
         $image = $request->file('image');
         $slug = Str::slug($request->name);
@@ -135,7 +149,7 @@ class WidgetbuilderController extends Controller
         notify()->success('Widget Item Updated','Update');
         return redirect()->route('admin.widget.builder',$id);
     }
-    
+
     public function widgetdetails($id)
     {
         $widget = Widget::find($id);

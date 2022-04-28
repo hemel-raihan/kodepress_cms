@@ -22,7 +22,7 @@
                     @php
                     $page = \App\Models\Pagebuilder\Custompage::where([['type','=','main-page'],['status','=',true]])->orderBy('id','desc')->first();
                     @endphp
-          <div class="container-sm">
+
 
 
                                 @if ($page->rightsidebar_id == 0 && $page->leftsidebar_id == 0)
@@ -273,10 +273,8 @@
                         </div>
                     </div>
 
-</div>
 
-
-@endsection()
+@endsection
 
 @section('scripts')
 

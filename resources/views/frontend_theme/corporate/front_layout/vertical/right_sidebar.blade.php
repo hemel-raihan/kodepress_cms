@@ -1,7 +1,10 @@
 <div class="sidebar col-lg-3">
     <div class="sidebar-widgets-wrap">
 
+    </br>
+    </br>
         @foreach ($widgets as $widget)
+
         <div class="widget clearfix">
 
             <h4>
@@ -82,7 +85,7 @@
                     <h4>
                         {{-- <a href="{{route('widget.details',$widget->id)}}"> --}}
                             <a href="#">
-                            <u><span style="color: #008000;">বিস্তারিত</span></u>
+                            <u><span style="color: #008000;">Click Here</span></u>
                         </a>
                     </h4>
                     <p></p>

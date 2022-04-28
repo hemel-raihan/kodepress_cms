@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Appearance_Settings;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use App\Models\Appearance_Settings\Footersetting;
 use App\Models\Appearance_Settings\Navbarsetting;
 
@@ -11,6 +12,7 @@ class AppearanceController extends Controller
 {
     public function index()
     {
+        Gate::authorize('app.appearance.settings.global');
         $setting = Navbarsetting::find(1);
         return view('backend.admin.appearance_settings.navbar_setting',compact('setting'));
     }
@@ -40,6 +42,7 @@ class AppearanceController extends Controller
 
     public function footer_index()
     {
+        Gate::authorize('app.appearance.settings.global');
         $footer_setting = Footersetting::find(1);
         return view('backend.admin.appearance_settings.footer_setting',compact('footer_setting'));
     }

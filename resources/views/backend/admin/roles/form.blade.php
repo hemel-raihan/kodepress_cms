@@ -33,6 +33,12 @@
 
                         <div class="row">
                             <div class="col-md-12">
+
+                                <form class="top-search-form" method="GET" action="{{route('admin.role.search')}}">
+                                    <input type="text" name="query" class="form-control" value="" placeholder="Search Permission Modules here" autocomplete="off">
+                                </form>
+
+
                                 <div class="main-card mb-3 card">
                                 <form method="POST" action="{{isset($role) ? route('admin.roles.update',$role->id) : route('admin.roles.store')}}">
                                  @csrf
@@ -53,13 +59,59 @@
 
                                    </div>
 
-                                   <div class="text-center"><strong>Manage Permission For Role</strong>
+                                   @isset($search_news)
+
+                                   <div class="text-center">
+                                      <h1><u> <strong>Search Result: </strong></u></h1>
+                                   </div>
+                                    <div  id="search_item">
+
+                                        @forelse($search_news->chunk(2) as $key=>$search)
+                                        <div class="form-row" >
+                                        @foreach($search as $key=>$module)
+                                        <div class="col" >
+                                        <h5>Module : {{ $module->name}}</h5>
+                                        @foreach($module->permissions as $key=> $permission)
+                                        <div class="mb-3 ml-4">
+                                        <div class="custom-control custom-checkbox mb-2">
+                                            <input type="checkbox" class="custom-control-input"
+                                            id="permission-{{$permission->id}}"
+                                            name="permissions[]" value="{{$permission->id}}"
+                                            @isset($role)
+                                            @foreach($role->permissions as $rpermission)
+                                            {{$permission->id == $rpermission->id ? 'checked' : ''}}
+                                            @endforeach
+                                            @endisset
+                                            >
+                                            <label for="permission-{{$permission->id}}" class="custom-control-label">{{$permission->name}}</label>
+                                        </div>
+                                        </div>
+                                        @endforeach
+                                        </div>
+                                        @endforeach
+                                        </div>
+                                        @empty
+                                        <div class="row">
+                                        <div class="col text-center">
+                                        <strong>No Module Found.</strong>
+                                        </div>
+                                        </div>
+                                        @endforelse
+
+                                    </div>
+                                    @endisset
+
+                                   <div class="text-center"><h1><u><strong>Manage Permission For Role</strong></u></h1>
                                             @error('permissions')
                                                 <span class="text-danger" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
-                                            </div>
+                                    </div>
+
+
+
+
 
                                    <div class="form-group">
                                    <div class="custom-control custom-checkbox">

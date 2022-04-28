@@ -549,38 +549,38 @@ class PermissionSeeder extends Seeder
         ]);
 
 
-        $moduleAppFrontmenuitem = Module::updateOrCreate(['name' => 'Widget Management']);
+        // $moduleAppFrontmenuitem = Module::updateOrCreate(['name' => 'Menu Item Management']);
 
-        Permission::updateOrCreate([
-            'module_id' => $moduleAppFrontmenuitem->id,
-            'name' => 'View (Global)',
-            'slug' => 'app.front.menuitems.global'
-        ]);
-        Permission::updateOrCreate([
-            'module_id' => $moduleAppFrontmenuitem->id,
-            'name' => 'View (Self)',
-            'slug' => 'app.front.menuitems.self'
-        ]);
-        Permission::updateOrCreate([
-            'module_id' => $moduleAppFrontmenuitem->id,
-            'name' => 'Create Frontmenuitem',
-            'slug' => 'app.front.menuitems.create'
-        ]);
-        Permission::updateOrCreate([
-            'module_id' => $moduleAppFrontmenuitem->id,
-            'name' => 'Edit Frontmenuitem',
-            'slug' => 'app.front.menuitems.edit'
-        ]);
-        Permission::updateOrCreate([
-            'module_id' => $moduleAppFrontmenuitem->id,
-            'name' => 'Delete Frontmenuitem',
-            'slug' => 'app.front.menuitems.destroy'
-        ]);
-        Permission::updateOrCreate([
-            'module_id' => $moduleAppFrontmenuitem->id,
-            'name' => 'menuitem Builder',
-            'slug' => 'app.front.menuitems.widgetbuilder'
-        ]);
+        // Permission::updateOrCreate([
+        //     'module_id' => $moduleAppFrontmenuitem->id,
+        //     'name' => 'View (Global)',
+        //     'slug' => 'app.front.menuitems.global'
+        // ]);
+        // Permission::updateOrCreate([
+        //     'module_id' => $moduleAppFrontmenuitem->id,
+        //     'name' => 'View (Self)',
+        //     'slug' => 'app.front.menuitems.self'
+        // ]);
+        // Permission::updateOrCreate([
+        //     'module_id' => $moduleAppFrontmenuitem->id,
+        //     'name' => 'Create Frontmenuitem',
+        //     'slug' => 'app.front.menuitems.create'
+        // ]);
+        // Permission::updateOrCreate([
+        //     'module_id' => $moduleAppFrontmenuitem->id,
+        //     'name' => 'Edit Frontmenuitem',
+        //     'slug' => 'app.front.menuitems.edit'
+        // ]);
+        // Permission::updateOrCreate([
+        //     'module_id' => $moduleAppFrontmenuitem->id,
+        //     'name' => 'Delete Frontmenuitem',
+        //     'slug' => 'app.front.menuitems.destroy'
+        // ]);
+        // Permission::updateOrCreate([
+        //     'module_id' => $moduleAppFrontmenuitem->id,
+        //     'name' => 'menuitem Builder',
+        //     'slug' => 'app.front.menuitems.widgetbuilder'
+        // ]);
 
 
         $moduleAppServiceCategory = Module::updateOrCreate(['name' => 'Service-Category Management']);
@@ -802,7 +802,7 @@ class PermissionSeeder extends Seeder
         ]);
 
 
-        $moduleAppcustompage = Module::updateOrCreate(['name' => 'Custom-Page Management']);
+        $moduleAppcustompage = Module::updateOrCreate(['name' => 'Page Builder Management']);
 
         Permission::updateOrCreate([
             'module_id' => $moduleAppcustompage->id,
@@ -836,37 +836,81 @@ class PermissionSeeder extends Seeder
         ]);
 
 
-        $moduleApppagebuilder = Module::updateOrCreate(['name' => 'Widget Management']);
+        $moduleAppSlider = Module::updateOrCreate(['name' => 'Slide Management']);
 
         Permission::updateOrCreate([
-            'module_id' => $moduleApppagebuilder->id,
+            'module_id' => $moduleAppSlider->id,
             'name' => 'View (Global)',
-            'slug' => 'app.build.pages.global'
+            'slug' => 'app.slider.pages.global'
+        ]);
+
+
+        $moduleAppCareer = Module::updateOrCreate(['name' => 'Career Management']);
+
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppCareer->id,
+            'name' => 'View (Global)',
+            'slug' => 'app.career.pages.global'
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleApppagebuilder->id,
-            'name' => 'View (Self)',
-            'slug' => 'app.build.pages.self'
+            'module_id' => $moduleAppCareer->id,
+            'name' => 'Create Job Category',
+            'slug' => 'app.career.categories.create'
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleApppagebuilder->id,
-            'name' => 'Create Pagebuilder',
-            'slug' => 'app.build.pages.create'
+            'module_id' => $moduleAppCareer->id,
+            'name' => 'Job View (Self)',
+            'slug' => 'app.career.jobs.self'
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleApppagebuilder->id,
-            'name' => 'Edit Pagebuilder',
-            'slug' => 'app.build.pages.edit'
+            'module_id' => $moduleAppCareer->id,
+            'name' => 'Edit Job',
+            'slug' => 'app.career.jobs.edit'
         ]);
         Permission::updateOrCreate([
-            'module_id' => $moduleApppagebuilder->id,
-            'name' => 'Delete Pagebuilder',
-            'slug' => 'app.build.pages.destroy'
+            'module_id' => $moduleAppCareer->id,
+            'name' => 'Delete Job',
+            'slug' => 'app.career.jobs.destroy'
         ]);
+
+        $moduleAppFaq = Module::updateOrCreate(['name' => 'Faq Management']);
+
         Permission::updateOrCreate([
-            'module_id' => $moduleApppagebuilder->id,
-            'name' => 'Pagebuilder',
-            'slug' => 'app.build.pages.pagebuilder'
+            'module_id' => $moduleAppFaq->id,
+            'name' => 'View (Global)',
+            'slug' => 'app.faq.pages.global'
+        ]);
+
+        $moduleAppCounter = Module::updateOrCreate(['name' => 'Counter Management']);
+
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppCounter->id,
+            'name' => 'View (Global)',
+            'slug' => 'app.counter.pages.global'
+        ]);
+
+        $moduleAppAppearanceSettings = Module::updateOrCreate(['name' => 'Appearance Settings']);
+
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppAppearanceSettings->id,
+            'name' => 'View (Global)',
+            'slug' => 'app.appearance.settings.global'
+        ]);
+
+        $moduleAppGeneralSettings = Module::updateOrCreate(['name' => 'General Settings']);
+
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppGeneralSettings->id,
+            'name' => 'View (Global)',
+            'slug' => 'app.general.settings.global'
+        ]);
+
+        $moduleAppGallery = Module::updateOrCreate(['name' => 'Gallery Settings']);
+
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppGallery->id,
+            'name' => 'View (Global)',
+            'slug' => 'app.gallery.global'
         ]);
 
     }

@@ -24,9 +24,15 @@ class PostController extends Controller
     public function index()
     {
         Gate::authorize('app.blog.posts.self');
-        //$posts = Auth::guard('admin')->user()->posts()->latest()->get();
+        if(Auth::guard('admin')->user()->role_id == 1)
+        {
+            $posts = Post::with('categories')->latest()->paginate(5);
+        }
+        else
+        {
+            $posts = Auth::guard('admin')->user()->posts()->with('categories')->latest()->paginate(5);
+        }
         $auth = Auth::guard('admin')->user();
-        $posts = Post::with('categories')->latest()->paginate(5);
         return view('backend.admin.blog.post.index',compact('posts','auth'));
     }
 
@@ -79,6 +85,10 @@ class PostController extends Controller
             //     $constraint->aspectRatio();
             // })->save($postphotoPath.'/'.$imagename);
 
+        }
+        else
+        {
+            $imagename = null;
         }
 
 

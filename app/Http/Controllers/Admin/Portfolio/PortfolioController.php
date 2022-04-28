@@ -24,7 +24,14 @@ class PortfolioController extends Controller
     {
         Gate::authorize('app.portfolio.posts.self');
         $auth = Auth::guard('admin')->user();
-        $posts = Portfolio::latest()->get();
+        if(Auth::guard('admin')->user()->role_id == 1)
+        {
+            $posts = Portfolio::with('portfoliocategories')->latest()->paginate(5);
+        }
+        else
+        {
+            $posts = Auth::guard('admin')->user()->portfolios()->with('portfoliocategories')->latest()->paginate(5);
+        }
         return view('backend.admin.portfolio.post.index',compact('posts','auth'));
     }
 
@@ -44,10 +51,10 @@ class PortfolioController extends Controller
     public function create()
     {
         Gate::authorize('app.portfolio.posts.create');
-        $categories = Portfoliocategory::where('parent_id', '=', 0)->get();
-        $subcat = Portfoliocategory::all();
-        $sidebars = Sidebar::all();
-        return view('backend.admin.portfolio.post.form',compact('categories','subcat','sidebars'));
+        $categories = Portfoliocategory::with('childrenRecursive')->where('parent_id', '=', 0)->get();
+        // $subcat = Portfoliocategory::all();
+        // $sidebars = Sidebar::all();
+        return view('backend.admin.portfolio.post.form',compact('categories'));
     }
 
     /**
@@ -63,8 +70,6 @@ class PortfolioController extends Controller
             'title' => 'required|unique:portfolios',
             'image' => 'max:1024',
             'categories' => 'required',
-            'leftsidebar_id' => 'required',
-            'rightsidebar_id' => 'required',
         ]);
 
 
@@ -166,8 +171,6 @@ class PortfolioController extends Controller
         'gallaryimage'=>  implode("|",$images),
         'files' => $filename,
         'body' => $request->body,
-        'leftsidebar_id' => $request->leftsidebar_id,
-        'rightsidebar_id' => $request->rightsidebar_id,
         'status' => $status,
         'is_approved' => $is_approved,
         'meta_title' => $request->meta_title,
@@ -225,10 +228,10 @@ class PortfolioController extends Controller
     public function edit(Portfolio $portfolio)
     {
         Gate::authorize('app.portfolio.posts.edit');
-        $categories = Portfoliocategory::where('parent_id', '=', 0)->get();
-        $subcat = Portfoliocategory::all();
-        $editsidebars = Sidebar::all();
-        return view('backend.admin.portfolio.post.form',compact('portfolio','categories','subcat','editsidebars'));
+        $categories = Portfoliocategory::with('childrenRecursive')->where('parent_id', '=', 0)->get();
+        // $subcat = Portfoliocategory::all();
+        // $editsidebars = Sidebar::all();
+        return view('backend.admin.portfolio.post.form',compact('portfolio','categories'));
     }
 
     /**
@@ -245,8 +248,6 @@ class PortfolioController extends Controller
             'title' => 'required',
             'image' => 'max:1024',
             'categories' => 'required',
-            'leftsidebar_id' => 'required',
-            'rightsidebar_id' => 'required',
         ]);
 
         //get form image
@@ -368,8 +369,6 @@ class PortfolioController extends Controller
             'admin_id' => Auth::id(),
             'image' => $imagename,
             'body' => $request->body,
-            'leftsidebar_id' => $request->leftsidebar_id,
-            'rightsidebar_id' => $request->rightsidebar_id,
             'status' => $status,
             'is_approved' => $is_approved,
             'meta_title' => $request->meta_title,

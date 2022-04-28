@@ -119,6 +119,17 @@
 				</div>
 
                 <div class="card-body">
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
 				<div class="form-group">
                     @isset($widget)
                     <label class="form-label" for="type">Select Widget Type</label>
@@ -166,7 +177,7 @@
                             @isset($editcategories)
                             <div>
                                 <select class="form-control" name="category_id" id="category_id" data-live-search="true">
-                                    <option value="0">Select Category</option>
+                                    <option value="">Select Category</option>
                                     @foreach ($editcategories as $key => $category)
                                     <option value="{{ $category->id }}" {{($widget->category_id == $category->id) ? 'selected' : ''}} >{{ $category->name }} ({{$category->posts()->count()}})</option>
                                     @endforeach
@@ -175,7 +186,7 @@
                             @else
                             <div>
                                 <select class="form-control" name="category_id" id="category_id" data-live-search="true">
-                                    <option value="0">Select Category</option>
+                                    <option value="">Select Category</option>
                                     @foreach ($categories as $key => $category)
                                     <option value="{{ $category->id }}">{{ $category->name }} ({{$category->posts()->count()}})</option>
                                     @endforeach
@@ -191,11 +202,7 @@
 					</div>
 				</div>
 
-                <div id="image_widget">
-					<div class="card-body">
-                        <input type="file" data-height="100" class="dropify form-control" data-default-file="{{ isset($widget) ? asset('uploads/sidebarphoto/'.$widget->image) : '' }}" name="image">
-					</div>
-				</div>
+
 
 				<div id="popular_post">
 					<div class="card-body">
@@ -230,6 +237,25 @@
 				</div>
 			</div>
 		</div>
+
+        <div class="col-lg-3 col-xl-3 col-md-12 col-sm-12" style="float: left">
+
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">Create Page</h3>
+				</div>
+				<div class="card-body">
+                    <div id="image_widget">
+                        <div class="card-body">
+                            <input type="file" class="dropify form-control" data-default-file="{{ isset($widget) ? asset('uploads/sidebarphoto/'.$widget->image) : '' }}" name="image">
+                        </div>
+                    </div>
+
+				</div>
+
+			</div>
+		</div>
+
 	</div>
     </form>
 	<!-- ROW-1 CLOSED -->

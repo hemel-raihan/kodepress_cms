@@ -5,7 +5,7 @@
 @isset($navbar)
 
 
-@if ($navbar->navbar_style == 'default')
+        @if ($navbar->navbar_style == 'default')
                 @if ($navbar->container == 'container-sm')
                 <div class="container-sm">
                 <div class="main-div">
@@ -82,7 +82,7 @@
                                                 <a class="menu-link" style="color: {{$navbar->text_color}}" href="#"><div>{{$menuitem->title}}</div></a>
                                                 @endif
                                                 <ul class="sub-menu-container" style="background: {{$navbar->background_color}}">
-                                                    @foreach ($menuitem->childs as $item)
+                                                    @foreach ($menuitem->childs()->with('childs')->get() as $item)
                                                     @if ($item->childs->isEmpty())
                                                     <li class="menu-item">
                                                         <a class="menu-link" style="color: {{$navbar->text_color}}" href="{{route('page',$item->slug)}}"><div>{{$item->title}}</div></a>
@@ -91,7 +91,7 @@
                                                     <li class="menu-item">
                                                         <a class="menu-link" style="color: {{$navbar->text_color}}" href="#"><div>{{$item->title}}</div></a>
                                                         <ul class="sub-menu-container" style="background: {{$navbar->background_color}}">
-                                                            @foreach ($item->childs as $itemm)
+                                                            @foreach ($item->childs()->with('childs')->get() as $itemm)
                                                             @if ($itemm->childs->isEmpty())
                                                             <li class="menu-item">
                                                                 <a class="menu-link" style="color: {{$navbar->text_color}}" href="{{route('page',$itemm->slug)}}"><div>{{$itemm->title}}</div></a>
@@ -100,7 +100,7 @@
                                                             <li class="menu-item">
                                                                 <a class="menu-link" style="color: {{$navbar->text_color}}" href="#"><div>{{$itemm->title}}</div></a>
                                                                 <ul class="sub-menu-container" style="background: {{$navbar->background_color}}">
-                                                                    @foreach ($itemm->childs as $itemmm)
+                                                                    @foreach ($itemm->childs()->with('childs')->get() as $itemmm)
                                                                     <li class="menu-item">
                                                                         <a class="menu-link" style="color: {{$navbar->text_color}}" href="{{route('page',$itemmm->slug)}}"><div>{{$itemmm->title}}</div></a>
                                                                     </li>
@@ -215,7 +215,7 @@
                                         <a class="menu-link" style="color: {{$navbar->text_color}}" href="#"><div>{{$menuitem->title}}</div></a>
                                         @endif
                                         <ul class="sub-menu-container" style="background: {{$navbar->background_color}}">
-                                            @foreach ($menuitem->childs as $item)
+                                            @foreach ($menuitem->childs()->with('childs')->get() as $item)
                                             @if ($item->childs->isEmpty())
                                             <li class="menu-item">
                                                 <a class="menu-link" style="color: {{$navbar->text_color}}" href="{{route('page',$item->slug)}}"><div>{{$item->title}}</div></a>
@@ -224,7 +224,7 @@
                                             <li class="menu-item">
                                                 <a class="menu-link" style="color: {{$navbar->text_color}}" href="#"><div>{{$item->title}}</div></a>
                                                 <ul class="sub-menu-container" style="background: {{$navbar->background_color}}">
-                                                    @foreach ($item->childs as $itemm)
+                                                    @foreach ($item->childs()->with('childs')->get() as $itemm)
                                                     @if ($itemm->childs->isEmpty())
                                                     <li class="menu-item">
                                                         <a class="menu-link" style="color: {{$navbar->text_color}}" href="{{route('page',$itemm->slug)}}"><div>{{$itemm->title}}</div></a>
@@ -233,7 +233,7 @@
                                                     <li class="menu-item">
                                                         <a class="menu-link" style="color: {{$navbar->text_color}}" href="#"><div>{{$itemm->title}}</div></a>
                                                         <ul class="sub-menu-container" style="background: {{$navbar->background_color}}">
-                                                            @foreach ($itemm->childs as $itemmm)
+                                                            @foreach ($itemm->childs()->with('childs')->get() as $itemmm)
                                                             <li class="menu-item">
                                                                 <a class="menu-link" style="color: {{$navbar->text_color}}" href="{{route('page',$itemmm->slug)}}"><div>{{$itemmm->title}}</div></a>
                                                             </li>
@@ -281,7 +281,7 @@
                 <div class="container-sm">
                 <div class="main-div">
                     <header id="header" class="full-header" style="background: {{$navbar->background_color}};">
-                        <div id="header-wrap">
+                        <div id="header-wrap" style="background: {{$navbar->background_color}};">
                             <div class="">
                                 <div class="header-row" style="margin-left: {{$navbar->left_margin}}; margin-right: {{$navbar->right_margin}};">
 
@@ -378,7 +378,7 @@
                                                 <a class="menu-link" style="color: {{$navbar->text_color}}" href="#"><div>{{$menuitem->title}}</div></a>
                                                 @endif
                                                 <ul class="sub-menu-container" style="background: {{$navbar->background_color}}">
-                                                    @foreach ($menuitem->childs as $item)
+                                                    @foreach ($menuitem->childs()->with('childs')->get() as $item)
                                                     @if ($item->childs->isEmpty())
                                                     <li class="menu-item">
                                                         <a class="menu-link" style="color: {{$navbar->text_color}}" href="{{route('page',$item->slug)}}"><div>{{$item->title}}</div></a>
@@ -387,7 +387,7 @@
                                                     <li class="menu-item">
                                                         <a class="menu-link" style="color: {{$navbar->text_color}}" href="#"><div>{{$item->title}}</div></a>
                                                         <ul class="sub-menu-container" style="background: {{$navbar->background_color}}">
-                                                            @foreach ($item->childs as $itemm)
+                                                            @foreach ($item->childs()->with('childs')->get() as $itemm)
                                                             @if ($itemm->childs->isEmpty())
                                                             <li class="menu-item">
                                                                 <a class="menu-link" style="color: {{$navbar->text_color}}" href="{{route('page',$itemm->slug)}}"><div>{{$itemm->title}}</div></a>
@@ -396,7 +396,7 @@
                                                             <li class="menu-item">
                                                                 <a class="menu-link" style="color: {{$navbar->text_color}}" href="#"><div>{{$itemm->title}}</div></a>
                                                                 <ul class="sub-menu-container" style="background: {{$navbar->background_color}}">
-                                                                    @foreach ($itemm->childs as $itemmm)
+                                                                    @foreach ($itemm->childs()->with('childs')->get() as $itemmm)
                                                                     <li class="menu-item">
                                                                         <a class="menu-link" style="color: {{$navbar->text_color}}" href="{{route('page',$itemmm->slug)}}"><div>{{$itemmm->title}}</div></a>
                                                                     </li>
@@ -436,7 +436,7 @@
             @else
 
             <header id="header" class="full-header" style="background: {{$navbar->background_color}};">
-                <div id="header-wrap">
+                <div id="header-wrap" style="background: {{$navbar->background_color}};">
                     <div class="">
                         <div class="header-row" style="margin-left: {{$navbar->left_margin}}; margin-right: {{$navbar->right_margin}};">
 
@@ -534,7 +534,7 @@
                                         <a class="menu-link" style="color: {{$navbar->text_color}}" href="#"><div>{{$menuitem->title}}</div></a>
                                         @endif
                                         <ul class="sub-menu-container" style="background: {{$navbar->background_color}}">
-                                            @foreach ($menuitem->childs as $item)
+                                            @foreach ($menuitem->childs()->with('childs')->get() as $item)
                                             @if ($item->childs->isEmpty())
                                             <li class="menu-item">
                                                 <a class="menu-link" style="color: {{$navbar->text_color}}" href="{{route('page',$item->slug)}}"><div>{{$item->title}}</div></a>
@@ -543,7 +543,7 @@
                                             <li class="menu-item">
                                                 <a class="menu-link" style="color: {{$navbar->text_color}}" href="#"><div>{{$item->title}}</div></a>
                                                 <ul class="sub-menu-container" style="background: {{$navbar->background_color}}">
-                                                    @foreach ($item->childs as $itemm)
+                                                    @foreach ($item->childs()->with('childs')->get() as $itemm)
                                                     @if ($itemm->childs->isEmpty())
                                                     <li class="menu-item">
                                                         <a class="menu-link" style="color: {{$navbar->text_color}}" href="{{route('page',$itemm->slug)}}"><div>{{$itemm->title}}</div></a>
@@ -552,7 +552,7 @@
                                                     <li class="menu-item">
                                                         <a class="menu-link" style="color: {{$navbar->text_color}}" href="#"><div>{{$itemm->title}}</div></a>
                                                         <ul class="sub-menu-container" style="background: {{$navbar->background_color}}">
-                                                            @foreach ($itemm->childs as $itemmm)
+                                                            @foreach ($itemm->childs()->with('childs')->get() as $itemmm)
                                                             <li class="menu-item">
                                                                 <a class="menu-link" style="color: {{$navbar->text_color}}" href="{{route('page',$itemmm->slug)}}"><div>{{$itemmm->title}}</div></a>
                                                             </li>
@@ -573,7 +573,7 @@
                                     @endif
                                     @endforeach
                                     @endisset
-                                    <li class="menu-item">
+                                    {{-- <li class="menu-item">
                                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             {{ Config::get('languages')[App::getLocale()] }}
                                         </a>
@@ -585,18 +585,8 @@
                                         @endforeach
 
                                         </ul>
-                                    </li>
-                                    {{-- <li>
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            {{ Config::get('languages')[App::getLocale()] }}
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        @foreach (Config::get('languages') as $lang => $language)
-                                            @if ($lang != App::getLocale())
-                                                    <a class="dropdown-item" href="{{ route('lang.switch', $lang) }}"> {{$language}}</a>
-                                            @endif
-                                        @endforeach
                                     </li> --}}
+
                                 </ul>
                             </nav><!-- #primary-menu end -->
 
@@ -614,8 +604,6 @@
 
             @endif
     @endisset
-    {{-- </div>
-</div> --}}
 
 
 

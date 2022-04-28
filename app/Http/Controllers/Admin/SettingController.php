@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Admin\Setting;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Artisan;
 
@@ -13,6 +14,7 @@ class SettingController extends Controller
 {
     public function index()
     {
+        Gate::authorize('app.general.settings.global');
         $setting = Setting::find(1);
         return view('backend.admin.settings.site_setting',compact('setting'));
     }
@@ -43,7 +45,8 @@ class SettingController extends Controller
             }
 
             $img                     =       Image::make($image->path());
-            $img->resize(200, 100)->save($settingPath.'/'.$imagename);
+            //$img->resize(200, 100)->save($settingPath.'/'.$imagename);
+            $img->save($settingPath.'/'.$imagename);
 
         }
         else

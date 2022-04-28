@@ -18,12 +18,12 @@
         <div class="postcontent col-lg-6">
         @endif
 
-        @foreach ($page->pagebuilders as $pagebuilder)
+        @foreach ($page->pagebuilders()->with('elements')->get() as $pagebuilder)
         @if ($pagebuilder->status == 1)
         <div class="{{($pagebuilder->container == 'container-sm') ? 'container-sm' : '' }} clearfix" style="background-color: {{$pagebuilder->background_color}}; background-image: url('{{asset('uploads/sectionpagephoto/'.$pagebuilder->background_img)}}');  border: {{$pagebuilder->border}} {{$pagebuilder->border_style}} {{$pagebuilder->border_color}};">
 
             @if ($pagebuilder->title_show == 1)
-            <div style="padding-top:20px;" class="heading-block center">
+            <div style="padding-top:60px;" class="heading-block center">
                 <h2>{{$pagebuilder->title}}</h2>
             </div>
             @endif
@@ -63,6 +63,7 @@
                         @endif
                         @endif
                         @isset($blogposts)
+                        <div class="row">
                         @foreach ($blogposts as $blogpost)
                         <div class="col-sm-6 col-lg-{{($element->layout == 'One Column') ? 12 : (($element->layout == 'Two Column') ? 6 : (($element->layout == 'Three Column') ? 4 : 3)) }}">
                             {{-- <div class="entry col-sm-6 col-12"> --}}
@@ -95,6 +96,7 @@
                             {{-- </div> --}}
                         </div>
                         @endforeach
+                        </div>
                         @endisset
 
 
@@ -180,6 +182,7 @@
                         @endif
                         @endif
                         @isset($blogcategories)
+                        <div class="row">
                         @foreach ($blogcategories as $blogcategory)
                         <div class="col-sm-6 col-lg-{{($element->layout == 'One Column') ? 12 : (($element->layout == 'Two Column') ? 6 : (($element->layout == 'Three Column') ? 4 : 3)) }}">
                                 <div class="feature-box fbox-rounded fbox-effect">
@@ -193,6 +196,7 @@
                                 </div>
 						</div>
                         @endforeach
+                        </div>
                         @endisset
 
 
@@ -329,6 +333,7 @@
                         @endphp
 
                         @isset($generalposts)
+                        <div class="row">
                         @foreach ($generalposts as $generalpost)
                         <div class="col-sm-6 col-lg-{{($element->layout == 'One Column') ? 12 : (($element->layout == 'Two Column') ? 6 : (($element->layout == 'Three Column') ? 4 : 3)) }}">
                             {{-- <div class="entry col-sm-6 col-12"> --}}
@@ -361,6 +366,7 @@
                             {{-- </div> --}}
                         </div>
                         @endforeach
+                        </div>
                         @endisset
 
                         @elseif($element->module_type == 'General Category')
@@ -376,6 +382,7 @@
                         @endif
                         @endif
                         @isset($generalcategories)
+                        <div class="row">
                         @foreach ($generalcategories as $generalcategory)
                         <div class="col-sm-6 col-lg-{{($element->layout == 'One Column') ? 12 : (($element->layout == 'Two Column') ? 6 : (($element->layout == 'Three Column') ? 4 : 3)) }}">
 
@@ -390,6 +397,7 @@
                                 </div>
 						</div>
                         @endforeach
+                        </div>
                         @endisset
 
                         @elseif($element->module_type == 'Service Post')
@@ -438,7 +446,7 @@
                         @endif
 
                         @isset($servicecategories)
-                        @foreach ($servicecategories as $servicecategory)
+                        {{-- @foreach ($servicecategories as $servicecategory)
                         <div class="col-sm-6 col-lg-{{($element->layout == 'One Column') ? 12 : (($element->layout == 'Two Column') ? 6 : (($element->layout == 'Three Column') ? 4 : 3)) }}">
                             <div class="feature-box fbox-center fbox-light fbox-effect border-bottom-0">
                                 <div class="fbox-icon">
@@ -450,7 +458,43 @@
 
                             </div>
                         </div>
-                        @endforeach
+                        @endforeach --}}
+
+                        <style>
+                            .single-category {
+                            box-shadow: 0px 0px 5px #0000001a;
+                            border-radius: 8px;
+                            text-align: center;
+                            padding: 40px 30px;
+                            margin-bottom: 40px;
+                            transform: translateY(0px);
+                            transition: .3s;
+                            }
+                            .single-category:hover {
+                                transform: translateY(-10px)
+                            }
+                        </style>
+
+                        <div class="row">
+                            @foreach ($servicecategories as $key => $servicecategory)
+                                <div class="col-xl-3 col-lg-4 col-sm-6">
+                                    <div class="single-category">
+                                        @if (!empty($servicecategory->image))
+                                            <div class="img-wrapper">
+                                                <img style="width: 100px; height: auto;" src="{{asset('uploads/servicecategory_photo/'.$servicecategory->image)}}" alt="">
+                                            </div>
+                                        @endif
+                                        <div class="text">
+                                            <h4>{{$servicecategory->name}}</h4>
+                                            <p>
+                                                  {{$servicecategory->desc}}
+                                            </p>
+                                            <a href="{{route('service.posts',$servicecategory->id)}}" class="readmore">View Service</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                         @endisset
 
 
@@ -738,7 +782,7 @@
 
                         <div class="row col-mb-50">
                             @foreach ($counters as $counter)
-                            <div class="col-sm-6 col-lg-3 text-center">
+                            <div class="col-sm-6 col-lg-3 text-center" style="padding-top: 50px;">
                                 <i class="i-plain i-xlarge mx-auto mb-0 icon-{{$counter->icon}}"></i>
                                 <div class="counter counter-large" style="color: {{$counter->color}};"><span data-from="100" data-to="{{$counter->number}}{{$counter->extra_text}}" data-refresh-interval="50" data-speed="2000"></span></div>
                                 <h5>{{$counter->title}}</h5>
@@ -791,6 +835,7 @@
         </div>
         @endif
         @endforeach
+        </div>
 
         {{-- <div class="row col-mb-50">
             <div class="col-sm-6 col-lg-3 text-center">

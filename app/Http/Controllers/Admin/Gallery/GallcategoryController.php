@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Gallery;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use App\Models\Gallery\Gallerycategory;
 
 class GallcategoryController extends Controller
@@ -35,6 +36,7 @@ class GallcategoryController extends Controller
      */
     public function create()
     {
+        Gate::authorize('app.gallery.global');
         return view('backend.admin.gallery.category.form');
     }
 

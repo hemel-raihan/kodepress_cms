@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Counter;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 class CounterController extends Controller
 {
@@ -34,6 +35,7 @@ class CounterController extends Controller
      */
     public function create()
     {
+        Gate::authorize('app.counter.pages.global');
         return view('backend.admin.counter.form');
     }
 

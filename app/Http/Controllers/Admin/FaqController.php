@@ -6,6 +6,7 @@ use App\Models\Faq;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 class FaqController extends Controller
 {
@@ -35,6 +36,7 @@ class FaqController extends Controller
      */
     public function create()
     {
+        Gate::authorize('app.faq.pages.global');
         return view('backend.admin.faq.form');
     }
 

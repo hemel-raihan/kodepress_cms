@@ -24,9 +24,15 @@ class ContentPostController extends Controller
     public function index()
     {
         Gate::authorize('app.content.posts.self');
-        //$posts = Auth::guard('admin')->user()->posts()->latest()->get();
+        if(Auth::guard('admin')->user()->role_id == 1)
+        {
+            $posts = Contentpost::with('contentcategories')->latest()->paginate(5);
+        }
+        else
+        {
+            $posts = Auth::guard('admin')->user()->contentposts()->with('contentcategories')->latest()->paginate(5);
+        }
         $auth = Auth::guard('admin')->user();
-        $posts = Contentpost::latest()->get();
         return view('backend.admin.general_content.post.index',compact('posts','auth'));
     }
 
@@ -38,10 +44,10 @@ class ContentPostController extends Controller
     public function create()
     {
         Gate::authorize('app.content.posts.create');
-        $categories = Contentcategory::where('parent_id', '=', 0)->get();
-        $subcat = Contentcategory::all();
-        $sidebars = Sidebar::all();
-        return view('backend.admin.general_content.post.form',compact('categories','subcat','sidebars'));
+        $categories = Contentcategory::with('childrenRecursive')->where('parent_id', '=', 0)->get();
+        // $subcat = Contentcategory::all();
+        // $sidebars = Sidebar::all();
+        return view('backend.admin.general_content.post.form',compact('categories'));
     }
 
     /**
@@ -59,8 +65,6 @@ class ContentPostController extends Controller
             'gallaryimage.*' => 'max:1024',
             'files' => 'mimes:pdf,doc,docx',
             'categories' => 'required',
-            'leftsidebar_id' => 'required',
-            'rightsidebar_id' => 'required',
         ]);
 
         //get form image
@@ -173,8 +177,6 @@ class ContentPostController extends Controller
             'gallaryimage'=>  implode("|",$images),
             'files' => $filename,
             'body' => $request->body,
-            'leftsidebar_id' => $request->leftsidebar_id,
-            'rightsidebar_id' => $request->rightsidebar_id,
             'status' => $status,
             'is_approved' => $is_approved,
 
@@ -231,10 +233,10 @@ class ContentPostController extends Controller
     public function edit(Contentpost $contentpost)
     {
         Gate::authorize('app.content.posts.edit');
-        $categories = Contentcategory::where('parent_id', '=', 0)->get();
-        $subcat = Contentcategory::all();
-        $editsidebars = Sidebar::all();
-        return view('backend.admin.general_content.post.form',compact('contentpost','categories','subcat','editsidebars'));
+        $categories = Contentcategory::with('childrenRecursive')->where('parent_id', '=', 0)->get();
+        // $subcat = Contentcategory::all();
+        // $editsidebars = Sidebar::all();
+        return view('backend.admin.general_content.post.form',compact('contentpost','categories'));
     }
 
     /**
@@ -253,8 +255,6 @@ class ContentPostController extends Controller
             'image' => 'max:1024',
             'gallaryimage.*' => 'max:1024',
             'files' => 'mimes:pdf,doc,docx',
-            'leftsidebar_id' => 'required',
-            'rightsidebar_id' => 'required',
         ]);
 
         //get form image
@@ -394,8 +394,6 @@ class ContentPostController extends Controller
             'gallaryimage'=>  implode("|",$images),
             'files' => $filename,
             'body' => $request->body,
-            'leftsidebar_id' => $request->leftsidebar_id,
-            'rightsidebar_id' => $request->rightsidebar_id,
             'status' => $status,
             'is_approved' => $is_approved,
 

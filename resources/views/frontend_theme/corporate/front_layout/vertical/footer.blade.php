@@ -381,13 +381,13 @@
 
     </div>
 
-    <div id="copyrights" style="background: #2d316a">
+    <div id="copyrights" style="background: #fff">
         <div class="container">
 
             <div class="row col-mb-30">
 
                 <div style="color: {{$footer->text_color}};" class="text-center text-md-start">
-                   <p style="text-align: center;"> Copyrights &copy; 2022 All right reserved by <a href="https://datahostbd.com/">Data Host IT</a></p>
+                   <p style="text-align: center;"> Copyrights &copy; 2022 All right reserved by <a href="https://datahostbd.com/">Datahostbd</a></p>
                 </div>
 
 

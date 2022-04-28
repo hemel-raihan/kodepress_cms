@@ -75,11 +75,9 @@
 
 										<td>
 
-											@if($auth->hasPermission('app.build.pages.pagebuilder'))
                                             <a href="{{route('admin.custompage.builder',$page->id)}}" class="btn btn-primary">
                                             <i class="side-menu__icon fe fe-file-text">Page Builder</i>
                                             </a>
-                                            @endif
 
                                             @if($auth->hasPermission('app.custom.pages.edit'))
                                             <a href="{{route('admin.custompages.edit',$page->id)}}" class="btn btn-success">

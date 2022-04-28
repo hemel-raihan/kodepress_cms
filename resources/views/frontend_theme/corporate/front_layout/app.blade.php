@@ -18,7 +18,7 @@
     @endphp
     @isset($setting)
 	<title>{{$setting->company_name}}</title>
-    <link rel="icon" href="{{asset('uploads/settings/'.$setting->logo)}}">
+    <link rel="icon" sizes="16x16" type="image/gif" href="{{asset('uploads/settings/'.$setting->logo)}}">
     @else
     <title>Home</title>
     @endisset
@@ -48,7 +48,7 @@
 
             @isset($menus)
 
-            @include('frontend_theme.corporate.front_layout.vertical.header_new',['menuitems'=>$menuitems])
+            @include('frontend_theme.corporate.front_layout.vertical.header',['menuitems'=>$menuitems])
             @else
             @include('frontend_theme.corporate.front_layout.vertical.header')
             @endisset
@@ -76,20 +76,20 @@
 
 		<!-- Content
 		============================================= -->
-		{{-- <section id="content">
-			<div class="content-wrap"> --}}
+		<section id="content">
+			<div class="content-wrap">
                 @php
                     $page = \App\Models\Pagebuilder\Custompage::where([['type','=','main-page'],['status','=',true]])->orderBy('id','desc')->first();
                 @endphp
                 {{-- <div class="container-lg" style="background: #19a1dd;">
                     <div class="container-md" style="background: #f9fdff;"> --}}
-                        <div class="body">
-                            <div class="{{($page->container == 'container-sm') ? 'container-sm' : '' }}">
-                                <div class="main-div">
-                                    <section id="content" style="background-image: url('{{asset('uploads/custompagephoto/'.$page->background_img)}}'); background: {{$page->background_img}}; margin-left: {{$page->left_margin}}; margin-right: {{$page->right_margin}};">
+                        {{-- <div class="body"> --}}
+                            {{-- <div class="{{($page->container == 'container-sm') ? 'container-sm' : '' }}">
+                                <div class="main-div"> --}}
+                                    <section id="content" style="background-image: url('{{asset('uploads/custompagephoto/'.$page->background_img)}}'); background: {{$page->background_color}}; margin-left: {{$page->left_margin}}; margin-right: {{$page->right_margin}};">
                                         <div class="content-wrap">
-                                           <div class=" clearfix">
-                                                {{-- <div class="row gutter-40 col-mb-80"> --}}
+                                           <div class="{{($page->container == 'container-sm') ? 'container-sm' : 'container-lg' }} clearfix">
+                                                <div class="row">
                                                     @if(!$page->leftsidebar_id == 0)
                                                     @php
                                                     $sidebars = \App\Models\Admin\Sidebar::where([['type','=','Left Side Bar'],['id','=',$page->leftsidebar_id]])->get();
@@ -112,29 +112,23 @@
                                                         $widgets = $sidebar->widgets()->get();
                                                     }
                                                     @endphp
-                                                    @isset($blog)
-                                                    @if (!$blog->rightsidebar_id == 0)
                                                     @include('frontend_theme.corporate.front_layout.vertical.right_sidebar',['widgets'=>$widgets])
                                                     @endif
-                                                    @else
-                                                    @include('frontend_theme.corporate.front_layout.vertical.right_sidebar',['widgets'=>$widgets])
-                                                    @endisset
-                                                    @endif
-                                                {{-- </div> --}}
+                                                </div>
                                             </div>
                                         </div>
                                     </section>
-                                </div>
-                            </div>
-                        </div>
+                                {{-- </div>
+                            </div> --}}
+                        {{-- </div> --}}
 
 
                     {{-- </div>
                 </div> --}}
 
-{{--
+
 			</div>
-		</section><!-- #content end --> --}}
+		</section><!-- #content end -->
 
 		<!-- Footer
 		============================================= -->

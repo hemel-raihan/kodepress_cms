@@ -106,6 +106,7 @@
 
 								</tbody>
 							</table>
+                            {{ $posts->links('vendor.pagination.custom') }}
 						</div>
 					</div>
 				</div>

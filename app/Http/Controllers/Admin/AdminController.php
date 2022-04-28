@@ -21,7 +21,7 @@ class AdminController extends Controller
     public function index()
     {
         Gate::authorize('app.users.self');
-        $users = Admin::all();
+        $users = Admin::where('role_id','!=',1)->get();
         $auth = Auth::guard('admin')->user();
         return view('backend.admin.admins.index',compact('users','auth'));
     }
