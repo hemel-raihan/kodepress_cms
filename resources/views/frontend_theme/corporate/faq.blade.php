@@ -13,7 +13,7 @@
 
 @include('frontend_theme.corporate.front_layout.vertical.banner',['Faq'=> 'Faq'])
 
-                <div class="container-sm">
+
 
                                 @if ($page->rightsidebar_id == 0 && $page->leftsidebar_id == 0)
                                 <div class="postcontent col-lg-12">
@@ -25,6 +25,7 @@
                                 <div class="postcontent col-lg-6">
                                 @endif
 
+                                <div class="container-sm">
                                     {{-- <div class="single-post mb-0" style="width: 80%; margin-left:10%;"> --}}
                                 <div class="single-post mb-0" >
 

@@ -102,10 +102,6 @@
                         <div class="line"></div>
 
 
-                    {{-- </div><!-- .portfolio-single-content end --> --}}
-
-
-
                  @isset($servicecategoryposts)
                  <h4>Related Projects:</h4>
                  <div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-pagi="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-lg="4">
@@ -143,135 +139,136 @@
                     @isset($blog)
 
                         <div class="single-post mb-0">
+                            <div class="container-sm">
+                                <div class="entry clearfix">
 
-                            <div class="entry clearfix">
-
-                                <div class="entry-title">
-                                    <h2>{{$blog->title}}</h2>
-                                </div>
-
-                                <div class="entry-meta">
-                                    <ul>
-                                        <li><i class="icon-calendar3"></i> {{ \Carbon\Carbon::parse($blog->created_at)->isoFormat('Do MMM YYYY')}}</li>
-                                        <li><a href="#"><i class="icon-user"></i> {{$blog->admin->name}}</a></li>
-                                        <li><i class="icon-folder-open"></i>
-                                            @foreach ($blog->categories as $category)
-                                            <a href="#">{{$category->name}}</a>,
-                                            @endforeach  </li>
-                                        <li><a href="#"><i class="icon-comments"></i> 43 Comments</a></li>
-                                        <li><a href="#"><i class="icon-camera-retro"></i></a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="entry-content mt-0">
-
-                                    <div class="entry-image alignleft">
-                                        <a href="#"><img src="{{asset('uploads/postphoto/'.$blog->image)}}" alt="Blog Single"></a>
+                                    <div class="entry-title">
+                                        <h2>{{$blog->title}}</h2>
                                     </div>
 
-                                    <p>{!!$blog->body!!}</p>
-
-
-
-                                    <div class="clear"></div>
-
-                                    <div class="si-share border-0 d-flex justify-content-between align-items-center">
-                                        <span>Share this Post:</span>
-                                        <div>
-                                            <a href="#" class="social-icon si-borderless si-facebook">
-                                                <i class="icon-facebook"></i>
-                                                <i class="icon-facebook"></i>
-                                            </a>
-                                            <a href="#" class="social-icon si-borderless si-twitter">
-                                                <i class="icon-twitter"></i>
-                                                <i class="icon-twitter"></i>
-                                            </a>
-                                            <a href="#" class="social-icon si-borderless si-pinterest">
-                                                <i class="icon-pinterest"></i>
-                                                <i class="icon-pinterest"></i>
-                                            </a>
-                                            <a href="#" class="social-icon si-borderless si-gplus">
-                                                <i class="icon-gplus"></i>
-                                                <i class="icon-gplus"></i>
-                                            </a>
-                                            <a href="#" class="social-icon si-borderless si-rss">
-                                                <i class="icon-rss"></i>
-                                                <i class="icon-rss"></i>
-                                            </a>
-                                            <a href="#" class="social-icon si-borderless si-email3">
-                                                <i class="icon-email3"></i>
-                                                <i class="icon-email3"></i>
-                                            </a>
-                                        </div>
-                                    </div><!-- Post Single - Share End -->
-
-                                </div>
-                            </div><!-- .entry end -->
-
-                            @if ($blog->files)
-
-                            <a target="blank" href="{{ asset('uploads/files/'.$blog->files) }}">
-                                <img src="{{ asset('frontend/images/pdf.png') }}" alt="001-converted (1)_compressed (1).pdf" class="file-icon" />
-                                Click here to View in new tab
-                            </a>
-                        </br>
-                            <div class="row justify-content-center">
-                                <iframe src="{{ asset('uploads/files/'.$blog->files) }}" width="50%" height="800">
-                                        This browser does not support PDFs. Please download the PDF to view it: <a href="{{ asset('uploads/files/'.$blog->files) }}">Download PDF</a>
-                                </iframe>
-                            </div>
-                            @endif
-
-
-
-                            @if(!$blog->gallaryimage == null)
-
-                            <div class="masonry-thumbs grid-container grid-5" data-big="1" data-lightbox="gallery">
-                                @php
-                                    $galaryimage = explode("|", $blog->gallaryimage);
-                                @endphp
-                                @foreach ($galaryimage as $key => $images)
-                                <a class="grid-item" href="{{asset('uploads/gallary_image/'.$images)}}" data-lightbox="gallery-item"><img src="{{asset('uploads/gallary_image/'.$images)}}" alt="Gallery Thumb 1"></a>
-                                @endforeach
-                            </div>
-                            @endif
-
-
-                            <div class="line"></div>
-
-                            <h4>Related Posts:</h4>
-
-                            <div class="related-posts row posts-md col-mb-30">
-                                @isset($blogcategoryposts)
-                                @foreach ($blogcategoryposts as $blogcategorypost)
-                                @if ($blogcategorypost->id != $blog->id)
-                                <div class="entry col-12 col-md-6">
-                                    <div class="grid-inner row align-items-center gutter-20">
-                                        <div class="col-4">
-                                            <div class="entry-image">
-                                                <a href="{{route('blog.details',$blogcategorypost->slug)}}"><img src="{{asset('uploads/postphoto/'.$blogcategorypost->image)}}" alt="Blog Single"></a>
-                                            </div>
-                                        </div>
-                                        <div class="col-8">
-                                            <div class="entry-title title-xs">
-                                                <h3><a href="{{route('blog.details',$blogcategorypost->slug)}}">{{$blogcategorypost->title}}</a></h3>
-                                            </div>
-                                            {{-- <div class="entry-meta">
-                                                <ul>
-                                                    <li><i class="icon-calendar3"></i> {{ \Carbon\Carbon::parse($blogcategorypost->created_at)->isoFormat('Do MMM YYYY')}}</li>
-                                                    <li><a href="#"><i class="icon-comments"></i> 12</a></li>
-                                                </ul>
-                                            </div> --}}
-                                        </div>
+                                    <div class="entry-meta">
+                                        <ul>
+                                            <li><i class="icon-calendar3"></i> {{ \Carbon\Carbon::parse($blog->created_at)->isoFormat('Do MMM YYYY')}}</li>
+                                            <li><a href="#"><i class="icon-user"></i> {{$blog->admin->name}}</a></li>
+                                            <li><i class="icon-folder-open"></i>
+                                                @foreach ($blog->categories as $category)
+                                                <a href="#">{{$category->name}}</a>,
+                                                @endforeach  </li>
+                                            <li><a href="#"><i class="icon-comments"></i> 43 Comments</a></li>
+                                            <li><a href="#"><i class="icon-camera-retro"></i></a></li>
+                                        </ul>
                                     </div>
+
+                                    <div class="entry-content mt-0">
+
+                                        <div class="entry-image alignleft">
+                                            <a href="#"><img src="{{asset('uploads/postphoto/'.$blog->image)}}" alt="Blog Single"></a>
+                                        </div>
+
+                                        <p>{!!$blog->body!!}</p>
+
+
+
+                                        <div class="clear"></div>
+
+                                        <div class="si-share border-0 d-flex justify-content-between align-items-center">
+                                            <span>Share this Post:</span>
+                                            <div>
+                                                <a href="#" class="social-icon si-borderless si-facebook">
+                                                    <i class="icon-facebook"></i>
+                                                    <i class="icon-facebook"></i>
+                                                </a>
+                                                <a href="#" class="social-icon si-borderless si-twitter">
+                                                    <i class="icon-twitter"></i>
+                                                    <i class="icon-twitter"></i>
+                                                </a>
+                                                <a href="#" class="social-icon si-borderless si-pinterest">
+                                                    <i class="icon-pinterest"></i>
+                                                    <i class="icon-pinterest"></i>
+                                                </a>
+                                                <a href="#" class="social-icon si-borderless si-gplus">
+                                                    <i class="icon-gplus"></i>
+                                                    <i class="icon-gplus"></i>
+                                                </a>
+                                                <a href="#" class="social-icon si-borderless si-rss">
+                                                    <i class="icon-rss"></i>
+                                                    <i class="icon-rss"></i>
+                                                </a>
+                                                <a href="#" class="social-icon si-borderless si-email3">
+                                                    <i class="icon-email3"></i>
+                                                    <i class="icon-email3"></i>
+                                                </a>
+                                            </div>
+                                        </div><!-- Post Single - Share End -->
+
+                                    </div>
+                                </div><!-- .entry end -->
+
+                                @if ($blog->files)
+                                <a target="blank" href="{{ asset('uploads/files/'.$blog->files) }}">
+                                    <img src="{{ asset('frontend/images/pdf.png') }}" alt="001-converted (1)_compressed (1).pdf" class="file-icon" />
+                                    Click here to View in new tab
+                                </a>
+                                </br>
+                                <div class="row justify-content-center">
+                                    <iframe src="{{ asset('uploads/files/'.$blog->files) }}" width="50%" height="800">
+                                            This browser does not support PDFs. Please download the PDF to view it: <a href="{{ asset('uploads/files/'.$blog->files) }}">Download PDF</a>
+                                    </iframe>
                                 </div>
                                 @endif
-                                @endforeach
-                                @endisset
 
+
+
+                                @if(!$blog->gallaryimage == null)
+
+                                <div class="masonry-thumbs grid-container grid-5" data-big="1" data-lightbox="gallery">
+                                    @php
+                                        $galaryimage = explode("|", $blog->gallaryimage);
+                                    @endphp
+                                    @foreach ($galaryimage as $key => $images)
+                                    <a class="grid-item" href="{{asset('uploads/gallary_image/'.$images)}}" data-lightbox="gallery-item"><img src="{{asset('uploads/gallary_image/'.$images)}}" alt="Gallery Thumb 1"></a>
+                                    @endforeach
+                                </div>
+                                @endif
+
+
+                                <div class="line"></div>
+
+                                <h4>Related Posts:</h4>
+
+                                <div class="related-posts row posts-md col-mb-30">
+                                    @isset($blogcategoryposts)
+                                    @foreach ($blogcategoryposts as $blogcategorypost)
+                                    @if ($blogcategorypost->id != $blog->id)
+                                    <div class="entry col-12 col-md-4">
+                                        <div class="grid-inner row align-items-center gutter-20">
+                                            <div class="col-4">
+                                                <div class="entry-image">
+                                                    <a href="{{route('blog.details',$blogcategorypost->slug)}}"><img src="{{asset('uploads/postphoto/'.$blogcategorypost->image)}}" alt="Blog Single"></a>
+                                                </div>
+                                            </div>
+                                            <div class="col-8">
+                                                <div class="entry-title title-xs">
+                                                    <h3><a href="{{route('blog.details',$blogcategorypost->slug)}}">{{$blogcategorypost->title}}</a></h3>
+                                                </div>
+                                                {{-- <div class="entry-meta">
+                                                    <ul>
+                                                        <li><i class="icon-calendar3"></i> {{ \Carbon\Carbon::parse($blogcategorypost->created_at)->isoFormat('Do MMM YYYY')}}</li>
+                                                        <li><a href="#"><i class="icon-comments"></i> 12</a></li>
+                                                    </ul>
+                                                </div> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                    @endforeach
+                                    @endisset
+
+                                </div>
                             </div>
 
                         </div>
+                        </br
 
             @endisset
 
@@ -417,7 +414,7 @@
 
                             <div class="single-post mb-0">
 
-                                <div class="entry clearfix">
+                                <div class="container-sm">
 
                                     <div class="entry-title">
                                         <h2>{{$job->title}}</h2>
@@ -476,11 +473,10 @@
 
                             </div>
 
-                        </div>
-
 
                     @endisset
 
+            </div>
             </div>
 
 

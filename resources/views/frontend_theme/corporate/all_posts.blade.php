@@ -11,10 +11,16 @@
 @isset($alljobs)
 @include('frontend_theme.corporate.front_layout.vertical.banner',['alljobs'=>$alljobs])
 @endisset
+@isset($servicecategory)
+@include('frontend_theme.corporate.front_layout.vertical.banner',['servicecategory'=>$servicecategory])
+@endisset
+@isset($pricecategories)
+@include('frontend_theme.corporate.front_layout.vertical.banner',['pricecategories'=>$pricecategories])
+@endisset
 
 
 
-            @if ($page->rightsidebar_id == 0 && $page->leftsidebar_id == 0)
+        @if ($page->rightsidebar_id == 0 && $page->leftsidebar_id == 0)
         <div class="postcontent col-lg-12">
         @elseif(!$page->rightsidebar_id == 0 && $page->leftsidebar_id == 0)
         <div class="postcontent col-lg-9">
@@ -26,6 +32,181 @@
 
     </br>
 </br>
+
+
+                @isset($servicecategoryposts)
+
+                <div class="container-sm">
+                    <style>
+                        .single-service {
+                            margin-bottom: 30px;
+                            position: relative;
+                        }
+                        .single-service::after {
+                            content: "";
+                            position: absolute;
+                            top: -2px;
+                            left: -2px;
+                            right: 100%;
+                            bottom: 100%;
+                            border-top: 2px solid #25d06f;
+                            border-left: 2px solid #25d06f;
+                            visibility: hidden;
+                            z-index: -10;
+                            -webkit-transition: .5s;
+                            transition: .5s;
+                        }
+
+                        .single-service::before {
+                            content: "";
+                            position: absolute;
+                            bottom: -2px;
+                            right: -2px;
+                            left: 100%;
+                            top: 100%;
+                            border-right: 2px solid #25d06f;
+                            border-bottom: 2px solid #25d06f;
+                            visibility: hidden;
+                            z-index: -10;
+                            -webkit-transition: .5s;
+                            transition: .5s;
+                        }
+
+                        .single-service:hover::after {
+                            visibility: visible;
+                            right: 0px;
+                            bottom: 0px;
+                        }
+
+                        .single-service:hover::before {
+                            visibility: visible;
+                            left: -2px;
+                            top: -2px;
+                        }
+
+                        .single-service .service-img-wrapper {
+                            overflow: hidden;
+                        }
+
+                        .single-service img {
+                            -webkit-transition: .5s;
+                            transition: .5s;
+                        }
+
+                        .single-service:hover img {
+                            -webkit-transform: scale(1.2, 1.2);
+                            transform: scale(1.2, 1.2);
+                        }
+
+                        .service-section .col-md-6:last-child .single-service {
+                            margin-bottom: 0;
+                        }
+
+                        .service-section .col-md-6:nth-last-child(2) .single-service {
+                            margin-bottom: 0;
+                        }
+
+                        .service-img-wrapper img {
+                            width: 100%;
+                        }
+                        </style>
+
+                        <div class="row">
+                            @foreach ($servicecategoryposts as $key=> $servicecategorypost)
+                            <div class="col-md-4">
+                                <div class="single-service">
+                                   <div class="service-img-wrapper">
+                                      <img src="{{asset('uploads/servicephoto/'.$servicecategorypost->image)}}" alt="">
+                                   </div>
+                                   <div class="service-txt">
+
+                                     <h4 class="service-title"><a  href="{{route('service.details',$servicecategorypost->slug)}}">{{strlen($servicecategorypost->title) > 18 ? substr($servicecategorypost->title, 0, 18) . '...' : $servicecategorypost->title}}</a></h4>
+
+
+                                     <div class="entry-content">
+                                        <p> {{Str::limit($servicecategorypost->excerpt , 100)}}</p>
+                                        <a href="{{route('service.details',$servicecategorypost->slug)}}" class="more-link">Read More</a>
+                                    </div>
+
+
+                                   </div>
+                                </div>
+                             </div>
+                            @endforeach
+                        </div>
+                </div>
+
+                @endisset
+
+
+                @isset($pricecategories)
+                <div class="container-sm">
+                    <div class="row pricing col-mb-30 mb-4">
+                        @foreach ($pricecategories as $key => $pricecategory)
+                        <div class="col-md-4">
+                            <div class="pricing-box pricing-simple p-5 {{($key%2 == 0) ? 'bg-danger' : 'bg-primary'}} dark text-center">
+                                <div class="pricing-title">
+                                    <span>Try Now</span>
+                                    <h3>{{$pricecategory->name}}</h3>
+                                </div>
+                                <div class="pricing-action">
+                                    <a href="{{route('all.price',$pricecategory->slug)}}" class="btn btn-light btn-lg">Get Started</a>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endisset
+
+
+                @isset($alljobs)
+                <div class="container-sm">
+                    <div class="row">
+
+                        @foreach ($alljobs as $alljob)
+                        <div class="col-md-6" style="margin-bottom: 20px;">
+                            <div class="grid-inner row align-items-center g-0 p-4" style="background: #f7f7f7;">
+                                {{-- <div class="col-md-4 mb-md-0">
+                                    <a href="#" class="entry-image">
+                                        <img src="images/events/thumbs/1.jpg" alt="Inventore voluptates velit totam ipsa">
+                                        <div class="entry-date">10<span>Apr</span></div>
+                                    </a>
+                                </div> --}}
+                                <div class="col-md-12 ps-md-4">
+                                    <div class="entry-title title-xs">
+                                        <h3><a href="{{route('career.details',$alljob->slug)}}">{{$alljob->title}}</a></h3>
+                                            <h4 style="background-color: #e0f5d7;
+                                                       border-radius: 20px;
+                                                       padding: 5px 15px;
+                                                       color: #449626;
+                                                       text-transform: capitalize;
+                                                       font-size: 14px;
+                                                       font-weight: 500;
+                                                       display: inline-block;
+                                                       margin-bottom: 16px;
+                                                       ">{{$alljob->employement_status}}</h4>
+                                    </div>
+                                    <div class="entry-meta">
+                                        <ul>
+                                            <li>Deadline: <a href="#"><i class="icon-time"></i>{{ \Carbon\Carbon::parse($alljob->application_deadline)->isoFormat('Do MMM YYYY')}}</a></li>
+                                            <li><a href="#"><i class="icon-map-marker2"></i> Melbourne</a></li>
+                                            <li>Vacancy : {{$alljob->vacancy}}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="entry-content">
+                                        <a href="#" class="btn btn-secondary btn-sm" disabled="disabled">Buy Tickets</a> <a href="#" class="btn btn-danger btn-sm">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+
+                    </div>
+                </div>
+                @endisset
+
+
 
             <!-- Portfolio Items
             ============================================= -->
@@ -56,57 +237,9 @@
                 @endforeach
                 @endisset
 
-                @isset($servicecategoryposts)
-                <div class="row col-mb-50">
-                    @foreach ($servicecategoryposts as $key=> $servicecategorypost)
-                    <div class="col-md-3">
-                        <div class="feature-box media-box">
-                            <div class="fbox-media">
-                                <img src="{{asset('uploads/servicephoto/'.$servicecategorypost->image)}}" alt="Why choose Us?">
-                            </div>
-                            <div class="fbox-content px-0">
-                               <h3><a href="{{route('service.details',$servicecategorypost->slug)}}">{{$servicecategorypost->title}}</a></h3>
-                                <p>{!!Str::limit($servicecategorypost->body, 150)!!}</p>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-                @endisset
 
-                @isset($pricecategoryposts)
-                <div class="row col-mb-50">
-                    @foreach ($pricecategoryposts as $key=> $pricecategorypost)
-                    <div class="col-sm-6 col-lg-4">
 
-                        <div class="pricing-box pricing-simple px-5 py-4 bg-light text-center text-md-start">
-                            <div class="pricing-title">
-                                <span class="text-danger">Most Popular</span>
-                                <h3>{{$pricecategorypost->title}}</h3>
-                            </div>
-                            <div class="pricing-price">
-                                <span class="price-unit">&euro;</span>{{$pricecategorypost->price}}<span class="price-tenure">{{$pricecategorypost->duration}}</span>
-                            </div>
-                            <div class="pricing-features">
-                                {{-- <ul class="iconlist">
-                                    <li><i class="icon-check text-smaller"></i> <strong>Premium</strong> Plugins</li>
-                                    <li><i class="icon-check text-smaller"></i> <strong>SEO</strong> Features</li>
-                                    <li><i class="icon-check text-smaller"></i> <strong>Full</strong> Access</li>
-                                    <li><i class="icon-check text-smaller"></i> <strong>100</strong> User Accounts</li>
-                                    <li><i class="icon-check text-smaller"></i> <strong>1 Year</strong> License</li>
-                                    <li><i class="icon-check text-smaller"></i> <strong>24/7</strong> Support</li>
-                                </ul> --}}
-                                {!!$pricecategorypost->body!!}
-                            </div>
-                            <div class="pricing-action">
-                                <a href="#" class="btn btn-danger btn-lg">Get Started</a>
-                            </div>
-                        </div>
 
-                    </div>
-                    @endforeach
-                </div>
-                @endisset
 
 
                 @isset($blogcategoryposts)
@@ -180,71 +313,6 @@
                 </div>
                 @endisset
 
-
-                @isset($alljobs)
-                <div class="row">
-
-                    @foreach ($alljobs as $alljob)
-                    <div class="col-md-6" style="margin-bottom: 20px;">
-                        <div class="grid-inner row align-items-center g-0 p-4" style="background: #f7f7f7;">
-                            {{-- <div class="col-md-4 mb-md-0">
-                                <a href="#" class="entry-image">
-                                    <img src="images/events/thumbs/1.jpg" alt="Inventore voluptates velit totam ipsa">
-                                    <div class="entry-date">10<span>Apr</span></div>
-                                </a>
-                            </div> --}}
-                            <div class="col-md-12 ps-md-4">
-                                <div class="entry-title title-xs">
-                                    <h3><a href="{{route('career.details',$alljob->slug)}}">{{$alljob->title}}</a></h3>
-                                        <h4 style="background-color: #e0f5d7;
-                                                   border-radius: 20px;
-                                                   padding: 5px 15px;
-                                                   color: #449626;
-                                                   text-transform: capitalize;
-                                                   font-size: 14px;
-                                                   font-weight: 500;
-                                                   display: inline-block;
-                                                   margin-bottom: 16px;
-                                                   ">{{$alljob->employement_status}}</h4>
-                                </div>
-                                <div class="entry-meta">
-                                    <ul>
-                                        <li>Deadline: <a href="#"><i class="icon-time"></i>{{ \Carbon\Carbon::parse($alljob->application_deadline)->isoFormat('Do MMM YYYY')}}</a></li>
-                                        <li><a href="#"><i class="icon-map-marker2"></i> Melbourne</a></li>
-                                        <li>Vacancy : {{$alljob->vacancy}}</li>
-                                    </ul>
-                                </div>
-                                <div class="entry-content">
-                                    <a href="#" class="btn btn-secondary btn-sm" disabled="disabled">Buy Tickets</a> <a href="#" class="btn btn-danger btn-sm">Read More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-
-                </div>
-
-                @endisset
-
-                @isset($pricecategories)
-
-                <div class="row pricing col-mb-30 mb-4">
-                    @foreach ($pricecategories as $key => $pricecategory)
-                    <div class="col-md-6 col-lg-4">
-                        <div class="pricing-box pricing-simple p-5 {{($key%2 == 0) ? 'bg-danger' : 'bg-primary'}} dark text-center">
-                            <div class="pricing-title">
-                                <span>Try Now</span>
-                                <h3>{{$pricecategory->name}}</h3>
-                            </div>
-                            <div class="pricing-action">
-                                <a href="{{route('all.price',$pricecategory->slug)}}" class="btn btn-light btn-lg">Get Started</a>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-
-                @endisset
 
 
 

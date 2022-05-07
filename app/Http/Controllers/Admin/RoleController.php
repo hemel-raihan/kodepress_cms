@@ -129,11 +129,12 @@ class RoleController extends Controller
 
     public function autocomplete(Request $request)
     {
+        $role = Role::find($request->id);
         $query = $request->input('query');
         //$search_news = Page::where('title','LIKE',"%$query%")->where('status',1)->get();
 
         $search_news = Module::where('name','LIKE','%'.$query.'%')->get();
         $modules = Module::with('permissions')->get();
-        return view('backend.admin.roles.form',compact('search_news','query','modules'));
+        return view('backend.admin.roles.form',compact('search_news','query','modules','role'));
     }
 }

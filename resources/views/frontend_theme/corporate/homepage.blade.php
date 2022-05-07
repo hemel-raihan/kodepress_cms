@@ -89,7 +89,8 @@
                                         </ul>
                                     </div>
                                     <div class="entry-content">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, asperiores quod est tenetur in. Eligendi, deserunt, blanditiis est quisquam doloribus.</p>
+                                        {{-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, asperiores quod est tenetur in. Eligendi, deserunt, blanditiis est quisquam doloribus.</p> --}}
+                                        <p>{!!Str::limit($blogpost->desc, 70)!!}</p>
                                         <a href="{{route('blog.details',$blogpost->slug)}}" class="more-link">Read More</a>
                                     </div>
                                 </div>

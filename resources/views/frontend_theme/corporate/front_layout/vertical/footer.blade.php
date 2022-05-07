@@ -373,8 +373,6 @@
                     </div>
 
                 </div>
-
-
             </div>
 
         </div><!-- .footer-widgets-wrap end -->

@@ -35,7 +35,9 @@
                             <div class="col-md-12">
 
                                 <form class="top-search-form" method="GET" action="{{route('admin.role.search')}}">
+                                    <input type="hidden" name="id" value="{{$role->id}}">
                                     <input type="text" name="query" class="form-control" value="" placeholder="Search Permission Modules here" autocomplete="off">
+                                    <button style="margin-left: 40%;" type="submit" class="btn btn-primary">search</button>
                                 </form>
 
 

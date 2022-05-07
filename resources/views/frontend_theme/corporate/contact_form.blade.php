@@ -9,19 +9,15 @@
     $setting  = \App\Models\Admin\Setting::where([['id',1]])->orderBy('id','desc')->first();
 @endphp
 
-<div class="container-sm">
-                {{-- <div class="single-post mb-0" style="width: 80%; margin-left:10%;"> --}}
+
                     <div class="single-post mb-0" >
 
-                    <!-- Single Post
-                    ============================================= -->
-                    <div class="entry clearfix">
+                    <div class="container-sm">
 
 
                     <div class="center mb-5">
                         <h1 class="fw-bold display-4">Contact Us..</h1>
                     </div>
-                    {{-- <div class="form-widget" data-loader="button" data-alert-type="inline"> --}}
 
                         <div class="row">
                             <div class="col-md-6">
@@ -56,25 +52,15 @@
                                     </div>
                                 </br>
                                 </br>
-                                    {{-- <div class="result-section center">
-                                        <div class="form-result"></div>
-                                        <a class="btn w-100 text-white btn-danger rounded-3 py-3 fw-semibold text-uppercase mt-3 button-back">Thank You.</a>
-                                    </div> --}}
                                 </form>
                             </div>
                             <div class="col-md-6">
                                 <iframe src="{{$setting->map}}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                             </div>
                         </div>
-
-
-
-
-
-
+                    </div>
                 </div>
-    </div>
-</div>
+
 
 @endsection()
 

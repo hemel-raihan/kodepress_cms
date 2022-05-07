@@ -23,7 +23,7 @@ class MenuitemController extends Controller
 {
     public function index($id)
     {
-        Gate::authorize('app.front.menuitems.widgetbuilder');
+        Gate::authorize('app.front.menus.widgetbuilder');
         $menu = Frontmenu::with('menuItems')->findOrFail($id);
         $auth = Auth::guard('admin')->user();
         $pages = Page::all();
