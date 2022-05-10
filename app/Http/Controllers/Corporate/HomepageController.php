@@ -170,20 +170,19 @@ class HomepageController extends Controller
         return view('frontend_theme.corporate.all_posts',compact('portfoliocategoryposts','portfoliocategory','page'));
     }
 
-    public function portfoliodetails($id)
+    public function portfoliodetails($slug)
     {
 
         $page = Custompage::where([['type','=','main-page'],['status','=',true]])->orderBy('id','desc')->first();
-        $portfolio = Portfolio::find($id);
-        foreach($portfolio->portfoliocategories as $categories)
-        {
-            $portfolio_id = $categories->id;
-        }
-
-        $portfoliocategory = Portfoliocategory::find($portfolio_id);
-        $portfoliocategoryposts = $portfoliocategory->portfolios()->get();
+        $portfolio = Portfolio::where('slug',$slug)->first();
+        // foreach($portfolio->portfoliocategories as $categories)
+        // {
+        //     $portfolio_id = $categories->id;
+        // }
+        // $portfoliocategory = Portfoliocategory::find($portfolio_id);
+        // $portfoliocategoryposts = $portfoliocategory->portfolios()->get();
         Artisan::call('cache:clear');
-        return view('frontend_theme.corporate.posts_singlepage',compact('portfolio','portfoliocategoryposts','page'));
+        return view('frontend_theme.corporate.posts_singlepage',compact('portfolio','page'));
     }
 
     public function services($id)

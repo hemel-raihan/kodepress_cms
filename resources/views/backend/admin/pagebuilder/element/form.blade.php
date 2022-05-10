@@ -138,12 +138,14 @@
                         <option value="Job Category" {{($element->module_type == 'Job Category') ? 'selected' : ''}} >Job Category</option>
                         <option value="Job_Category_post" {{($element->module_type == 'Job_Category_post') ? 'selected' : ''}} >Category Wise Job</option>
                         <option value="Job Post" {{($element->module_type == 'Job Post') ? 'selected' : ''}} >Job Post</option>
-                        <option value="Portfolio Category" {{($element->module_type == 'Portfolio Category') ? 'selected' : ''}} >Portfolio Category</option>
+                        {{-- <option value="Portfolio Category" {{($element->module_type == 'Portfolio Category') ? 'selected' : ''}} >Portfolio Category</option> --}}
                         <option value="Portfolio Post" {{($element->module_type == 'Portfolio Post') ? 'selected' : ''}} >Portfolio Post</option>
                         <option value="Price-Table Category" {{($element->module_type == 'Price-Table Category') ? 'selected' : ''}} >Price-Table Category</option>
                         <option value="Price-Table Post" {{($element->module_type == 'Price-Table Post') ? 'selected' : ''}} >Price-Table Post</option>
+                        <option value="Team Section" {{($element->module_type == 'Team Section') ? 'selected' : ''}} >Team Section</option>
                         <option value="Client List" {{($element->module_type == 'Client List') ? 'selected' : ''}} >Client List</option>
                         <option value="Counter Up" {{($element->module_type == 'Counter Up') ? 'selected' : ''}} >Counter Up</option>
+                        <option value="Gallery" {{($element->module_type == 'Gallery') ? 'selected' : ''}} >Gallery</option>
 					</select>
                     @else
                     <label class="form-label" for="type">Select Module Type</label>
@@ -163,12 +165,14 @@
                         <option value="Job Category">Job Category</option>
                         <option value="Job_Category_post">Category Wise Job</option>
                         <option value="Job Post">Job Post</option>
-                        <option value="Portfolio Category">Portfolio Category</option>
+                        {{-- <option value="Portfolio Category">Portfolio Category</option> --}}
                         <option value="Portfolio Post">Portfolio Post</option>
                         <option value="Price-Table Category">Price-Table Category</option>
                         <option value="Price-Table Post">Price-Table Post</option>
+                        <option value="Team Section">Team Section</option>
                         <option value="Client List">Client List</option>
                         <option value="Counter Up">Counter Up</option>
+                        <option value="Gallery">Gallery</option>
 					</select>
                     @endisset
 				</div>

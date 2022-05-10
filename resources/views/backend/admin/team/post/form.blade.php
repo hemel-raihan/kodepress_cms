@@ -93,7 +93,7 @@
 								<a href="{{route('admin.teamposts.index')}}" class="btn btn-primary btn-icon text-white me-2">
 									<span>
 										{{-- <i class="fe fe-minus"></i> --}}
-									</span> Back To PostList
+									</span> Back To Team List
 								</a>
 								{{-- <a href="#" class="btn btn-success btn-icon text-white">
 									<span>
@@ -115,7 +115,7 @@
 		<div class="col-lg-9 col-xl-9 col-md-12 col-sm-12">
 			<div class="card">
 				<div class="card-header">
-					<h3 class="card-title">Create Team Post</h3>
+					<h3 class="card-title">Create Team Member</h3>
 				</div>
 				<div class="card-body">
 
@@ -130,8 +130,8 @@
                     @endif
 
 					<div class="form-group">
-						<label for="exampleInputname">Team Name</label>
-						<input type="text" class="form-control @error('name') is-invalid @enderror" value="{{$teampost->name ?? old('name')}}" name="name" id="" placeholder="Team Name">
+						<label for="exampleInputname">Name</label>
+						<input type="text" class="form-control @error('name') is-invalid @enderror" value="{{$teampost->name ?? old('name')}}" name="name" id="" placeholder="Name">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{$message}}</strong>
@@ -141,7 +141,7 @@
 
                     <div class="form-group">
 						<label for="exampleInputname">Designation</label>
-						<input type="text" class="form-control @error('designation') is-invalid @enderror" value="{{$teampost->designation ?? old('designation')}}" name="designation" id="" placeholder="Team Designation">
+						<input type="text" class="form-control @error('designation') is-invalid @enderror" value="{{$teampost->designation ?? old('designation')}}" name="designation" id="" placeholder="Member Designation">
                         @error('designation')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{$message}}</strong>
@@ -149,39 +149,34 @@
                         @enderror
 					</div>
 
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="exampleInputname">Facebook</label>
+                                <input type="text" class="form-control " value="{{$teampost->facebook ?? old('facebook')}}" name="facebook" id="" placeholder="Enter Facebook Url">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="exampleInputname">Twitter</label>
+                                <input type="text" class="form-control " value="{{$teampost->twitter ?? old('twitter')}}" name="twitter" id="" placeholder="Enter Twitter Url">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="exampleInputname">Instagram</label>
+                                <input type="text" class="form-control " value="{{$teampost->instagram ?? old('instagram')}}" name="instagram" id="" placeholder="Enter Instagram Url">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="exampleInputname">Linkedin</label>
+                                <input type="text" class="form-control " value="{{$teampost->linkedin ?? old('linkedin')}}" name="linkedin" id="" placeholder="Enter Linkedin Url">
+                            </div>
+                        </div>
+                    </div>
 
 
-					<div class="form-group">
-						<label for="exampleInputContent">Post Description</label>
-						<div class="ql-wrapper ql-wrapper-demo bg-light">
-							<!-- <div id="quillEditor">
-
-							</div> -->
-                            {{-- <textarea style="height: 200px;" class="form-control" id="" name="body">{{$post->body ?? old('body')}}</textarea> --}}
-
-                            <textarea name="body" class="my-editor form-control" id="editor" style="height: 200px;" cols="30" rows="10">{!!$teampost->body ?? old('body')!!}</textarea>
-
-                            {{-- <div id="toolbar-container"></div>
-                            <div id="editor" style="height: 300px">
-
-                            </div> --}}
-
-
-
-						</div>
-					</div>
-
-
-                    {{-- <input type="radio" name="link" checked id="test2">
-                    <label for="css">Feature Image</label>
-                    <input type="radio" name="link" id="test1">
-                    <label for="html">Youtube Link</label> --}}
-
-
-                    {{-- <div class="form-group youtube" style="display:none">
-						<label for="exampleInputname">Youtube Link</label>
-						<input type="text" class="form-control" value="{{$post->youtube_link ?? old('youtube_link')}}" name="youtube_link" id="youtube_link" placeholder="Youtube Video Link">
-					</div> --}}
 
 
 
@@ -206,7 +201,7 @@
 
 			<div class="card shadow-none border">
 				<div class="card-header">
-					<h5 class="card-title">Parent Category</h5>
+					<h5 class="card-title">Choose Rank Category</h5>
 				</div>
 				<div class="card-body" style="padding:2px;">
 					<div class="transfer">
@@ -324,15 +319,9 @@
                     @endisset
 
                     <div class="form-group featur">
-						<label class="form-label">Feature Image</label>
+						<label class="form-label">Image</label>
 						<!-- <input id="demo" type="file" name="image" accept=".jpg, .png, image/jpeg, image/png" multiple="" class="ff_fileupload_hidden"> -->
                         <input type="file" class="dropify form-control" data-default-file="{{ isset($teampost) ? asset('uploads/teamphoto/'.$teampost->image) : '' }}" name="image">
-					</div>
-
-                    <div class="form-group">
-						<label class="form-label">File</label>
-						<input type="file" data-height="100" name="files" class="dropify" data-default-file="{{ isset($teampost) ? asset('uploads/teamfiles/'.$teampost->files) : ''}}" data-bs-height="180"  />
-
 					</div>
 
 				</div>

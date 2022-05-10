@@ -10,6 +10,7 @@
                 <div class="container-sm">
                 <div class="main-div">
                     <header id="header" style="background: {{$navbar->background_color}};"  class=" header-size-sm" data-sticky-shrink="false">
+                        @include('frontend_theme.corporate.front_layout.vertical.topbar')
                         {{-- <div class="" > --}}
                             <div style="margin-left: {{$navbar->left_margin}}; margin-right: {{$navbar->right_margin}};" class=" header-row flex-column flex-lg-row justify-content-center justify-content-lg-start">
 
@@ -145,6 +146,7 @@
             @else
 
             <header id="header" style="background: {{$navbar->background_color}}; background-image: url({{asset('assets/frontend/images/banner.jpg')}});" class=" header-size-sm" data-sticky-shrink="false">
+                @include('frontend_theme.corporate.front_layout.vertical.topbar')
                 <div class="" >
                     <div style="margin-left: {{$navbar->left_margin}}; margin-right: {{$navbar->right_margin}};" class=" header-row flex-column flex-lg-row justify-content-center justify-content-lg-start">
 
@@ -281,6 +283,7 @@
                 <div class="container-sm">
                 <div class="main-div">
                     <header id="header" class="full-header" style="background: {{$navbar->background_color}};">
+                        @include('frontend_theme.corporate.front_layout.vertical.topbar')
                         <div id="header-wrap" style="background: {{$navbar->background_color}};">
                             <div class="">
                                 <div class="header-row" style="margin-left: {{$navbar->left_margin}}; margin-right: {{$navbar->right_margin}};">
@@ -436,6 +439,7 @@
             @else
 
             <header id="header" class="full-header" style="background: {{$navbar->background_color}};">
+                @include('frontend_theme.corporate.front_layout.vertical.topbar')
                 <div id="header-wrap" style="background: {{$navbar->background_color}};">
                     <div class="">
                         <div class="header-row" style="margin-left: {{$navbar->left_margin}}; margin-right: {{$navbar->right_margin}};">

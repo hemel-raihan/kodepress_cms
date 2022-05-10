@@ -418,6 +418,11 @@ input[type="radio"][id^="cb"] {
 
                     @endisset
 
+                    <div class="form-group">
+                        <label for="exampleInputname">Title Color</label>
+                        <input type="text" class="form-control " value="{{$pagebuilder->title_color ?? old('title_color')}}" name="title_color" id="" placeholder="ex: #fff">
+                    </div>
+
                     @isset($pagebuilder)
                         <div class="form-group">
                             <label class="form-label">Select Container</label>

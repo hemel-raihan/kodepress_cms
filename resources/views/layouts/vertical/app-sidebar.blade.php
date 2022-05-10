@@ -173,12 +173,12 @@
                                 @if($auth->hasPermission('app.portfolio.posts.self'))
 								<li><a href="{{route('admin.portfolios.index')}}" class="slide-item">All Portfolios</a></li>
                                 @endif
-                                @if($auth->hasPermission('app.portfolio.categories.create'))
+                                {{-- @if($auth->hasPermission('app.portfolio.categories.create'))
 								<li><a href="{{route('admin.portfoliocategories.create')}}" class="slide-item">Add Portfolio Category</a></li>
                                 @endif
                                 @if($auth->hasPermission('app.portfolio.categories.self'))
                                 <li><a href="{{route('admin.portfoliocategories.index')}}" class="slide-item">All Categories</a></li>
-                                @endif
+                                @endif --}}
 							</ul>
 						</li>
                         @endif

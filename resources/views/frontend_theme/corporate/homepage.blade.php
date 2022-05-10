@@ -20,11 +20,11 @@
 
         @foreach ($page->pagebuilders()->with('elements')->get() as $pagebuilder)
         @if ($pagebuilder->status == 1)
-        <div class="{{($pagebuilder->container == 'container-sm') ? 'container-sm' : '' }} clearfix" style="background-color: {{$pagebuilder->background_color}}; background-image: url('{{asset('uploads/sectionpagephoto/'.$pagebuilder->background_img)}}');  border: {{$pagebuilder->border}} {{$pagebuilder->border_style}} {{$pagebuilder->border_color}};">
+        <div class="{{($pagebuilder->container == 'container-sm') ? 'container-sm' : '' }} clearfix" style="background-color: {{$pagebuilder->background_color}};  background-image: url('{{asset('uploads/sectionpagephoto/'.$pagebuilder->background_img)}}');  border: {{$pagebuilder->border}} {{$pagebuilder->border_style}} {{$pagebuilder->border_color}};">
 
             @if ($pagebuilder->title_show == 1)
             <div style="padding-top:60px;" class="heading-block center">
-                <h2>{{$pagebuilder->title}}</h2>
+                <h2 style="color: {{$pagebuilder->title_color}};">{{$pagebuilder->title}}</h2>
             </div>
             @endif
 
@@ -602,14 +602,14 @@
                         @endisset
 
 
-                        @elseif($element->module_type == 'Portfolio Category')
+                        {{-- @elseif($element->module_type == 'Portfolio Category')
                         @php
                             $portfoliocategories = App\Models\Portfolio\Portfoliocategory::all()->take($element->post_qty);
                         @endphp
 
                         @isset($portfoliocategories)
 
-                        <div id="oc-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="1" data-pagi="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-xl="4">
+                        <div id="oc-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-pagi="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-xl="4">
                             @foreach ($portfoliocategories as $portfoliocategory)
                             <div class="portfolio-item">
                                 <div class="portfolio-image">
@@ -625,8 +625,39 @@
                                     </div>
                                 </div>
                                 <div class="portfolio-desc">
-                                    <h3><a href="{{route('portfolio.posts',$portfoliocategory->id)}}">{{$portfoliocategory->name}}</a></h3>
-                                    {{-- <span><a href="#">Media</a>, <a href="#">Icons</a></span> --}}
+                                    <h3><a href="{{route('portfolio.posts',$portfoliocategory->slug)}}">{{$portfoliocategory->name}}</a></h3>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+
+                        @endisset --}}
+
+
+                        @elseif($element->module_type == 'Portfolio Post')
+                        @php
+                            $portfolioposts = App\Models\Portfolio\Portfolio::latest()->take($element->post_qty)->get();
+                        @endphp
+
+                        @isset($portfolioposts)
+
+                        <div id="oc-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-pagi="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-xl="{{($element->layout == 'One Column') ? 1 : (($element->layout == 'Two Column') ? 2 : (($element->layout == 'Three Column') ? 3 : 4)) }}">
+                            @foreach ($portfolioposts as $portfoliopost)
+                            <div class="portfolio-item">
+                                <div class="portfolio-image">
+                                    <a href="portfolio-single.html">
+                                        <img src="{{asset('uploads/portfoliophoto/thumb/'.$portfoliopost->image)}}" alt="Open Imagination">
+                                    </a>
+                                    <div class="bg-overlay">
+                                        <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-speed="350">
+                                            <a href="{{asset('uploads/portfoliophoto/'.$portfoliopost->image)}}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350" data-lightbox="image"><i class="icon-line-plus"></i></a>
+                                            {{-- <a href="portfolio-single.html" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a> --}}
+                                        </div>
+                                        <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-speed="350"></div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-desc">
+                                    <h3><a href="{{route('portfolio.details',$portfoliopost->slug)}}">{{$portfoliopost->title}}</a></h3>
                                 </div>
                             </div>
                             @endforeach
@@ -635,32 +666,39 @@
                         @endisset
 
 
-                        @elseif($element->module_type == 'Portfolio Post')
+                        @elseif($element->module_type == 'Team Section')
                         @php
-                            $portfolioposts = App\Models\Portfolio\Portfolio::all()->take($element->post_qty);
+                            $teamposts = App\Models\Teams\Teampost::all()->take($element->post_qty);
                         @endphp
 
-                        @isset($portfolioposts)
+                        @isset($teamposts)
 
-                        <div id="oc-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="1" data-pagi="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-xl="4">
-                            @foreach ($portfolioposts as $portfoliopost)
-                            <div class="portfolio-item">
-                                <div class="portfolio-image">
-                                    <a href="portfolio-single.html">
-                                        <img src="{{asset('uploads/portfoliophoto/'.$portfoliopost->image)}}" alt="Open Imagination">
-                                    </a>
-                                    <div class="bg-overlay">
-                                        <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-speed="350">
-                                            <a href="{{asset('uploads/portfoliophoto/'.$portfoliopost->image)}}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350" data-lightbox="image"><i class="icon-line-plus"></i></a>
-                                            <a href="portfolio-single.html" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
-                                        </div>
-                                        <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-speed="350"></div>
-                                    </div>
-                                </div>
-                                {{-- <div class="portfolio-desc">
-                                    <h3><a href="{{route('portfolio.details',$portfoliopost->id)}}">{{$portfoliopost->title}}</a></h3>
-                                </div> --}}
-                            </div>
+                        <div id="oc-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-pagi="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-xl="{{($element->layout == 'One Column') ? 1 : (($element->layout == 'Two Column') ? 2 : (($element->layout == 'Three Column') ? 3 : 4)) }}">
+                            @foreach ($teamposts as $teampost)
+                                <div class="team">
+									<div class="team-image">
+										<img src="{{asset('uploads/teamphoto/'.$teampost->image)}}" alt="John Doe">
+									</div>
+									<div class="team-desc team-desc-bg">
+										<div class="team-title"><h4>{{$teampost->name}}</h4><span>{{$teampost->designation}}</span></div>
+										<a href="{{$teampost->facebook}}" class="social-icon inline-block si-small si-light si-rounded si-facebook">
+											<i class="icon-facebook"></i>
+											<i class="icon-facebook"></i>
+										</a>
+										<a href="{{$teampost->twitter}}" class="social-icon inline-block si-small si-light si-rounded si-twitter">
+											<i class="icon-twitter"></i>
+											<i class="icon-twitter"></i>
+										</a>
+										<a href="{{$teampost->instagram}}" class="social-icon inline-block si-small si-light si-rounded si-instagram">
+											<i class="icon-instagram"></i>
+											<i class="icon-instagram"></i>
+										</a>
+                                        <a href="{{$teampost->linkedin}}" class="social-icon inline-block si-small si-light si-rounded si-linkedin">
+											<i class="icon-linkedin"></i>
+											<i class="icon-linkedin"></i>
+										</a>
+									</div>
+								</div>
                             @endforeach
                         </div>
 
@@ -792,6 +830,65 @@
                         </div>
 
                         @endisset
+
+
+
+                        @elseif($element->module_type == 'Gallery')
+                        @php
+                            $galleryphotos = App\Models\Gallery\Gallery::with('gallerycategory')->get()->take($element->post_qty);
+                        @endphp
+
+                        @if ($element->title)
+                        @if ($element->title_show == 1)
+                        <div class="heading-block">
+                            <h2 style="color: {{$element->title_color}};">{{$element->title}}</h2>
+                        </div>
+                        @endif
+                        @endif
+                        @isset($galleryphotos)
+                        @php
+                        $gallerycategories = \App\Models\Gallery\Gallerycategory::all();
+                        @endphp
+                        <div class="grid-filter-wrap">
+                            <ul class="grid-filter" data-container="#portfolio">
+                                <li class="activeFilter"><a href="#" data-filter="*">Show All</a></li>
+                                @foreach ($gallerycategories as $category)
+                                <li><a href="#" data-filter=".{{$category->id}}" >{{$category->name}}</a></li>
+                                @endforeach
+                            <div class="grid-shuffle rounded" data-container="#portfolio">
+                                <i class="icon-random"></i>
+                            </div>
+                        </div>
+
+
+                        <div id="portfolio" class="portfolio row grid-container gutter-20" data-layout="fitRows">
+                        @foreach ($galleryphotos as $photo)
+                        {{-- @foreach ($photo->gallerycategory as $category) --}}
+                        <article class="col-sm-6 col-lg-{{($element->layout == 'One Column') ? 12 : (($element->layout == 'Two Column') ? 6 : (($element->layout == 'Three Column') ? 4 : 3)) }} {{$photo->gallerycategory->id}}">
+                            <div class="grid-inner">
+                                <div class="portfolio-image">
+                                    <a href="portfolio-single.html">
+                                        <img src="{{asset('uploads/gallery_photo/thumb/'.$photo->image)}}" alt="Open Imagination">
+                                    </a>
+                                    <div class="bg-overlay">
+                                        <div class="bg-overlay-content dark" data-hover-animate="fadeIn">
+                                            <a href="{{asset('uploads/gallery_photo/'.$photo->image)}}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-lightbox="image" title="Image"><i class="icon-line-plus"></i></a>
+                                        </div>
+                                        <div class="bg-overlay-bg dark" data-hover-animate="fadeIn"></div>
+                                    </div>
+                                </div>
+                                {{-- <div class="portfolio-desc">
+                                    <h3>{{$photo->name}}</h3>
+                                </div> --}}
+                            </div>
+                        </article>
+                        {{-- @endforeach --}}
+                        @endforeach
+                        </div>
+
+                        @endisset
+
+
 
                         @elseif($element->module_type == 'Custome Element')
 

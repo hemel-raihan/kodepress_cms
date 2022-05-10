@@ -46,7 +46,9 @@ class GalleryController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
+            'name' => 'required',
             'image' => 'required|max:1024',
+            'categories' => 'required',
         ]);
 
         //get form image
@@ -59,8 +61,13 @@ class GalleryController extends Controller
             $imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
 
             $postphotoPath = public_path('uploads/gallery_photo');
+            $thumbphotoPath = public_path('uploads/gallery_photo/thumb');
             $img                     =       Image::make($image->path());
-            $img->resize(900, 600)->save($postphotoPath.'/'.$imagename);
+            $img->save($postphotoPath.'/'.$imagename);
+            // $img->resize(900, 600)->save($postphotoPath.'/'.$imagename);
+            $img->resize(350, 250, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($thumbphotoPath.'/'.$imagename);
 
         }
 
@@ -97,7 +104,7 @@ class GalleryController extends Controller
      */
     public function edit(Gallery $galleryphoto)
     {
-        
+
         $categories = Gallerycategory::all();
         return view('backend.admin.gallery.gallery_post.form',compact('galleryphoto','categories'));
     }
@@ -112,7 +119,9 @@ class GalleryController extends Controller
     public function update(Request $request, Gallery $galleryphoto)
     {
         $this->validate($request,[
+            'name' => 'required',
             'image' => 'max:1024',
+            'categories' => 'required',
         ]);
 
         //get form image
@@ -125,16 +134,22 @@ class GalleryController extends Controller
             $imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
 
             $postphotoPath = public_path('uploads/gallery_photo');
+            $thumbphotoPath = public_path('uploads/gallery_photo/thumb');
 
             $postphoto_path = public_path('uploads/gallery_photo/'.$galleryphoto->image);  // Value is not URL but directory file path
+            $thumbpostphoto_path = public_path('uploads/gallery_photo/thumb/'.$galleryphoto->image);
             if (file_exists($postphoto_path)) {
 
                 @unlink($postphoto_path);
+                @unlink($thumbpostphoto_path);
 
             }
 
            $img                     =       Image::make($image->path());
-            $img->resize(900, 600)->save($postphotoPath.'/'.$imagename);
+           $img->save($postphotoPath.'/'.$imagename);
+            $img->resize(350, 250, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($thumbphotoPath.'/'.$imagename);
 
         }
         else
@@ -165,9 +180,11 @@ class GalleryController extends Controller
     public function destroy(Gallery $galleryphoto)
     {
         $postphoto_path = public_path('uploads/gallery_photo/'.$galleryphoto->image);  // Value is not URL but directory file path
+        $thumbpostphoto_path = public_path('uploads/gallery_photo/thumb/'.$galleryphoto->image);
             if (file_exists($postphoto_path)) {
 
                 @unlink($postphoto_path);
+                @unlink($thumbpostphoto_path);
 
             }
 

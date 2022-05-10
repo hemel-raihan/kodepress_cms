@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Admin\Sidebar;
+use App\Models\Service\Service;
 use App\Models\Portfolio\Portfolio;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -26,22 +27,22 @@ class PortfolioController extends Controller
         $auth = Auth::guard('admin')->user();
         if(Auth::guard('admin')->user()->role_id == 1)
         {
-            $posts = Portfolio::with('portfoliocategories')->latest()->paginate(5);
+            $posts = Portfolio::latest()->paginate(5);
         }
         else
         {
-            $posts = Auth::guard('admin')->user()->portfolios()->with('portfoliocategories')->latest()->paginate(5);
+            $posts = Auth::guard('admin')->user()->portfolios()->latest()->paginate(5);
         }
         return view('backend.admin.portfolio.post.index',compact('posts','auth'));
     }
 
-    public function fetchportfolios()
-    {
-        $portfolios = Portfolio::all();
-        return response()->json([
-            'portfolios' => $portfolios,
-        ]);
-    }
+    // public function fetchportfolios()
+    // {
+    //     $portfolios = Portfolio::all();
+    //     return response()->json([
+    //         'portfolios' => $portfolios,
+    //     ]);
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -51,10 +52,11 @@ class PortfolioController extends Controller
     public function create()
     {
         Gate::authorize('app.portfolio.posts.create');
-        $categories = Portfoliocategory::with('childrenRecursive')->where('parent_id', '=', 0)->get();
+        $services = Service::get('title');
+        //$categories = Portfoliocategory::with('childrenRecursive')->where('parent_id', '=', 0)->get();
         // $subcat = Portfoliocategory::all();
         // $sidebars = Sidebar::all();
-        return view('backend.admin.portfolio.post.form',compact('categories'));
+        return view('backend.admin.portfolio.post.form',compact('services'));
     }
 
     /**
@@ -69,7 +71,7 @@ class PortfolioController extends Controller
         $this->validate($request,[
             'title' => 'required|unique:portfolios',
             'image' => 'max:1024',
-            'categories' => 'required',
+            // 'categories' => 'required',
         ]);
 
 
@@ -83,8 +85,10 @@ class PortfolioController extends Controller
         $imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
 
         $postphotoPath = public_path('uploads/portfoliophoto');
+        $thumbpostphotoPath = public_path('uploads/portfoliophoto/thumb');
         $img                     =       Image::make($image->path());
-        $img->resize(900, 600)->save($postphotoPath.'/'.$imagename);
+        $img->resize(600, 400)->save($thumbpostphotoPath.'/'.$imagename);
+        $img->save($postphotoPath.'/'.$imagename,60,'jpg');
 
     }
     else
@@ -167,19 +171,22 @@ class PortfolioController extends Controller
         'title' => $request->title,
         'slug' => $slug,
         'admin_id' => Auth::id(),
+        'client_name' => $request->client_name,
+        'service' => $request->service,
+        'start_date' => $request->start_date,
+        'submission_date' => $request->submission_date,
         'image' => $imagename,
         'gallaryimage'=>  implode("|",$images),
         'files' => $filename,
         'body' => $request->body,
         'status' => $status,
-        'is_approved' => $is_approved,
         'meta_title' => $request->meta_title,
         'meta_desc' => $request->meta_desc,
 
     ]);
 
     //for many to many
-    $portfolio->portfoliocategories()->attach($request->categories);
+    //$portfolio->portfoliocategories()->attach($request->categories);
 
 
     notify()->success("Portfolio Successfully created","Added");
@@ -228,10 +235,11 @@ class PortfolioController extends Controller
     public function edit(Portfolio $portfolio)
     {
         Gate::authorize('app.portfolio.posts.edit');
-        $categories = Portfoliocategory::with('childrenRecursive')->where('parent_id', '=', 0)->get();
+        $services = Service::get('title');
+        //$categories = Portfoliocategory::with('childrenRecursive')->where('parent_id', '=', 0)->get();
         // $subcat = Portfoliocategory::all();
         // $editsidebars = Sidebar::all();
-        return view('backend.admin.portfolio.post.form',compact('portfolio','categories'));
+        return view('backend.admin.portfolio.post.form',compact('portfolio','services'));
     }
 
     /**
@@ -247,7 +255,7 @@ class PortfolioController extends Controller
         $this->validate($request,[
             'title' => 'required',
             'image' => 'max:1024',
-            'categories' => 'required',
+            // 'categories' => 'required',
         ]);
 
         //get form image
@@ -260,7 +268,7 @@ class PortfolioController extends Controller
             $imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
 
             $postphotoPath = public_path('uploads/portfoliophoto');
-
+            $thumbpostphotoPath = public_path('uploads/portfoliophoto/thumb');
             $postphoto_path = public_path('uploads/portfoliophoto/'.$portfolio->image);  // Value is not URL but directory file path
             if (file_exists($postphoto_path)) {
 
@@ -269,7 +277,9 @@ class PortfolioController extends Controller
             }
 
            $img                     =       Image::make($image->path());
-            $img->resize(900, 600)->save($postphotoPath.'/'.$imagename);
+           $img->save($postphotoPath.'/'.$imagename,60,'jpg');
+           $img->resize(600, 400)->save($thumbpostphotoPath.'/'.$imagename);
+
 
         }
         else
@@ -365,18 +375,21 @@ class PortfolioController extends Controller
 
         $portfolio->update([
             'title' => $request->title,
-            'slug' => $request->slug,
+            'slug' => $slug,
             'admin_id' => Auth::id(),
+            'client_name' => $request->client_name,
+            'service' => $request->service,
+            'start_date' => $request->start_date,
+            'submission_date' => $request->submission_date,
             'image' => $imagename,
             'body' => $request->body,
             'status' => $status,
-            'is_approved' => $is_approved,
             'meta_title' => $request->meta_title,
             'meta_desc' => $request->meta_desc,
         ]);
 
         //for many to many
-        $portfolio->portfoliocategories()->sync($request->categories);
+        //$portfolio->portfoliocategories()->sync($request->categories);
 
 
         notify()->success("Portfolio Successfully Updated","Update");
@@ -421,7 +434,7 @@ class PortfolioController extends Controller
 
                 }
 
-        $portfolio->portfoliocategories()->detach();
+        //$portfolio->portfoliocategories()->detach();
 
         $portfolio->delete();
         notify()->success('Portfolio Deleted Successfully','Delete');

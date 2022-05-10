@@ -56,7 +56,6 @@
 										<th class="border-bottom-0">Name</th>
                                         <th class="border-bottom-0">Designation</th>
 										<th class="border-bottom-0">Category</th>
-                                        <th class="border-bottom-0">Published Date</th>
 										<th class="border-bottom-0">Status</th>
 										<th class="border-bottom-0">Action</th>
 
@@ -72,7 +71,6 @@
                                         {{$category->name}},
                                         @endforeach
                                         </td>
-                                        <td>{{$post->created_at->diffForHumans()}}</td>
 										<td>
                                             @if($post->status == true)
                                             <a href="{{route('admin.team.post.status',$post->id)}}" class="btn btn-green">Active</a>
@@ -108,6 +106,7 @@
 
 								</tbody>
 							</table>
+                            {{ $posts->links('vendor.pagination.custom') }}
 						</div>
 					</div>
 				</div>

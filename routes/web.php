@@ -67,7 +67,7 @@ Route::get('fetch-portfolios', 'Admin\Portfolio\PortfolioController@fetchportfol
 
 //for corporate theme
 Route::get('/portfolio/posts/{id}', 'Corporate\HomepageController@portfolios')->name('portfolio.posts');
-Route::get('/portfolio/details/{id}', 'Corporate\HomepageController@portfoliodetails')->name('portfolio.details');
+Route::get('/portfolio/details/{slug}', 'Corporate\HomepageController@portfoliodetails')->name('portfolio.details');
 
 Route::get('/service/posts/{id}', 'Corporate\HomepageController@services')->name('service.posts');
 Route::get('/service/details/{slug}', 'Corporate\HomepageController@servicedetails')->name('service.details');
@@ -189,8 +189,8 @@ Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin', 'middlewar
     Route::resource('services','Service\ServiceController');
     Route::get('services/{id}/status', 'Service\ServiceController@status')->name('service.status');
 
-    Route::resource('portfolios/portfoliocategories','Portfolio\CategoryController');
-    Route::get('portfolios/portfoliocategories/{id}/approve', 'Portfolio\CategoryController@approval')->name('portfolio.category.approve');
+    // Route::resource('portfolios/portfoliocategories','Portfolio\CategoryController');
+    // Route::get('portfolios/portfoliocategories/{id}/approve', 'Portfolio\CategoryController@approval')->name('portfolio.category.approve');
 
     Route::resource('portfolios','Portfolio\PortfolioController');
     Route::get('portfolios/{id}/status', 'Portfolio\PortfolioController@status')->name('portfolio.status');

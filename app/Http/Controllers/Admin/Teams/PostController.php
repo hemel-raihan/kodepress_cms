@@ -23,7 +23,7 @@ class PostController extends Controller
     {
         Gate::authorize('app.team.posts.self');
         $auth = Auth::guard('admin')->user();
-        $posts = Teampost::latest()->get();
+        $posts = Teampost::with('teamcategories')->latest()->paginate(5);
         return view('backend.admin.team.post.index',compact('posts','auth'));
     }
 
@@ -35,7 +35,7 @@ class PostController extends Controller
     public function create()
     {
         Gate::authorize('app.team.posts.create');
-        $categories = Teamcategory::where('parent_id', '=', 0)->get();
+        $categories = Teamcategory::with('childrenRecursive')->where('parent_id', '=', 0)->get();
         $subcat = Teamcategory::all();
         return view('backend.admin.team.post.form',compact('categories','subcat'));
     }
@@ -53,7 +53,6 @@ class PostController extends Controller
                 'name' => 'required',
                 'designation' => 'required',
                 'image' => 'required|max:1024',
-                'files' => 'mimes:pdf,doc,docx',
                 'categories' => 'required',
             ]);
 
@@ -69,26 +68,15 @@ class PostController extends Controller
 
             $postphotoPath = public_path('uploads/teamphoto');
             $img                     =       Image::make($image->path());
-            $img->resize(900, 600)->save($postphotoPath.'/'.$imagename);
-
-        }
-
-
-        //get form file
-        $file = $request->file('files');
-
-        if(isset($file))
-        {
-            $currentDate = Carbon::now()->toDateString();
-            $filename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$file->getClientOriginalExtension();
-            $destinationPath = public_path('uploads/teamfiles');
-
-            $file->move($destinationPath,$filename);
+            $img->resize(250, 280)->save($postphotoPath.'/'.$imagename);
+            // $img->resize(250, 300, function ($constraint) {
+            //         $constraint->aspectRatio();
+            //     })->save($postphotoPath.'/'.$imagename);
 
         }
         else
         {
-            $filename = null;
+            $imagename = null;
         }
 
         if(!$request->status)
@@ -107,9 +95,11 @@ class PostController extends Controller
             'designation' => $request->designation,
             'slug' => $slug,
             'image' => $imagename,
-            'files' => $filename,
-            'body' => $request->body,
             'status' => $status,
+            'facebook' => $request->facebook,
+            'twitter' => $request->twitter,
+            'instagram' => $request->instagram,
+            'linkedin' => $request->linkedin
 
         ]);
 
@@ -164,7 +154,7 @@ class PostController extends Controller
     public function edit(Teampost $teampost)
     {
         Gate::authorize('app.team.posts.edit');
-        $categories = Teamcategory::where('parent_id', '=', 0)->get();
+        $categories = Teamcategory::with('childrenRecursive')->where('parent_id', '=', 0)->get();
         $subcat = Teamcategory::all();
         return view('backend.admin.team.post.form',compact('teampost','categories','subcat'));
     }
@@ -182,7 +172,6 @@ class PostController extends Controller
         $this->validate($request,[
             'name' => 'required',
             'image' => 'max:1024',
-            'files' => 'mimes:pdf,doc,docx',
             'categories' => 'required',
         ]);
 
@@ -205,37 +194,15 @@ class PostController extends Controller
             }
 
            $img                     =       Image::make($image->path());
-            $img->resize(900, 600)->save($postphotoPath.'/'.$imagename);
+           $img->resize(250, 280)->save($postphotoPath.'/'.$imagename);
+        //    $img->resize(150, 300, function ($constraint) {
+        //     $constraint->aspectRatio();
+        //     })->save($postphotoPath.'/'.$imagename);
 
         }
         else
         {
             $imagename = $teampost->image;
-        }
-
-
-        //get form file
-        $file = $request->file('files');
-
-        if(isset($file))
-        {
-            $currentDate = Carbon::now()->toDateString();
-            $filename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$file->getClientOriginalExtension();
-            $destinationPath = public_path('uploads/teamfiles');
-
-
-            $file_path = public_path('uploads/teamfiles/'.$teampost->files);  // Value is not URL but directory file path
-            if (file_exists($file_path)) {
-
-                @unlink($file_path);
-
-            }
-            $file->move($destinationPath,$filename);
-
-        }
-        else
-        {
-            $filename = $teampost->files;
         }
 
         if(!$request->status)
@@ -251,9 +218,12 @@ class PostController extends Controller
             'name' => $request->name,
             'slug' => $request->slug,
             'image' => $imagename,
-            'files' => $filename,
             'body' => $request->body,
             'status' => $status,
+            'facebook' => $request->facebook,
+            'twitter' => $request->twitter,
+            'instagram' => $request->instagram,
+            'linkedin' => $request->linkedin
 
         ]);
 
@@ -284,13 +254,6 @@ class PostController extends Controller
             if (file_exists($postphoto_path)) {
 
                 @unlink($postphoto_path);
-
-            }
-
-        $postfile_path = public_path('uploads/teamfiles/'.$teampost->files);  // Value is not URL but directory file path
-            if (file_exists($postfile_path)) {
-
-                @unlink($postfile_path);
 
             }
 

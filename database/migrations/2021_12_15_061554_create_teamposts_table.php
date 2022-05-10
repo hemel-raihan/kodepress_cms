@@ -18,10 +18,13 @@ class CreateTeampostsTable extends Migration
             $table->string('name')->nullable();
             $table->string('designation')->nullable();
             $table->string('slug')->unique()->nullable();
-            $table->string('image')->default('default.png')->nullable();
+            $table->string('image')->nullable();
             $table->text('body')->nullable();
             $table->boolean('status')->default(false);
-            $table->string('files')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('linkedin')->nullable();
             $table->timestamps();
         });
     }

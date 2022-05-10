@@ -131,7 +131,7 @@
 
 					<div class="form-group">
 						<label for="exampleInputname">Portfolio Title</label>
-						<input type="text" class="form-control @error('title') is-invalid @enderror" value="{{$portfolio->title ?? old('title')}}" name="title" id="" placeholder="Portfolio Name">
+						<input type="text" class="form-control @error('title') is-invalid @enderror" value="{{$portfolio->title ?? old('title')}}" name="title" id="" placeholder="Portfolio Title">
                         @error('title')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{$message}}</strong>
@@ -139,6 +139,56 @@
                         @enderror
 					</div>
 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputname">Client Name</label>
+                                <input type="text" class="form-control" value="{{$portfolio->client_name ?? old('client_name')}}" name="client_name" id="" placeholder="Client Name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            @isset($portfolio)
+                            <div class="form-group">
+                                <label class="form-label">Service</label>
+                                <select name="service" class="form-control form-select select2" data-bs-placeholder="Select service">
+                                    <option value="">Select service</option>
+                                    @foreach ($services as $service)
+                                    <option value="{{$service->title}}" {{($portfolio->service == $service->title) ? 'selected' : ''}}>{{$service->title}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            @else
+                            <div class="form-group">
+                                <label class="form-label">Service</label>
+                                <select name="service" class="form-control form-select select2" data-bs-placeholder="Select service">
+                                    <option value="">Select servicer</option>
+                                    @foreach ($services as $service)
+                                    <option value="{{$service->title}}">{{$service->title}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            @endisset
+
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputname">Start Date</label>
+                                <input type="date" class="form-control" value="{{$portfolio->start_date ?? old('start_date') }}" name="start_date" id="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputname">Submission Date</label>
+                                <input type="date" class="form-control" value="{{$portfolio->submission_date ?? old('submission_date') }}" name="submission_date" id="">
+                            </div>
+                        </div>
+                    </div>
 
 
 
@@ -189,7 +239,7 @@
 		{{-- Right Side --}}
 		<div class="col-lg-3 col-xl-3 col-md-12 col-sm-12" style="float: left">
 
-			<div class="card shadow-none border">
+			{{-- <div class="card shadow-none border">
 				<div class="card-header">
 					<h5 class="card-title">Parent Category</h5>
 				</div>
@@ -200,9 +250,6 @@
 							<div class="transfer-double-content clearfix">
 
 								<div class="transfer-double-list transfer-double-list-1636878492751 tab-content-first-1636878492751 tab-content-active">
-									{{-- <div class="transfer-double-list-header">
-										<div class="transfer-double-list-search"><input class="transfer-double-list-search-input" type="text" id="groupListSearch_1636878492751" placeholder="Search" value="" /></div>
-									</div> --}}
 
                                     @isset($portfolio)
 
@@ -280,7 +327,7 @@
 					</div>
 				</div>
 
-			</div>
+			</div> --}}
 
 			<div class="card">
 				<div class="card-header">
@@ -339,9 +386,9 @@
 
 
 
-    {{-- <script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script> --}}
+    <script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
 
-    <script src="//cdn.ckeditor.com/4.17.1/full/ckeditor.js"></script>
+    {{-- <script src="//cdn.ckeditor.com/4.17.1/full/ckeditor.js"></script> --}}
 
 <script>
 	window.onload = function () {

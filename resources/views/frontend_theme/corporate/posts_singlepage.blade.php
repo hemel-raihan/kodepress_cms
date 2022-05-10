@@ -23,35 +23,68 @@
 
                         @isset($portfolio)
 
+                        <section id="page-title">
 
-                        {{-- <div class="row"> --}}
-						{{-- <div class="col-lg-8 portfolio-single-image"> --}}
-							<a href="#"><img src="{{asset('uploads/portfoliophoto/'.$portfolio->image)}}" alt="Image"></a>
-						{{-- </div><!-- .portfolio-single-image end --> --}}
+                            <div class="container clearfix">
+                                <h1>{{$portfolio->title}}</h1>
+                            </div>
 
-						<!-- Portfolio Single Content
-						============================================= -->
-						{{-- <div class="col-lg-4 portfolio-single-content"> --}}
+                        </section>
+                    </br>
+                        <div class="container-sm">
+                            <div class="row">
+                                <div class="col-lg-8 portfolio-single-image">
+                                    <a href="#"><img src="{{asset('uploads/portfoliophoto/'.$portfolio->image)}}" alt="Image"></a>
+                                </div><!-- .portfolio-single-image end -->
 
-							<!-- Portfolio Single - Description
-							============================================= -->
-							<div class="fancy-title title-bottom-border">
-								<h2>Project Info:</h2>
-							</div>
-							<p>{!!$portfolio->body!!}</p>
-							<!-- Portfolio Single - Description End -->
+                                <!-- Portfolio Single Content
+                                ============================================= -->
+                                <div class="col-lg-4 portfolio-single-content">
 
-							<div class="line"></div>
-
+                                    <!-- Portfolio Single - Description
+                                    ============================================= -->
+                                    <div class="fancy-title title-bottom-border">
+                                        <h2>Project Info:</h2>
 
 
-						{{-- </div><!-- .portfolio-single-content end --> --}}
+                                    </div>
+                                    <ul class="portfolio-meta bottommargin">
+                                        <li><span><i class="icon-user"></i>Client:</span> {{$portfolio->client_name}}</li>
+                                        <li><span><i class="icon-link"></i>Service:</span> {{$portfolio->service}}</li>
+                                        <li><span><i class="icon-calendar3"></i>Start Date:</span> {{ $portfolio->start_date }}</li>
+                                        <li><span><i class="icon-calendar3"></i>End Date:</span>{{ $portfolio->submission_date }}</li>
+                                    </ul>
 
-					{{-- </div> --}}
+                                    <!-- Portfolio Single - Description End -->
+
+                                    <div class="line"></div>
+
+
+
+                                </div><!-- .portfolio-single-content end -->
+
+                            </div>
+                            <p>{!!$portfolio->body!!}</p>
+
+                            <div class="line"></div>
+
+                            @if(!$portfolio->gallaryimage == null)
+
+                                <div class="masonry-thumbs grid-container grid-5" data-big="1" data-lightbox="gallery">
+                                    @php
+                                        $galaryimage = explode("|", $portfolio->gallaryimage);
+                                    @endphp
+                                    @foreach ($galaryimage as $key => $images)
+                                    <a class="grid-item" href="{{asset('uploads/portfoliogallary_image/'.$images)}}" data-lightbox="gallery-item"><img src="{{asset('uploads/portfoliogallary_image/'.$images)}}" alt="Gallery Thumb 1"></a>
+                                    @endforeach
+                                </div>
+                                @endif
+                        </div>
+
 
 					<div class="divider divider-center"><i class="icon-circle"></i></div>
 
-                    @isset($portfoliocategoryposts)
+                    {{-- @isset($portfoliocategoryposts)
                         <h4>Related Projects:</h4>
 					    <div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-pagi="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-lg="4">
                         @foreach ($portfoliocategoryposts as $portfoliocategorypost)
@@ -81,11 +114,14 @@
                         @endif
                         @endforeach
                       </div>
-                    @endisset
+                    @endisset --}}
                 @endisset
 
 
-                    @isset($service)
+                @isset($service)
+
+                <div class="container-sm">
+
 
                     {{-- <div class="col-lg-8 portfolio-single-image"> --}}
                         {{-- <a href="#"><img src="{{asset('uploads/servicephoto/'.$service->image)}}" alt="Image"></a> --}}
@@ -93,46 +129,45 @@
 
                     {{-- <div class="col-lg-4 portfolio-single-content"> --}}
 
-                        {{-- <div class="fancy-title title-bottom-border">
-                            <h2>Project Info:</h2>
-                        </div> --}}
-                        <p>{!!$service->body!!}</p>
+                    <p>{!!$service->body!!}</p>
 
 
-                        <div class="line"></div>
+                    <div class="line"></div>
 
 
-                 @isset($servicecategoryposts)
-                 <h4>Related Projects:</h4>
-                 <div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-pagi="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-lg="4">
-                 @foreach ($servicecategoryposts as $servicecategorypost)
-                 @if ($servicecategorypost->id != $service->id)
-                 <div class="oc-item">
-                     <div class="portfolio-item">
-                         <div class="portfolio-image">
-                             <a href="{{route('service.details',$servicecategorypost->slug)}}">
-                                 <img src="{{asset('uploads/servicephoto/'.$servicecategorypost->image)}}" alt="Open Imagination">
-                             </a>
-                             {{-- <div class="bg-overlay">
-                                 <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-speed="350">
-                                     <a href="{{asset('uploads/servicephoto/'.$servicecategorypost->image)}}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350" data-lightbox="image"><i class="icon-line-plus"></i></a>
-                                     <a href="#" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
-                                 </div>
-                                 <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-speed="350"></div>
-                             </div> --}}
-                         </div>
-                         <div class="portfolio-desc">
-                             <h3><a href="{{route('service.details',$servicecategorypost->slug)}}">{{$servicecategorypost->title}}</a></h3>
-                             <span>@foreach ($servicecategorypost->servicecategories as $category)
-                                 <a href="#">{{$category->name}}</a>
-                             @endforeach</span>
+                     @isset($servicecategoryposts)
+                     <h4>Related Projects:</h4>
+                     <div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-pagi="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-lg="4">
+                     @foreach ($servicecategoryposts as $servicecategorypost)
+                     @if ($servicecategorypost->id != $service->id)
+                     <div class="oc-item">
+                         <div class="portfolio-item">
+                             <div class="portfolio-image">
+                                 <a href="{{route('service.details',$servicecategorypost->slug)}}">
+                                     <img src="{{asset('uploads/servicephoto/'.$servicecategorypost->image)}}" alt="Open Imagination">
+                                 </a>
+                                 {{-- <div class="bg-overlay">
+                                     <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-speed="350">
+                                         <a href="{{asset('uploads/servicephoto/'.$servicecategorypost->image)}}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350" data-lightbox="image"><i class="icon-line-plus"></i></a>
+                                         <a href="#" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
+                                     </div>
+                                     <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-speed="350"></div>
+                                 </div> --}}
+                             </div>
+                             <div class="portfolio-desc">
+                                 <h3><a href="{{route('service.details',$servicecategorypost->slug)}}">{{$servicecategorypost->title}}</a></h3>
+                                 <span>@foreach ($servicecategorypost->servicecategories as $category)
+                                     <a href="#">{{$category->name}}</a>
+                                 @endforeach</span>
+                             </div>
                          </div>
                      </div>
-                 </div>
-                 @endif
-                 @endforeach
-                 </div><!-- .portfolio-carousel end -->
-                 @endisset
+                     @endif
+                     @endforeach
+                     </div><!-- .portfolio-carousel end -->
+                     @endisset
+
+                </div>
                 @endisset
 
 
@@ -268,7 +303,8 @@
                             </div>
 
                         </div>
-                        </br
+                    </div>
+                    </br
 
             @endisset
 
@@ -277,7 +313,7 @@
                 @isset($content)
 
                         <div class="single-post mb-0">
-
+                        <div class="container-sm">
                             <div class="entry clearfix">
 
                                 <div class="entry-title">
@@ -347,7 +383,7 @@
                                 <img src="{{ asset('frontend/images/pdf.png') }}" alt="001-converted (1)_compressed (1).pdf" class="file-icon" />
                                 Click here to View in new tab
                             </a>
-                        </br>
+                          </br>
                             <div class="row justify-content-center">
                                 <iframe src="{{ asset('uploads/contentfiles/'.$content->files) }}" width="50%" height="800">
                                         This browser does not support PDFs. Please download the PDF to view it: <a href="{{ asset('uploads/contentfiles/'.$content->files) }}">Download PDF</a>
@@ -403,7 +439,7 @@
                                 @endisset
 
                             </div>
-
+                        </div>
                         </div>
 
                     @endisset
@@ -476,7 +512,6 @@
 
                     @endisset
 
-            </div>
             </div>
 
 

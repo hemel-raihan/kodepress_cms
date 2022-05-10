@@ -97,6 +97,7 @@ class PagebuilderController extends Controller
             'background_color' => $background_color,
             'background_img' => $background_img,
             'title_show' => $title_show,
+            'title_color' => $request->title_color,
         ]);
         notify()->success("Section Successfully created","Added");
         return redirect()->route('admin.custompage.builder',$id);
@@ -169,23 +170,23 @@ class PagebuilderController extends Controller
             $status = 1;
         }
 
-        if(!$request->background_img)
-        {
-            $background_img = null;
-        }
-        else
-        {
-            $background_img = $imagename;
-        }
+        // if(!$request->background_img)
+        // {
+        //     $background_img = null;
+        // }
+        // else
+        // {
+        //     $background_img = $imagename;
+        // }
 
-        if(!$request->background_color)
-        {
-            $background_color = null;
-        }
-        else
-        {
-            $background_color = $request->background_color;
-        }
+        // if(!$request->background_color)
+        // {
+        //     $background_color = null;
+        // }
+        // else
+        // {
+        //     $background_color = $request->background_color;
+        // }
 
         if(!$request->title_show)
         {
@@ -206,9 +207,10 @@ class PagebuilderController extends Controller
             'bordercolor' => $request->bordercolor,
             'border_style' => $request->border_style,
             'status' => $status,
-            'background_color' => $background_color,
-            'background_img' => $background_img,
+            'background_color' => $request->background_color,
+            'background_img' => $imagename,
             'title_show' => $title_show,
+            'title_color' => $request->title_color,
         ]);
 
         notify()->success('Section Updated','Update');

@@ -54,7 +54,7 @@
 								<thead>
 									<tr>
 										<th class="border-bottom-0">Title</th>
-										<th class="border-bottom-0">Category</th>
+										<th class="border-bottom-0">Service</th>
 										<th class="border-bottom-0">Status</th>
 										<th class="border-bottom-0">Action</th>
 									</tr>
@@ -63,11 +63,7 @@
                                 @foreach($posts as $post)
 									<tr>
 										<td>{{Str::limit($post->title,'30')}}</td>
-                                        <td>
-                                        @foreach($post->portfoliocategories as $category)
-                                        {{$category->name}},
-                                        @endforeach
-                                        </td>
+                                        <td>{{$post->service}}</td>
 										<td>
                                             @if($post->status == true)
                                             <a href="{{route('admin.portfolio.status',$post->id)}}" class="btn btn-green">Active</a>
@@ -101,7 +97,9 @@
                                 @endforeach
 
 								</tbody>
+
 							</table>
+                            {{ $posts->links('vendor.pagination.custom') }}
 						</div>
 					</div>
 				</div>
