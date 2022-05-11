@@ -5,7 +5,8 @@
 @endsection
 
 @section('content')
-
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/bn_IN/sdk.js#xfbml=1&version=v13.0" nonce="i6CXGYAJ"></script>
 
 @isset($service)
 @include('frontend_theme.corporate.front_layout.vertical.banner',['servicc'=>$service])
@@ -266,6 +267,7 @@
                                 </div>
                                 @endif
 
+                                <div class="fb-comments" data-href="{{Request::url()}}" data-width="" data-numposts="10"></div>
 
                                 <div class="line"></div>
 
@@ -300,6 +302,7 @@
                                     @endisset
 
                                 </div>
+                            </br>
                             </div>
 
                         </div>

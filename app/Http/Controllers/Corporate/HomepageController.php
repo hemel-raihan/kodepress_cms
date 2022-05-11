@@ -243,13 +243,13 @@ class HomepageController extends Controller
     public function blogdetails($slug)
     {
         $page = Custompage::where([['type','=','main-page'],['status','=',true]])->orderBy('id','desc')->first();
-        $blog = Post::where('slug',$slug)->first();
+        $blog = Post::where([['slug',$slug],['status',1],['is_approved',1]])->first();
         foreach($blog->categories as $blogcategories)
         {
             $blog_id = $blogcategories->id;
         }
         $blogcategory = category::find($blog_id);
-        $blogcategoryposts = $blogcategory->posts()->get();
+        $blogcategoryposts = $blogcategory->posts()->where([['status',1],['is_approved',1]])->get();
         Artisan::call('cache:clear');
         return view('frontend_theme.corporate.posts_singlepage',compact('blog','blogcategoryposts','page'));
     }

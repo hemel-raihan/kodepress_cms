@@ -407,7 +407,7 @@ $(document).on('click', '.edit_category', function(e){
         method: 'PUT',
         data:{
                 _token: "{{ csrf_token() }}",
-                name:name,
+                title:name,
                 desc:desc,
                 id: faq_id,
                 },

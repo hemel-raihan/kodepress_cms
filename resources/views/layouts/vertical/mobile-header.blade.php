@@ -3,7 +3,7 @@
 					<div class="container-fluid">
 						<div class="d-flex">
 							<a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="#"></a><!-- sidebar-toggle-->
-							<a class="header-brand1 d-flex d-md-none" href="{{ url('index') }}">
+							<a class="header-brand1 d-flex d-md-none" href="{{ route('admin.dashboard') }}">
                                 {{-- @php
                                 $setting  = \App\Models\Admin\Setting::where([['id',1]])->orderBy('id','desc')->first();
                                 @endphp --}}

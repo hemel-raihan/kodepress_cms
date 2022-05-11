@@ -5,7 +5,7 @@
 				<div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
 				<aside class="app-sidebar">
 					<div class="side-header">
-						<a class="header-brand1" href="{{ url('index') }}">
+						<a class="header-brand1" href="{{ route('admin.dashboard') }}">
                             {{-- @php
                             $setting  = \App\Models\Admin\Setting::where([['id',1]])->orderBy('id','desc')->first();
                             @endphp --}}
@@ -72,9 +72,12 @@
 						</li>
                         @endif
 
+                        @php
+                            $pending_post = App\Models\blog\Post::where('is_approved',0)->count();
+                        @endphp
                         @if ($auth->hasPermission('app.blog.posts.global') && $auth->hasPermission('app.blog.categories.global'))
                         <li class="slide">
-							<a class="side-menu__item" data-bs-toggle="slide" href="#"><i class="side-menu__icon fe fe-globe"></i><span class="side-menu__label">Blog Management</span><i class="angle fa fa-angle-right"></i></a>
+							<a class="side-menu__item" data-bs-toggle="slide" href="#"><i class="side-menu__icon fe fe-globe"></i><span class="side-menu__label">Blog Management @if($auth->role_id ==1) @if ($pending_post !=0) <strong style="padding: 3px; border-radius: 50%;" class=" bg-red">{{$pending_post}}</strong> @endif @endif</span><i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
                                 @if($auth->hasPermission('app.blog.posts.create'))
 								<li><a href="{{route('admin.posts.create')}}" class="slide-item">Create New Post </a></li>
@@ -289,6 +292,17 @@
                                 @endif
                                 <li><a href="{{ route('admin.contact.index') }}" class="slide-item">Customer message List</a></li>
                                 <li><a href="{{ route('admin.clients.index') }}" class="slide-item">Clients</a></li>
+							</ul>
+						</li>
+                        @endif
+
+                        @if ($auth->hasPermission('app.subscriber.global'))
+						<li class="slide">
+							<a class="side-menu__item" data-bs-toggle="slide" href="#"><i class="side-menu__icon fe fe-user"></i><span class="side-menu__label">Subscribers</span><i class="angle fa fa-angle-right"></i></a>
+							<ul class="slide-menu">
+                                @if ($auth->hasPermission('app.subscriber.global'))
+								<li><a href="{{ route('admin.subscribers.index') }}" class="slide-item">Subscribers</a></li>
+                                @endif
 							</ul>
 						</li>
                         @endif

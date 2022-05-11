@@ -54,7 +54,7 @@
 									<tr>
 										<th class="border-bottom-0">Title</th>
 										<th class="border-bottom-0">Category</th>
-                                        {{-- <th class="border-bottom-0">Published Date</th> --}}
+                                        <th class="border-bottom-0">Approval Status</th>
 										<th class="border-bottom-0">Status</th>
                                         <th class="border-bottom-0">Scrollable</th>
 										<th class="border-bottom-0">Action</th>
@@ -70,7 +70,15 @@
                                         {{$category->name}},
                                         @endforeach
                                         </td>
-                                        {{-- <td>{{$post->created_at->diffForHumans()}}</td> --}}
+
+                                        <td>
+                                            @if($post->is_approved == true)
+                                            <button class="btn btn-green">Approved</button>
+                                            @else
+                                            <button  class="btn btn-red">Pending</button>
+                                            @endif
+                                        </td>
+
 										<td>
                                             @if($post->status == true)
                                             <a href="{{route('admin.blog.post.status',$post->id)}}" class="btn btn-green">Active</a>
@@ -87,6 +95,12 @@
                                         </td>
 
 										<td>
+
+                                            @if($auth->hasPermission('app.blog.posts.details'))
+                                            <a href="{{route('admin.posts.show',$post->id)}}" class="btn btn-success">
+                                            <i class="fa fa-eye"></i>
+                                            </a>
+                                            @endif
 
                                             @if($auth->hasPermission('app.blog.posts.edit'))
                                             <a href="{{route('admin.posts.edit',$post->id)}}" class="btn btn-success">

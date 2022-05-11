@@ -96,6 +96,8 @@ Route::get('job/details/{slug}', 'Corporate\HomepageController@career_details')-
 Route::get('default/price/category', 'Corporate\HomepageController@price_category')->name('pricecategory');
 Route::get('default/price-plan/{slug}', 'Corporate\HomepageController@all_price')->name('all.price');
 
+Route::post('subscribe', 'SubscriberController@store')->name('subscriber.store');
+
 //for admin authentication
 Route::get('adminlogin', 'Adminlogin\LoginController@showloginform')->name('admin.login')->middleware('installcheck');
  Route::post('adminlogin', 'Adminlogin\LoginController@login')->name('admin.loginform');
@@ -119,6 +121,7 @@ Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin', 'middlewar
     Route::resource('blog/posts','blog\PostController');
     Route::get('blog/post/{id}/status', 'blog\PostController@status_approval')->name('blog.post.status');
     Route::get('blog/post/{id}/scroll', 'blog\PostController@scroll_approval')->name('blog.post.scroll');
+    Route::put('/post/{id}/approve','blog\PostController@approval')->name('post.approve');
     Route::resource('general/contentcategories','general_content\ContentCategoryController');
     Route::get('general/contentcategory/{id}/approve', 'general_content\ContentCategoryController@approval')->name('general.contentcategory.approve');
     Route::resource('general/contentposts','general_content\ContentPostController');
@@ -270,6 +273,8 @@ Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin', 'middlewar
 
 
     Route::get('role/search', 'RoleController@autocomplete')->name('role.search');
+
+    Route::resource('subscribers','SubscriberController');
 });
 
 

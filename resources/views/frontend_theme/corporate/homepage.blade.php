@@ -52,7 +52,7 @@
 
                         @if($element->module_type == 'Blog Post')
                         @php
-                            $blogposts = App\Models\blog\Post::all()->take($element->post_qty);
+                            $blogposts = App\Models\blog\Post::where([['status',1],['is_approved',1]])->latest()->take($element->post_qty)->get();
                         @endphp
 
                         @if ($element->title)
@@ -65,12 +65,13 @@
                         @isset($blogposts)
                         <div class="row">
                         @foreach ($blogposts as $blogpost)
+                        @if ($blogpost->status ==1)
+                        @if ($blogpost->is_approved == 1)
                         <div class="col-sm-6 col-lg-{{($element->layout == 'One Column') ? 12 : (($element->layout == 'Two Column') ? 6 : (($element->layout == 'Three Column') ? 4 : 3)) }}">
-                            {{-- <div class="entry col-sm-6 col-12"> --}}
                                 <div class="grid-inner">
                                     @isset($blogpost->image)
                                     <div class="entry-image">
-                                        <a href="#" data-lightbox="image"><img src="{{asset('uploads/postphoto/'.$blogpost->image)}}" alt="Standard Post with Image"></a>
+                                        <a href="{{route('blog.details',$blogpost->slug)}}" ><img src="{{asset('uploads/postphoto/'.$blogpost->image)}}" alt="Standard Post with Image"></a>
                                     </div>
                                     @endisset
                                     @isset($blogpost->youtube_link)
@@ -94,8 +95,9 @@
                                         <a href="{{route('blog.details',$blogpost->slug)}}" class="more-link">Read More</a>
                                     </div>
                                 </div>
-                            {{-- </div> --}}
                         </div>
+                        @endif
+                        @endif
                         @endforeach
                         </div>
                         @endisset
@@ -118,32 +120,7 @@
                         <div id="oc-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-pagi="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-xl="{{($element->layout == 'One Column') ? 1 : (($element->layout == 'Two Column') ? 2 : (($element->layout == 'Three Column') ? 3 : 4)) }}">
                         @foreach ($category->posts as $post)
                         @if ($post->status == 1)
-
-                        {{-- <div class="posts-sm row col-mb-30" id="post-list-sidebar" >
-                            <div class="entry col-12"  >
-                                <div class="grid-inner row g-0" >
-
-                                    <div class="col-auto">
-                                        <div class="entry-image">
-                                            <a href="{{route('blog.details',$post->slug)}}"><img src="{{asset('uploads/postphoto/'.$post->image)}}" alt="Image"></a>
-                                        </div>
-                                    </div>
-                                    <div class="col ps-3">
-                                        <div class="entry-title">
-                                            <h4><a href="{{route('blog.details',$post->slug)}}">{{$post->title}}</a></h4>
-                                        </div>
-                                        <div class="entry-meta">
-                                            <ul>
-                                                <li>{{ \Carbon\Carbon::parse($post->created_at)->isoFormat('Do MMM YYYY')}}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div> --}}
-
-
+                        @if ($post->is_approved == 1)
                         <div class="portfolio-item">
                             <div class="portfolio-image" style="width: {{$element->portfolio_width}}%;">
                                 <a href="portfolio-single.html">
@@ -162,8 +139,7 @@
                             </div>
                             @endif
                         </div>
-
-
+                        @endif
                         @endif
                         @endforeach
                         </div>
@@ -231,6 +207,7 @@
 
                         <div id="portfolio" class="portfolio row grid-container gutter-20" data-layout="fitRows">
                         @foreach ($productposts as $productpost)
+                        @if ($productpost->status == 1)
                         @foreach ($productpost->productcategories as $category)
                         <article class="col-sm-6 col-lg-{{($element->layout == 'One Column') ? 12 : (($element->layout == 'Two Column') ? 6 : (($element->layout == 'Three Column') ? 4 : 3)) }} {{$category->id}}">
                             <div class="grid-inner">
@@ -253,9 +230,9 @@
                             </div>
                         </article>
                         @endforeach
+                        @endif
                         @endforeach
                         </div>
-
                         @endisset
 
 
@@ -336,6 +313,7 @@
                         @isset($generalposts)
                         <div class="row">
                         @foreach ($generalposts as $generalpost)
+                        @if ($generalpost->status == 1)
                         <div class="col-sm-6 col-lg-{{($element->layout == 'One Column') ? 12 : (($element->layout == 'Two Column') ? 6 : (($element->layout == 'Three Column') ? 4 : 3)) }}">
                             {{-- <div class="entry col-sm-6 col-12"> --}}
                                 <div class="grid-inner">
@@ -366,6 +344,7 @@
                                 </div>
                             {{-- </div> --}}
                         </div>
+                        @endif
                         @endforeach
                         </div>
                         @endisset
@@ -417,6 +396,7 @@
                         @isset($serviceposts)
                             <div id="oc-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-pagi="true" data-autoplay="10000" data-items-xs="1" data-items-sm="1" data-items-md="3" data-items-xl="{{($element->layout == 'One Column') ? 1 : (($element->layout == 'Two Column') ? 2 : (($element->layout == 'Three Column') ? 3 : 4)) }}">
                                 @foreach ($serviceposts as $servicepost)
+                                @if ($servicepost->status == 1)
                                 <div class="portfolio-item">
                                     <div class="portfolio-image" style="width: {{$element->portfolio_width}}%;">
                                         <a href="{{route('service.details',$servicepost->slug)}}">
@@ -428,6 +408,7 @@
                                         <p>{{$servicepost->excerpt}}</p>
                                     </div>
                                 </div>
+                                @endif
                                 @endforeach
                             </div>
                         @endisset
@@ -478,22 +459,24 @@
 
                         <div class="row">
                             @foreach ($servicecategories as $key => $servicecategory)
-                                <div class="col-xl-3 col-lg-4 col-sm-6">
-                                    <div class="single-category">
-                                        @if (!empty($servicecategory->image))
-                                            <div class="img-wrapper">
-                                                <img style="width: 100px; height: auto;" src="{{asset('uploads/servicecategory_photo/'.$servicecategory->image)}}" alt="">
-                                            </div>
-                                        @endif
-                                        <div class="text">
-                                            <h4>{{$servicecategory->name}}</h4>
-                                            <p>
-                                                  {{$servicecategory->desc}}
-                                            </p>
-                                            <a href="{{route('service.posts',$servicecategory->id)}}" class="readmore">View Service</a>
+                            @if ($servicecategory->status == 1)
+                            <div class="col-xl-3 col-lg-4 col-sm-6">
+                                <div class="single-category">
+                                    @if (!empty($servicecategory->image))
+                                        <div class="img-wrapper">
+                                            <img style="width: 100px; height: auto;" src="{{asset('uploads/servicecategory_photo/'.$servicecategory->image)}}" alt="">
                                         </div>
+                                    @endif
+                                    <div class="text">
+                                        <h4>{{$servicecategory->name}}</h4>
+                                        <p>
+                                              {{$servicecategory->desc}}
+                                        </p>
+                                        <a href="{{route('service.posts',$servicecategory->id)}}" class="readmore">View Service</a>
                                     </div>
                                 </div>
+                            </div>
+                            @endif
                             @endforeach
                         </div>
                         @endisset
@@ -517,6 +500,7 @@
                         @isset($priceposts)
                         <div id="oc-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-pagi="true" data-autoplay="10000" data-items-xs="1" data-items-sm="1" data-items-md="3" data-items-xl="{{($element->layout == 'One Column') ? 1 : (($element->layout == 'Two Column') ? 2 : (($element->layout == 'Three Column') ? 3 : 4)) }}">
                             @foreach ($priceposts as $pricepost)
+                            @if ($pricepost->status == 1)
                             <div class="portfolio-item">
                                 <div class="pricing-box pricing-simple px-5 py-4 bg-light text-center text-md-start">
                                     <div class="pricing-title">
@@ -542,6 +526,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                             @endforeach
                         </div>
 
@@ -602,37 +587,6 @@
                         @endisset
 
 
-                        {{-- @elseif($element->module_type == 'Portfolio Category')
-                        @php
-                            $portfoliocategories = App\Models\Portfolio\Portfoliocategory::all()->take($element->post_qty);
-                        @endphp
-
-                        @isset($portfoliocategories)
-
-                        <div id="oc-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-pagi="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-xl="4">
-                            @foreach ($portfoliocategories as $portfoliocategory)
-                            <div class="portfolio-item">
-                                <div class="portfolio-image">
-                                    <a href="portfolio-single.html">
-                                        <img src="{{asset('uploads/portfoliocategory_photo/'.$portfoliocategory->image)}}" alt="Open Imagination">
-                                    </a>
-                                    <div class="bg-overlay">
-                                        <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-speed="350">
-                                            <a href="{{asset('uploads/portfoliocategory_photo/'.$portfoliocategory->image)}}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350" data-lightbox="image"><i class="icon-line-plus"></i></a>
-                                            <a href="portfolio-single.html" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
-                                        </div>
-                                        <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-speed="350"></div>
-                                    </div>
-                                </div>
-                                <div class="portfolio-desc">
-                                    <h3><a href="{{route('portfolio.posts',$portfoliocategory->slug)}}">{{$portfoliocategory->name}}</a></h3>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-
-                        @endisset --}}
-
 
                         @elseif($element->module_type == 'Portfolio Post')
                         @php
@@ -643,6 +597,7 @@
 
                         <div id="oc-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-pagi="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-xl="{{($element->layout == 'One Column') ? 1 : (($element->layout == 'Two Column') ? 2 : (($element->layout == 'Three Column') ? 3 : 4)) }}">
                             @foreach ($portfolioposts as $portfoliopost)
+                            @if ($portfoliopost->status == 1)
                             <div class="portfolio-item">
                                 <div class="portfolio-image">
                                     <a href="portfolio-single.html">
@@ -660,6 +615,7 @@
                                     <h3><a href="{{route('portfolio.details',$portfoliopost->slug)}}">{{$portfoliopost->title}}</a></h3>
                                 </div>
                             </div>
+                            @endif
                             @endforeach
                         </div>
 
@@ -675,30 +631,32 @@
 
                         <div id="oc-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="20" data-pagi="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-xl="{{($element->layout == 'One Column') ? 1 : (($element->layout == 'Two Column') ? 2 : (($element->layout == 'Three Column') ? 3 : 4)) }}">
                             @foreach ($teamposts as $teampost)
-                                <div class="team">
-									<div class="team-image">
-										<img src="{{asset('uploads/teamphoto/'.$teampost->image)}}" alt="John Doe">
-									</div>
-									<div class="team-desc team-desc-bg">
-										<div class="team-title"><h4>{{$teampost->name}}</h4><span>{{$teampost->designation}}</span></div>
-										<a href="{{$teampost->facebook}}" class="social-icon inline-block si-small si-light si-rounded si-facebook">
-											<i class="icon-facebook"></i>
-											<i class="icon-facebook"></i>
-										</a>
-										<a href="{{$teampost->twitter}}" class="social-icon inline-block si-small si-light si-rounded si-twitter">
-											<i class="icon-twitter"></i>
-											<i class="icon-twitter"></i>
-										</a>
-										<a href="{{$teampost->instagram}}" class="social-icon inline-block si-small si-light si-rounded si-instagram">
-											<i class="icon-instagram"></i>
-											<i class="icon-instagram"></i>
-										</a>
-                                        <a href="{{$teampost->linkedin}}" class="social-icon inline-block si-small si-light si-rounded si-linkedin">
-											<i class="icon-linkedin"></i>
-											<i class="icon-linkedin"></i>
-										</a>
-									</div>
-								</div>
+                            @if ($teampost->status == 1)
+                            <div class="team">
+                                <div class="team-image">
+                                    <img src="{{asset('uploads/teamphoto/'.$teampost->image)}}" alt="John Doe">
+                                </div>
+                                <div class="team-desc team-desc-bg">
+                                    <div class="team-title"><h4>{{$teampost->name}}</h4><span>{{$teampost->designation}}</span></div>
+                                    <a href="{{$teampost->facebook}}" class="social-icon inline-block si-small si-light si-rounded si-facebook">
+                                        <i class="icon-facebook"></i>
+                                        <i class="icon-facebook"></i>
+                                    </a>
+                                    <a href="{{$teampost->twitter}}" class="social-icon inline-block si-small si-light si-rounded si-twitter">
+                                        <i class="icon-twitter"></i>
+                                        <i class="icon-twitter"></i>
+                                    </a>
+                                    <a href="{{$teampost->instagram}}" class="social-icon inline-block si-small si-light si-rounded si-instagram">
+                                        <i class="icon-instagram"></i>
+                                        <i class="icon-instagram"></i>
+                                    </a>
+                                    <a href="{{$teampost->linkedin}}" class="social-icon inline-block si-small si-light si-rounded si-linkedin">
+                                        <i class="icon-linkedin"></i>
+                                        <i class="icon-linkedin"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            @endif
                             @endforeach
                         </div>
 
@@ -864,7 +822,7 @@
                         <div id="portfolio" class="portfolio row grid-container gutter-20" data-layout="fitRows">
                         @foreach ($galleryphotos as $photo)
                         {{-- @foreach ($photo->gallerycategory as $category) --}}
-                        <article class="col-sm-6 col-lg-{{($element->layout == 'One Column') ? 12 : (($element->layout == 'Two Column') ? 6 : (($element->layout == 'Three Column') ? 4 : 3)) }} {{$photo->gallerycategory->id}}">
+                        <article class="col-sm-3 col-lg-{{($element->layout == 'One Column') ? 12 : (($element->layout == 'Two Column') ? 6 : (($element->layout == 'Three Column') ? 4 : 3)) }} {{$photo->gallerycategory->id}}">
                             <div class="grid-inner">
                                 <div class="portfolio-image">
                                     <a href="portfolio-single.html">

@@ -3,16 +3,23 @@
 namespace App\Http\Controllers\Admin\blog;
 
 use Carbon\Carbon;
+use App\Models\Admin;
 use App\Models\blog\Post;
+use App\Models\Subscriber;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Admin\Sidebar;
 use App\Models\blog\category;
 use App\Http\Controllers\Controller;
+use App\Notifications\NewAuthorPost;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Intervention\Image\Facades\Image;
+use App\Notifications\AdminApprovePost;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
+use App\Notifications\NewPostNotification;
+use Illuminate\Support\Facades\Notification;
 
 class PostController extends Controller
 {
@@ -172,13 +179,13 @@ class PostController extends Controller
             $status = 1;
         }
 
-        if(!Auth::guard('admin')->user()->role_id == 1)
+        if(Auth::guard('admin')->user()->role_id == 1)
         {
-            $is_approved = false;
+            $is_approved = true;
         }
         else
         {
-            $is_approved = true;
+            $is_approved = false;
         }
 
         if(!$request->youtube_link)
@@ -231,6 +238,21 @@ class PostController extends Controller
         $post->categories()->attach($request->categories);
 
 
+        if(Auth::guard('admin')->user()->role_id == 1)
+        {
+            $subscribers = Subscriber::all();
+            foreach($subscribers as $subscriber)
+            {
+                Notification::route('mail',$subscriber->email)
+                ->notify(new NewPostNotification($post,$subscriber));      ///this process for all other..this is called on demand notification
+            }
+        }
+        else
+        {
+            $users = Admin::where('role_id',1)->get();
+            Notification::send($users, new NewAuthorPost($post));    //only for admin or user model
+        }
+
         notify()->success("Post Successfully created","Added");
         return redirect()->route('admin.posts.index');
     }
@@ -255,6 +277,34 @@ class PostController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function approval($id)
+    {
+        Gate::authorize('app.blog.posts.approve');
+        $post = Post::find($id);
+        if($post->is_approved == false)
+        {
+            $post->is_approved = true;
+            $post->save();
+
+            $admin_name = Auth::user()->name;
+            $post->admin->notify(new AdminApprovePost($post,$admin_name));
+
+            $subscribers = Subscriber::all();
+            foreach($subscribers as $subscriber)
+            {
+                Notification::route('mail',$subscriber->email)
+                            ->notify(new NewPostNotification($post,$subscriber));      ///this process for all other..this is called on demand notification
+            }
+            // Artisan::call('queue:work');
+            notify()->success('This post Successfully approved');
+        }
+        else
+        {
+            notify()->info('This post is already approved');
+        }
+        return redirect()->route('admin.posts.index');
     }
 
     public function scroll_approval($id)
@@ -287,8 +337,26 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        Gate::authorize('app.blog.posts.details');
-        return view('backend.admin.blog.post.show',compact('post'));
+        if(Auth::guard('admin')->user()->role_id == 1)
+        {
+            Gate::authorize('app.blog.posts.details');
+            return view('backend.admin.blog.post.show',compact('post'));
+        }
+        else
+        {
+            if($post->admin_id!=Auth::id())
+            {
+                notify()->error('you are not authorized to access this post details');
+                return redirect()->back();
+            }
+            else
+            {
+                Gate::authorize('app.blog.posts.details');
+                return view('backend.admin.blog.post.show',compact('post'));
+            }
+        }
+
+
     }
 
     /**
@@ -299,11 +367,26 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        Gate::authorize('app.blog.posts.edit');
-        $categories = category::with('childrenRecursive')->where('parent_id', '=', 0)->get();
-        //$subcat = category::all();
-        //$editsidebars = Sidebar::all();
-        return view('backend.admin.blog.post.form',compact('post','categories'));
+        if(Auth::guard('admin')->user()->role_id == 1)
+        {
+            Gate::authorize('app.blog.posts.edit');
+            $categories = category::with('childrenRecursive')->where('parent_id', '=', 0)->get();
+            return view('backend.admin.blog.post.form',compact('post','categories'));
+        }
+        else
+        {
+            if($post->admin_id!=Auth::id())
+            {
+                notify()->error('you are not authorized to access there');
+                return redirect()->back();
+            }
+            else
+            {
+                Gate::authorize('app.blog.posts.edit');
+                $categories = category::with('childrenRecursive')->where('parent_id', '=', 0)->get();
+                return view('backend.admin.blog.post.form',compact('post','categories'));
+            }
+        }
     }
 
     /**

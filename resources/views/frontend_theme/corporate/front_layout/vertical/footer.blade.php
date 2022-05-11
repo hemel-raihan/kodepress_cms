@@ -309,10 +309,10 @@
 
                         </div>
 
-                        @isset($footer_menuitems)
+                @isset($footer_menuitems)
                 @foreach ($footer_menuitems as $footer_menuitem)
 
-                <div class="col-lg-3 col-md-8 pb-2 pb-sm-0">
+                <div class="col-lg-2 col-md-8 pb-2 pb-sm-0">
                     <div class="widget">
                         <h4 style="color: {{$footer->text_color}}" class="widget-title pb-1">{{$footer_menuitem->title}}</h4>
                         @if(!$footer_menuitem->childs->isEmpty())
@@ -331,6 +331,31 @@
 
                 @endforeach
                 @endisset
+
+                <div class="col-md-4">
+                    <div class="widget  clearfix">
+                        <h5><strong>Subscribe</strong> to Our Newsletter to get Important News, Amazing Offers &amp; Inside Scoops:</h5>
+                        <div class="widget-subscribe-form-result"></div>
+                        <form method="POST" action="{{route('subscriber.store')}}" enctype="multipart/form-data">
+                            @csrf
+                            @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                            <div class="input-group mx-auto">
+                                <div class="input-group-text"><i class="icon-email2"></i></div>
+                                <input type="email" id="widget-subscribe-form-email" name="email" class="form-control required email" placeholder="Enter your Email">
+                                <button class="btn btn-success" type="submit">Subscribe</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
 
                         {{-- <div class="col-md-4">
                             <div class="widget widget_links clearfix">

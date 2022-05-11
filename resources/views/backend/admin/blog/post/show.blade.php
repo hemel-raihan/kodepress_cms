@@ -89,48 +89,31 @@
             <li class="breadcrumb-item active" aria-current="page">Table</li>
         </ol> --}}
     </div>
-
-    <div class="ms-auto pageheader-btn">
-    @if($auth->hasPermission('app.blog.posts.create'))
-        <a href="{{route('admin.posts.create')}}" class="btn btn-primary btn-icon text-white me-2">
-            <span>
-                <i class="fe fe-plus"></i>
-            </span> Create New Post
-        </a>
-        @endif
-
-        {{-- <a href="#" class="btn btn-success btn-icon text-white">
-            <span>
-                <i class="fe fe-log-in"></i>
-            </span> Export
-        </a> --}}
-    </div>
 </div>
 <!-- PAGE-HEADER END -->
 
 <div class="container-fluid">
-
-    @if(Auth::user()->hasPermission('app.blog.posts.approve'))
     <a href="{{route('admin.posts.index')}}" class="btn btn-danger waves-effect">BACK</a>
+    @if(Auth::user()->hasPermission('app.blog.posts.approve'))
     @if($post->is_approved == false)
-    <button type="button" class="btn btn-success pull-right waves-effect" onclick="approvepost$post({{$post->id}})"><i class="material-icons">done</i><span>Approve</span></button>
+    <button type="button" class="btn btn-danger pull-right waves-effect" onclick="approvepost$post({{$post->id}})"><i class="material-icons"></i><span>Approve</span></button>
     <form id="approvalform" action="{{route('admin.post.approve',$post->id)}}" method="POST" style="display: none;">
-                           @csrf
-                          @method('PUT')
-                          </form>
+    @csrf
+    @method('PUT')
+    </form>
     @else
-    <button type="button" class="btn btn-success pull-right " disabled><i class="material-icons">done</i><span>Approved</span></button>
+    <button type="button" class="btn btn-success pull-right " disabled><i class="material-icons"></i><span>Approved</span></button>
     @endif
     @endif
     </br>
     </br>
       <div class="row clearfix">
           <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-              <div class="card">
+              <div class="card" style="padding: 30px;">
                   <div class="header">
                       <h2>
-                          {{$post->title}}
-                          <small>posted by : <strong><a href="">{{$post->admin->name}}</a></strong> on {{ Carbon\Carbon::parse($post->created_at)->format('d-m-Y H:i:s') }}</small>
+                          {{$post->title}}</br>
+                          <small>posted by : <strong>{{$post->admin->name}}</strong> on {{ Carbon\Carbon::parse($post->created_at)->format('d-m-Y') }}</small>
 
                       </h2>
 
@@ -145,29 +128,25 @@
                   <div class="header bg-cyan">
                       <h2>
                           Categories
-
                       </h2>
 
                   </div>
-                  <div class="body">
-
-                          @foreach($post->categories as $category)
-                          <span class="label bg-cyan">{{$category->name}}</span>
-                          @endforeach
-
+                  <div class="body" style="padding: 20px;">
+                    @foreach($post->categories as $category)
+                    <h3 style="font-size: 15px;" class="label bg-cyan">{{$category->name}}</h3>
+                    @endforeach
                   </div>
               </div>
               <div class="card">
                   <div class="header bg-amber">
                       <h2>
                           Feature Image
-
                       </h2>
 
                   </div>
-                  <div class="body">
+                  <div class="body" style="padding: 60px;">
 
-                     <img class="img-responsive thumbnail" src="{{Storage::disk('public')->url('postphoto/'.$post->image)}}" alt="">
+                     <img style="text-align: center;" src="{{asset('uploads/postphoto/'.$post->image)}}" alt="">
 
                   </div>
               </div>
@@ -182,26 +161,26 @@
 
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script type="text/javascript">
-    function approvepost$post(id)
+        <script type="text/javascript">
+            function approvepost$post(id)
 
-    {
-        Swal.fire({
-  title: 'Are you sure?',
-  text: "You approve this!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, approve it!'
-}).then((result) => {
-  if (result.isConfirmed) {
-   event.preventDefault();
-   document.getElementById('approvalform').submit();
-  }
-})
-    }
-    </script>
+            {
+                Swal.fire({
+          title: 'Are you sure?',
+          text: "You approve this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, approve it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+           event.preventDefault();
+           document.getElementById('approvalform').submit();
+          }
+        })
+            }
+            </script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js" integrity="sha512-8QFTrG0oeOiyWo/VM9Y8kgxdlCryqhIxVeRpWSezdRRAvarxVtwLnGroJgnVW9/XBRduxO/z1GblzPrMQoeuew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 

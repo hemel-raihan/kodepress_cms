@@ -227,7 +227,7 @@ class PermissionSeeder extends Seeder
         ]);
         Permission::updateOrCreate([
             'module_id' => $moduleAppBlogPost->id,
-            'name' => 'Approve BlogPost',
+            'name' => 'Status Approve BlogPost',
             'slug' => 'app.blog.posts.status'
         ]);
         Permission::updateOrCreate([
@@ -911,6 +911,14 @@ class PermissionSeeder extends Seeder
             'module_id' => $moduleAppGallery->id,
             'name' => 'View (Global)',
             'slug' => 'app.gallery.global'
+        ]);
+
+        $moduleAppSubscriber = Module::updateOrCreate(['name' => 'Subscriber Manage']);
+
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppSubscriber->id,
+            'name' => 'View (Global)',
+            'slug' => 'app.subscriber.global'
         ]);
 
     }
