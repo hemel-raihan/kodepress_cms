@@ -6,8 +6,10 @@ use App\Models\blog\Post;
 use App\Models\Admin\Page;
 use Illuminate\Http\Request;
 use App\Models\blog\category;
+use App\Models\Package\Order;
 use App\Models\Career\Jobpost;
 use App\Models\Gallery\Gallery;
+use App\Models\Package\Address;
 use App\Models\Product\Product;
 use App\Models\Service\Service;
 use App\Models\Pagebuilder\Element;
@@ -22,7 +24,9 @@ use Illuminate\Support\Facades\Artisan;
 use App\Models\general_content\Contentpost;
 use App\Models\Portfolio\Portfoliocategory;
 use App\Models\Pricing_Table\Pricecategory;
+use Illuminate\Support\Facades\Notification;
 use App\Models\general_content\Contentcategory;
+use App\Notifications\EmailVarification;
 
 class HomepageController extends Controller
 {
@@ -217,18 +221,57 @@ class HomepageController extends Controller
         return view('frontend_theme.corporate.all_posts',compact('pricecategoryposts','pricecategory','page'));
     }
 
-    public function pricedetails($id)
+    public function package_order($slug)
     {
         $page = Custompage::where([['type','=','main-page'],['status','=',true]])->orderBy('id','desc')->first();
-        $price = Price::find($id);
-        foreach($price->pricecategories as $categories)
-        {
-            $price_id = $categories->id;
-        }
-        $pricecategory = Pricecategory::find($price_id);
-        $pricecategoryposts = $pricecategory->prices()->get();
+        $price = Price::where([['slug',$slug],['status',1]])->first();
+
         Artisan::call('cache:clear');
-        return view('frontend_theme.corporate.posts_singlepage',compact('price','pricecategoryposts','page'));
+        return view('frontend_theme.corporate.package_order',compact('page','price'));
+    }
+
+    public function package_order_store(Request $request, $id)
+    {
+        $this->validate($request,[
+            'name' => 'required',
+            'email' => 'required|email',
+        ]);
+
+        $address = Address::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'email_verified_code' => rand(0, 99999),
+            'contact_no' => $request->contact_no,
+            'country' => $request->country,
+            'zip_code' => $request->zip_code,
+            'nda_file' => $request->nda_file,
+        ]);
+
+        Notification::route('mail',$address->email)
+                            ->notify(new EmailVarification($address));
+        notify()->success("A verification code has sent to your email");
+        return view('frontend_theme.corporate.testtest',compact('address','id'));
+
+
+    }
+
+    public function email_varified(Request $request)
+    {
+        if($request->email_verified_code == $request->code)
+        {
+                $order = Order::create([
+                'order_code' => rand(0, 99999),
+                'address_id' => $request->address_id,
+                'price_id' => $request->price_id,
+                ]);
+
+            notify()->success("Your Order Successfully sent to the Admin");
+            return view('frontend_theme.corporate.order_success');
+        }
+        else
+        {
+            return 'puck';
+        }
     }
 
     public function blogs($id)

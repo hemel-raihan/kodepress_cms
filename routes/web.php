@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
 use Artisan;
+use App\Models\Role;
+use App\Events\StatusLiked;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 /*
@@ -63,8 +64,6 @@ Route::get('fetch-portfolios', 'Admin\Portfolio\PortfolioController@fetchportfol
 
 //Route::get('links/{details}','Admin\Link\LinkController@details')->name('link.details');
 
-
-
 //for corporate theme
 Route::get('/portfolio/posts/{id}', 'Corporate\HomepageController@portfolios')->name('portfolio.posts');
 Route::get('/portfolio/details/{slug}', 'Corporate\HomepageController@portfoliodetails')->name('portfolio.details');
@@ -73,7 +72,9 @@ Route::get('/service/posts/{id}', 'Corporate\HomepageController@services')->name
 Route::get('/service/details/{slug}', 'Corporate\HomepageController@servicedetails')->name('service.details');
 
 Route::get('/price/posts/{id}', 'Corporate\HomepageController@prices')->name('price.posts');
-Route::get('/price/details/{id}', 'Corporate\HomepageController@pricedetails')->name('price.details');
+Route::get('/package-order/{slug}', 'Corporate\HomepageController@package_order')->name('package.order');
+Route::post('/package-order/{id}', 'Corporate\HomepageController@package_order_store')->name('package.store');
+Route::post('/email-varified', 'Corporate\HomepageController@email_varified')->name('email.varified');
 
 Route::get('/blog/posts/{id}', 'Corporate\HomepageController@blogs')->name('blog.posts');
 Route::get('/blog/details/{slug}', 'Corporate\HomepageController@blogdetails')->name('blog.details');

@@ -346,7 +346,7 @@
                                     @endforeach
                                 </ul>
                             </div>
-                        @endif
+                             @endif
                             <div class="input-group mx-auto">
                                 <div class="input-group-text"><i class="icon-email2"></i></div>
                                 <input type="email" id="widget-subscribe-form-email" name="email" class="form-control required email" placeholder="Enter your Email">

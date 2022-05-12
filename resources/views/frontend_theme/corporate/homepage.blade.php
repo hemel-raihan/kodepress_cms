@@ -522,7 +522,7 @@
                                         {!!$pricepost->body!!}
                                     </div>
                                     <div class="pricing-action">
-                                        <a href="#" class="btn btn-danger btn-lg">Get Started</a>
+                                        <a href="{{route('package.order',$pricepost->slug)}}" class="btn btn-danger btn-lg">Get Started</a>
                                     </div>
                                 </div>
                             </div>

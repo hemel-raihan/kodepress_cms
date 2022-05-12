@@ -238,7 +238,7 @@ class PriceController extends Controller
 
         $price->update([
             'title' => $request->title,
-            'slug' => $request->slug,
+            'slug' => $slug,
             'admin_id' => Auth::id(),
             'image' => $imagename,
             'body' => $request->body,
