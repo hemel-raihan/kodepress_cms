@@ -102,12 +102,12 @@
                                         <button class="btn btn-danger waves effect" type="button"
                                             onclick="deletepost$category({{ $category->id}})" >
                                             <i class="fa fa-trash"></i>
-                                            </button>
+                                        </button>
                                             <form id="deleteform-{{$category->id}}" action="{{route('admin.categories.destroy',$category->id)}}" method="POST" style="display: none;">
                                             @csrf
                                             @method('DELETE')
                                             </form>
-                                        @endif
+                                            @endif
                                             </td>
 
 									</tr>

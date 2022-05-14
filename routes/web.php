@@ -73,7 +73,8 @@ Route::get('/service/details/{slug}', 'Corporate\HomepageController@servicedetai
 
 Route::get('/price/posts/{id}', 'Corporate\HomepageController@prices')->name('price.posts');
 Route::get('/package-order/{slug}', 'Corporate\HomepageController@package_order')->name('package.order');
-Route::post('/package-order/{id}', 'Corporate\HomepageController@package_order_store')->name('package.store');
+Route::post('/package-order/{slug}', 'Corporate\HomepageController@package_order_store')->name('package.store');
+Route::put('/resend-code/{id}/{slug}', 'Corporate\HomepageController@resend_code')->name('resend_code.store');
 Route::post('/email-varified', 'Corporate\HomepageController@email_varified')->name('email.varified');
 
 Route::get('/blog/posts/{id}', 'Corporate\HomepageController@blogs')->name('blog.posts');
@@ -276,6 +277,10 @@ Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin', 'middlewar
     Route::get('role/search', 'RoleController@autocomplete')->name('role.search');
 
     Route::resource('subscribers','SubscriberController');
+
+    Route::resource('orders','Pricing_Table\OrderController');
+    Route::get('/all_orders/{id}/show', 'Pricing_Table\OrderController@all_orders_show')->name('all_orders.show');
+    Route::post('/orders/update_delivery_status', 'Pricing_Table\OrderController@update_delivery_status')->name('orders.update_delivery_status');
 });
 
 

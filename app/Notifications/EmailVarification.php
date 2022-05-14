@@ -43,7 +43,7 @@ class EmailVarification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                        ->greeting('Hello '.$this->address->name)
+                        ->greeting('Hello, '.$this->address->name)
                         ->subject('Email Varification Code')
                         ->line('Please varifie your email id with this code')
                         ->line('Code: '.$this->address->email_verified_code)

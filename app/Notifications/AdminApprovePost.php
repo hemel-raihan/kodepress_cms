@@ -44,7 +44,7 @@ class AdminApprovePost extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                ->greeting('Hello '.$this->post->admin->name)
+                ->greeting('Hello, '.$this->post->admin->name)
                 ->subject('Your Post Successfully Approved')
                 ->line('Your Post has been successfully approved by '.$this->admin_name)
                 ->line('Post Title :'. $this->post->title)

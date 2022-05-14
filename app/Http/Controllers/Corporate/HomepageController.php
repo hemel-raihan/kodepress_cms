@@ -27,6 +27,7 @@ use App\Models\Pricing_Table\Pricecategory;
 use Illuminate\Support\Facades\Notification;
 use App\Models\general_content\Contentcategory;
 use App\Notifications\EmailVarification;
+use App\Notifications\OrderCompleteNotification;
 
 class HomepageController extends Controller
 {
@@ -230,8 +231,10 @@ class HomepageController extends Controller
         return view('frontend_theme.corporate.package_order',compact('page','price'));
     }
 
-    public function package_order_store(Request $request, $id)
+    public function package_order_store(Request $request, $slug)
     {
+        $page = Custompage::where([['type','=','main-page'],['status','=',true]])->orderBy('id','desc')->first();
+        $price = Price::where([['slug',$slug],['status',1]])->first();
         $this->validate($request,[
             'name' => 'required',
             'email' => 'required|email',
@@ -250,10 +253,26 @@ class HomepageController extends Controller
         Notification::route('mail',$address->email)
                             ->notify(new EmailVarification($address));
         notify()->success("A verification code has sent to your email");
-        return view('frontend_theme.corporate.testtest',compact('address','id'));
-
-
+        return view('frontend_theme.corporate.email_varification',compact('address','price','page'));
     }
+
+    public function resend_code($id,$slug)
+    {
+        $page = Custompage::where([['type','=','main-page'],['status','=',true]])->orderBy('id','desc')->first();
+        $address = Address::find($id);
+        $price = Price::where([['slug',$slug],['status',1]])->first();
+
+        $address->update([
+            'email_verified_code' => rand(0, 99999),
+        ]);
+
+        Notification::route('mail',$address->email)
+                            ->notify(new EmailVarification($address));
+
+        notify()->success("Another verification code has sent to your email");
+        return view('frontend_theme.corporate.email_varification',compact('address','price','page'));
+    }
+
 
     public function email_varified(Request $request)
     {
@@ -265,12 +284,20 @@ class HomepageController extends Controller
                 'price_id' => $request->price_id,
                 ]);
 
+                $address = Address::find($request->address_id);
+                Notification::route('mail',$address->email)
+                            ->notify(new OrderCompleteNotification($address,$order));
+
             notify()->success("Your Order Successfully sent to the Admin");
-            return view('frontend_theme.corporate.order_success');
+            return redirect()->route('home');
         }
         else
         {
-            return 'puck';
+            $price = Price::find($request->price_id);
+            $address = Address::find($request->address_id);
+            $page = Custompage::where([['type','=','main-page'],['status','=',true]])->orderBy('id','desc')->first();
+            notify()->error("Invalid Code..Please Try again!");
+            return view('frontend_theme.corporate.email_varification',compact('address','price','page'));
         }
     }
 

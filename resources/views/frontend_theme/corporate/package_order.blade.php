@@ -30,7 +30,7 @@
 
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, vel odio non dicta provident sint ex autem mollitia dolorem illum repellat ipsum aliquid illo similique sapiente fugiat minus ratione.</p>
 
-                                <form id="billing-form" name="billing-form" class="row mb-0" action="{{route('package.store',$price->id)}}" method="post">
+                                <form id="billing-form" name="billing-form" class="row mb-0" action="{{route('package.store',$price->slug)}}" method="post">
                                     @csrf
                                     @if ($errors->any())
                                     <div class="alert alert-danger">

@@ -2,8 +2,9 @@
 
 namespace App\Models\Package;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Pricing_Table\Price;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -14,6 +15,11 @@ class Order extends Model
     public function address()
     {
         return $this->belongsTo(Address::class);
+    }
+
+    public function price()
+    {
+        return $this->belongsTo(Price::class);
     }
 
 }

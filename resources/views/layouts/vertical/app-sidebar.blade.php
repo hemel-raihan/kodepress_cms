@@ -188,7 +188,7 @@
 
                         @if ($auth->hasPermission('app.price.posts.global') && $auth->hasPermission('app.price.categories.global'))
                         <li class="slide">
-							<a class="side-menu__item" data-bs-toggle="slide" href="#"><i class="side-menu__icon fe fe-dollar-sign"></i><span class="side-menu__label">Pricing Tables</span><i class="angle fa fa-angle-right"></i></a>
+							<a class="side-menu__item" data-bs-toggle="slide" href="#"><i class="side-menu__icon fe fe-dollar-sign"></i><span class="side-menu__label">Package Management</span><i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
                                 @if($auth->hasPermission('app.price.posts.create'))
 								<li><a href="{{route('admin.prices.create')}}" class="slide-item">Add New Price </a></li>
@@ -202,6 +202,7 @@
                                 @if($auth->hasPermission('app.price.categories.self'))
                                 <li><a href="{{route('admin.pricecategories.index')}}" class="slide-item">All Categories</a></li>
                                 @endif
+                                <li><a href="{{route('admin.orders.index')}}" class="slide-item">All Orders</a></li>
 							</ul>
 						</li>
                         @endif

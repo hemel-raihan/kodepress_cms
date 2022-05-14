@@ -7,20 +7,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewAuthorPost extends Notification implements ShouldQueue
+class OrderCompleteNotification extends Notification
 {
     use Queueable;
 
-    public $post;
+    public $address,$order;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($post)
+    public function __construct($address,$order)
     {
-        $this->post = $post;
+        $this->address = $address;
+        $this->order = $order;
     }
 
     /**
@@ -43,13 +44,12 @@ class NewAuthorPost extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->greeting('Hello, Admin!')
-                    ->subject('New post Approval Needed')
-                    ->line('New Post By '.$this->post->admin->name . ' need to Approve')
-                    ->line('To Approved the post Click View button')
-                    ->line('Post Title :'. $this->post->title)
-                    ->action('View', url(route('admin.posts.show',$this->post->id)))
-                    ->line('Thank you for using our application!');
+                        ->greeting('Hello, '.$this->address->name)
+                        ->subject('Order Successfully Complete')
+                        ->line('Your order has sent to Admin. We will notify you very shortly')
+                        ->line('Package Name: '.$this->order->price->title)
+                        ->line('Your Order Id: '.$this->order->order_code)
+                        ->line('Thank you!');
     }
 
     /**
